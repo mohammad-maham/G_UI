@@ -27,20 +27,6 @@ input[type="number"]{
     direction:ltr;
 }
 
-.avatar img:hover {
-    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
-    cursor: pointer;
-    transform: scale(1.1);
-    animation: scaleUp 0.5s ease-in-out;
-}
-
-.avatar img.active {
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
-    border: 1px solid #999;
-    transform: scale(1.1);
-    padding:2px;
-}
-
 @keyframes scaleUp {
     from {
         transform: scale(1);  
