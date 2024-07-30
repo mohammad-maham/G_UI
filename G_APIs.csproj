@@ -59,10 +59,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GoldHelpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\GoldHelpers.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -220,6 +216,7 @@
     <Compile Include="BussinesLogic\Interface\ISession.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Common\Captcha.cs" />
+    <Compile Include="Common\HtmlAttributesExtensions.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\DataTableExtention.cs" />
     <Compile Include="Common\Enums.cs" />
@@ -369,6 +366,7 @@
     <Content Include="Content\assets\js\forms\custom-clipboard.js" />
     <Content Include="Content\assets\js\Helper.js" />
     <Content Include="Content\assets\js\ie11fix\fn.fix-padStart.js" />
+    <Content Include="Content\assets\js\jquery.mask.js" />
     <Content Include="Content\assets\js\libs\jquery-3.1.1.min.js" />
     <Content Include="Content\assets\js\libs\jquery-ui.js" />
     <Content Include="Content\assets\js\loader.js" />

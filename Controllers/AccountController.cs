@@ -1,7 +1,6 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Common;
 using G_APIs.Models;
-using GoldHelpers.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult Profile(User model)
         {
-            return View(model ?? new User());
+            return View(new User() {Name= "sayid"});
         }
 
         [GoldAuthorize]

@@ -17,20 +17,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="col-md-8 mb-4">
-                                <label for="validationCustom01">آدرس</label>
-                                <input name="Adress" type="text" class="form-control" value="@Model.Name" required="">
-                                <div class="invalid-feedback">
-                                    وارد کردن این فیلد الزامیست
-                                </div>
+                                @Html.EditorFor(m => m.Name)
+
                             </div>
                             <div class="col-md-8 mb-4">
-                                <label for="validationCustom01">تلفن  </label>
-                                <input name="Phone" type="text" class="form-control"  value="@Model.Family" required="">
-                                <div class="invalid-feedback">
-                                    وارد کردن این فیلد الزامیست
-                                </div>
+                                @Html.EditorFor(m => m.Father)
+
                             </div>
-                        
 
                         </div>
 

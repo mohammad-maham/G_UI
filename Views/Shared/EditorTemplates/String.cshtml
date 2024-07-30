@@ -1,5 +1,45 @@
-﻿@model string
+﻿@using System.ComponentModel.DataAnnotations
+@model string
+
+
+@{
+    var displayName = ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName;
+    var propertyName = ViewData.ModelMetadata.PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired;
+    var isReadOny = ViewData.ModelMetadata.IsReadOnly ? "readonly" : null;
+
+
+    var errorMessage = string.Empty;
+    var requiredAttribute = ViewData.ModelMetadata.ContainerType.GetProperty(propertyName)
+        ?.GetCustomAttributes(typeof(RequiredAttribute), false)
+        .FirstOrDefault() as RequiredAttribute;
+
+    if (requiredAttribute != null)
+    {
+        errorMessage = requiredAttribute.ErrorMessage;
+    }
+
+    var additionalAttributes = ViewData["HtmlAttributes"] as object;
+    var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(additionalAttributes);
+}
+
 <div class="form-group">
-    <label for="@ViewData.ModelMetadata.PropertyName">@ViewData.ModelMetadata.DisplayName</label>
-    <input type="text" class="form-control custom-input" id="@ViewData.ModelMetadata.PropertyName" name="@ViewData.ModelMetadata.PropertyName" value="@Model" />
+
+    <label for="@propertyName">@displayName</label>
+
+    @if (required)
+    {
+
+        @*<input name="@propertyName" type="text" class="form-control" value="@Model" required @isReadOny>*@
+
+        @Html.TextBoxFor(m => m, new { @class = "form-control",  @required = required ? "required" : null,  isReadOny  })
+
+        <div class="invalid-feedback">
+            @errorMessage
+        </div>
+    }
+    else
+    {
+        <input name="Name" type="text" class="form-control" value="@Model" @isReadOny>
+    }
 </div>

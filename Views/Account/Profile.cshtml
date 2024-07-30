@@ -1,5 +1,7 @@
 ﻿@model  G_APIs.Models.User
 
+<link href="~/Content/assets/css/elements/avatar.css" rel="stylesheet" type="text/css">
+<script src="~/Content/assets/js/jquery.mask.js"></script>
 
 <div class="row layout-top-spacing">
     <div id="custom_styles" class="col-lg-12 layout-spacing col-md-8">
@@ -17,33 +19,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="col-md-8 mb-4">
-                                <label for="validationCustom01">نام</label>
-                                <input name="Name" type="text" class="form-control" placeholder="نام" value="@Model.Name" required="">
-                                <div class="invalid-feedback">
-                                    وارد کردن این فیلد الزامیست
-                                </div>
+                                @Html.EditorFor(x => x.Name)
                             </div>
                             <div class="col-md-8 mb-4">
-                                <label for="validationCustom01">نام خانوادگی</label>
-                                <input name="Family" type="text" class="form-control" placeholder="نام خانوادگی" value="@Model.Family" required="">
-                                <div class="invalid-feedback">
-                                    وارد کردن این فیلد الزامیست
-                                </div>
-                            </div>
-                            <div class="col-md-8 mb-4">
-                                <label for="validationCustom01"> تاریخ تولد  </label>
-                                <input name="BirthDate" type="text" class="form-control" placeholder="  تاریخ تولد   " value="@Model.BirthDate">
-                                <div class="invalid-feedback">
-                                    وارد کردن این فیلد الزامیست
-                                </div>
-                            </div>
+                                @Html.EditorFor(x => x.Family)
 
+                            </div>
+                            <div class="col-md-8 mb-4">
+                                <input name="BirthDate" type="text" id="birthDate" class="form-control text-right" value="@Model.BirthDate" required >
+                            </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="col-md-8 mb-4">
                                 <label for="validationCustom01"> جنسیت  </label>
-                                <select name="Gender" class="custom-select" required="">
+                                <select name="Gender" class="custom-select select2" required="">
                                     <option value="" selected="@Model.Gender">لطفا انتخاب کنید</option>
                                     <option value="1">مرد</option>
                                     <option value="0">زن</option>
@@ -53,11 +42,7 @@
                                 </div>
                             </div>
                             <div class="col-md-8 mb-4">
-                                <label for="validationCustom01">نام پدر</label>
-                                <input name="Father" type="text" class="form-control" placeholder="نام پدر" value="@Model.Father" required="">
-                                <div class="invalid-feedback">
-                                    وارد کردن این فیلد الزامیست
-                                </div>
+                                @Html.EditorFor(x => x.Father)
                             </div>
                         </div>
                     </div>
@@ -71,6 +56,12 @@
 </div>
 
 <script>
+
+    $(function () {
+
+        $('#birthDate').mask('0000/00/00');
+
+    })
 
     $('#profileForm').ajaxForm({
 
