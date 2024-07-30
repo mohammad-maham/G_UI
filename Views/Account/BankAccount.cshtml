@@ -1,0 +1,106 @@
+﻿@model  G_APIs.Models.BankAccount
+
+<link href="~/assets/css/elements/avatar.css" rel="stylesheet" type="text/css">
+
+
+<div class="row layout-top-spacing">
+    <div id="custom_styles" class="col-lg-12 layout-spacing col-md-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>  تکمیل اطلاعات بانکی</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="widget-content widget-content-area">
+                        <p class="h6 font-weight-bold">لطفا بانک مورد نظر را انتخاب کنید.</p>
+                        <div class="avatar avatar-xl mt-1 mr-2">
+                            <img alt="avatar" src="~/assets/img/bank/melat.png" class="rounded" data-value="1" title="ملی">
+                        </div>
+                        <div class="avatar avatar-xl mt-1 mr-2">
+                            <img alt="avatar" src="~/assets/img//bank/saderat.png" class="rounded" data-value="2" title="ملت">
+                        </div>
+                        <div class="avatar avatar-xl mt-1 mr-2">
+                            <img alt="avatar" src="~/assets/img//bank/melli.png" class="rounded" data-value="3" title="صادرات">
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <form form class="bankForm" id="bankForm" action="javascript:void(0);" novalidate>
+
+                        <input id="bankname" name="BankName" type="hidden" />
+
+                        @* <div class="">
+                            <label for="validationCustom01">شماره حساب</label>
+                            <input name="AccountNumber" type="number" class="form-control text-right" value="@Model.Hesab" required="">
+                            <div class="invalid-feedback">
+                                وارد کردن این فیلد الزامیست
+                            </div>
+                        </div> *@
+
+                        @Html.EditorFor(m => m.Hesab)
+
+                        <div class=" mt-2">
+                            <label for="validationCustom01">شبا  </label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">IR</div>
+                                </div>
+                                <input name="Shaba" type="number" class="form-control text-right" value="@Model.Shaba" required="">
+                                <div class="invalid-feedback">
+                                    وارد کردن این فیلد الزامیست
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field-wrapper  mt-4">
+                            <button class="btn btn-primary submit-fn col-md-5 float-right" type="submit">  ذخیره      </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () { 
+        
+        $('.avatar img').click(function () { 
+            $('.avatar img').removeClass('active');
+            $(this).addClass('active');
+        })
+
+    })
+
+    $('#bankForm').ajaxForm({
+
+        validation: true,
+        url: '/Fund/AddBankAccount',
+        jwt: false,
+        blockui: true,
+        mixin: true,
+
+        success: function (response) {
+           
+            console.log(response)
+            if (response.result) {
+
+                localStorage.setItem('auth', response.data);
+                window.location.href = '/Home';
+
+            }
+        },
+        // error: function (xhr, status, error) {
+        //     $('#loginResult').html(response.message).show();
+        //     // $('#loginResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').removeClass('hide');
+        //     console.error('Form submission failed:', error);
+        // }
+    });
+</script>

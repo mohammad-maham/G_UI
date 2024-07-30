@@ -1,0 +1,177 @@
+﻿@model G_APIs.Models.User
+@{
+    Layout = "_LayoutSign";
+}
+
+<div class="form-content">
+
+    <h1 class="register-header">   ثبت نام <a href="#"><span class="brand-name">کاربر جدید</span></a></h1>
+
+    <form id="registerForm" class="registerForm clearfix" action="javascript:void(0);" novalidate>
+
+        <div class="form">
+
+            <div id="username-field" class="field-wrapper input">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input name="NationalCode" type="text" class="form-control basic" maxlength="10" placeholder="  کد ملی" required>
+
+                <div class="invalid-feedback">
+                    وارد کردن این گزینه الزامیست
+                </div>
+            </div>
+            <div id="password-field" class="field-wrapper input mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input name="Mobile" type="text" class="form-control " maxlength="10" placeholder="  موبایل   را بدون صفر اولیه وارد کنید" required>
+
+                <div class="invalid-feedback">
+                    وارد کردن این گزینه الزامیست
+                </div>
+            </div>
+
+            <div id="captcha-field" class="field-wrapper input mb-2 clearfix">
+
+                <img id="img-captcha" src="@Model.Captcha" />
+                <input id="captcha" name="captcha" type="text" class="form-control" placeholder="متن تصویر" autocomplete="off" required>
+
+                <div class="invalid-feedback">
+                    لطفا متن تصویر را وارد نمایید
+                </div>
+
+            </div>
+
+            <div class="registerResult alert alert-danger hide" role="alert">
+                <p></p>
+            </div>
+
+        </div>
+        <div class="field-wrapper clearfix">
+            <button class="btn btn-primary submit-fn col-md-5 float-right" type="submit">  ثبت نام</button>
+            <a class="btn btn-success   col-md-5 " asp-controller="Account" asp-action="Login"> ورود   </a>
+        </div>
+
+    </form>
+
+    <form id="setPasswordForm" class="setPasswordForm hide clearfix" action="javascript:void(0);" novalidate>
+
+        <input id="nationalCode" name="NationalCode" type="hidden" value="">
+        <input id="mobile" name="Mobile" type="hidden" value="">
+
+        <div class="form">
+            <div id="confirm-field" class="field-wrapper input mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input id="confirmCode" name="OTP" type="text" class="form-control" placeholder="کد تایید" autocomplete="off" required readonly onmouseover="this.removeAttribute('readonly');">
+                <div class="invalid-feedback">
+                    وارد کردن این گزینه الزامیست
+                </div>
+            </div>
+            <div id="password-field" class="field-wrapper input mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input id="password" name="Password" type="password" class="form-control" placeholder="رمز عبور خود را وارد کنید" autocomplete="off" required readonly onmouseover="this.removeAttribute('readonly');">
+                <div class="invalid-feedback">
+                    لطفا   رمز عبور را وارد نمایید
+                </div>
+            </div>
+            <div class="registerResult alert alert-danger hide" role="alert">
+                <p></p>
+            </div>
+        </div>
+
+        <div class="field-wrapper clearfix">
+            <button class="btn btn-primary submit-fn col-md-5 float-right" type="submit">  ثبت نام    </button>
+        </div>
+    </form>
+    <div id="registed" class="hide">
+        <h6 class="h6 font-weight-bold">ثبت نام  با موفقیت انجام شد <br />لطفا به صفحه ورود مراجعه نمایید. </h6>
+        <a class="btn btn-success   col-md-5 btn-block" asp-controller="Account" asp-action="Login"> ورود   </a>
+    </div>
+    @* <p class="terms-conditions">©  تمامی حقوق محفوظ است.</p> *@
+
+</div>
+
+<script>
+
+    function GetCaptcha() {
+
+        $.ajax({
+            url: '/Account/GetCaptcha',
+            method: "GET",
+            success: function (res) {
+
+                if (res != undefined || res != null)
+                    $('#img-captcha').attr('src', res)
+            },
+            error: function (xhr, status, error) {
+                $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();
+            }
+        });
+    }
+
+    $(function () {
+
+        setInterval(GetCaptcha, 60000);
+
+    })
+
+    $('input.basic').maxlength({
+        placement: "left"
+    });
+
+    $('#registerForm').ajaxForm({
+
+        validation: true,
+        url: '/Account/SignUp',
+        jwt: false,
+        blockui: true,
+        mixin: true,
+        success: function (response) {
+
+            if (response.result) {
+
+                var obj = $.parseJSON(response.data);
+
+                $('#mobile').val(obj.Mobile);
+                $('#nationalCode').val(obj.NationalCode);
+
+                $('#confirmCode,#password').val('');
+                $('#setPasswordForm').show();
+
+                $('#registerForm,.registerResult').hide();
+
+            }
+        },
+        error: function (xhr, status, error) {
+            $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();
+            console.error('Form submission failed:', error);
+        }
+    });
+
+    $('#setPasswordForm').ajaxForm({
+
+        validation: true,
+        url: '/Account/SetPassword',
+        jwt: false,
+        blockui: true,
+        mixin: true,
+
+        success: function (response) {
+
+            if (response.result) {
+
+                //    setTimeout(() => {
+                //        window.location.href = '/Account/Login';
+                // }, 3000)
+
+                $('#setPasswordForm,.register-header').hide();
+                $('#registed').show();
+
+            }
+
+        },
+        error: function (xhr, status, error) {
+            $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();
+            console.error('Form submission failed:', error);
+        }
+    });
+
+</script>
+

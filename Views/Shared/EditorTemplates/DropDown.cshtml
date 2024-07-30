@@ -1,0 +1,33 @@
+﻿@using UFO.Infrastructure.Helpers.UI.WebApplication.Mvc.Util.DropDown;
+    @model dynamic
+    @{
+        LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+        string requiredMsg = "";
+        IEnumerable<ModelClientValidationRule> clientRules = ModelValidatorProviders.Providers.GetValidators(ViewData.ModelMetadata, ViewContext).SelectMany(v => v.GetClientValidationRules());
+        foreach (ModelClientValidationRule rule in clientRules)
+        {
+            if (rule.ValidationType == "required")
+            {
+                requiredMsg += rule.ErrorMessage + " ";
+            }
+        }
+
+
+    //if (!string.IsNullOrEmpty(requiredMsg))
+    //{
+    //    InputString = InputString.Replace("<input", "<input required=\"\" aria-required=\"true\" data-msg-required=\"" + requiredMsg + "\" ");
+    //}
+    }
+    @section Label{
+        @Html.LabelFor(m => m)
+    }
+
+    @section Input{
+        @{
+
+            string id = Html.NameFor(m => m).ToString().Replace("_", ".");
+            var dropdown = Util.DropDownListFor(id, Model as object);
+            dropdown.Required(!string.IsNullOrEmpty(requiredMsg), requiredMsg);
+        }
+        @dropdown
+    }

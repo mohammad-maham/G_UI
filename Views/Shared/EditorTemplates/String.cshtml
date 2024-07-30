@@ -1,0 +1,5 @@
+﻿@model string
+<div class="form-group">
+    <label for="@ViewData.ModelMetadata.PropertyName">@ViewData.ModelMetadata.DisplayName</label>
+    <input type="text" class="form-control custom-input" id="@ViewData.ModelMetadata.PropertyName" name="@ViewData.ModelMetadata.PropertyName" value="@Model" />
+</div>

@@ -1,0 +1,13 @@
+﻿@model string
+@{
+    Layout = null;
+}
+@section Label{
+    @Html.LabelFor(m => m)
+}
+
+@section Input{
+    @Html.Raw(string.Format("<textarea type=\"{0}\" id=\"@{{id}}\" name=\"@{{name}}\" class=\"form-control ckeditortextarea\" >{1}</textarea>"
+        , "text"
+        , Html.ValueFor(m => m)))
+}

@@ -1,0 +1,54 @@
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./../../fonts/MaterialIcons-Regular.eot);
+    src: local('Material Icons'), local('MaterialIcons-Regular'), 
+        url(./../../fonts/MaterialIcons-Regular.woff2) format('woff2'),
+        url(./../../fonts/MaterialIcons-Regular.woff) format('woff'), 
+        url(./../../fonts/MaterialIcons-Regular.ttf) format('truetype');
+} 
+ 
+ 
+@font-face {
+    font-family: YekanBakhFat;
+    src: url('./../../fonts/YekanBakh/YekanBakhFat.ttf') format("truetype")
+}
+
+ 
+
+@font-face {
+    font-family: YekanBakhHeavy;
+    src: url('./../../fonts/YekanBakh/YekanBakhHeavy.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakhLight;
+    src: url('./../../fonts/YekanBakh/YekanBakhLight.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakhMedium;
+    src: url('./../../fonts/YekanBakh/YekanBakhMedium.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakhRegular;
+    src: url('./../../fonts/YekanBakh/YekanBakhRegular.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakhThin;
+    src: url('./../../fonts/YekanBakh/YekanBakhThin.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: PeydaMedium;
+    src: url('./../../fonts/peyda-medium.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: PeydaRegular;
+    src: url('./../../fonts/peyda-bold.ttf') format("truetype")
+}

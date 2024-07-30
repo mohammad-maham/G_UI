@@ -1,0 +1,54 @@
+﻿@model dynamic
+@{
+    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+    ViewBag.Editor = "block";
+
+}
+@section Label{
+    @Html.LabelFor(m => m)
+}
+@section Input{
+    @{
+        string id = Html.IdFor(m => m).ToString().Replace("_", ".");
+
+        var name = id.Split('.').Last() + "Items";
+
+        var items = new List<PerfectSelectListItem>();
+
+        if (ViewData.ContainsKey(name) && ViewData[name] != null && (ViewData[name] is PerfectSelectList || ViewData[name] is SelectList))
+        {
+            if (ViewData[name] as PerfectSelectList != null)
+            {
+                items = (ViewData[name] as PerfectSelectList).ToList();
+            }
+            else if (ViewData[name] as SelectList != null)
+            {
+                items = (ViewData[name] as SelectList).Select(i => new PerfectSelectListItem()
+                {
+                    Disabled = false,
+                    Selected = i.Selected,
+                    Text = i.Text,
+                    Value = i.Value
+                }).ToList();
+            }
+            else
+            {
+                items = (ViewData[name] as DropDownList).Select(i => new PerfectSelectListItem()
+                {
+                    Disabled = false,
+                    Selected = i.Selected,
+                    Text = i.Text,
+                    Value = i.Value
+                }).ToList(); 
+            }
+            foreach (var item in items)
+            {
+                var checkeditem = item.Value.Trim() == Html.ValueFor(m => m).ToString().Trim();
+                <div style="margin:5px 0">
+                    <input class="red" type="radio" @(checkeditem ? "checked='checked'" : "") @(item.Disabled ? "disabled='disabled'" : "") value="@item.Value" name="@id">
+                    @item.Text
+                </div>
+            }
+        }
+    }
+}

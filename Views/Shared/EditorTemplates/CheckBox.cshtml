@@ -1,0 +1,14 @@
+﻿@model bool?
+@{
+    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+    var mm = Model;
+}
+@section Label{
+    @Html.LabelFor(m => m)
+}
+
+@section Input{
+    <label class="checkbox-inline">
+        <input type="checkbox" value="true" name="@("@{name}")"  @(Model==true ? "checked='checked'" : "")>
+    </label>
+}

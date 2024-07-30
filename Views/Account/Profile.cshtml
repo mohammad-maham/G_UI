@@ -1,0 +1,97 @@
+﻿@model  G_APIs.Models.User
+
+
+<div class="row layout-top-spacing">
+    <div id="custom_styles" class="col-lg-12 layout-spacing col-md-8">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>پروفابل من</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+
+                <form class="profileForm" id="profileForm" action="javascript:void(0);" novalidate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-8 mb-4">
+                                <label for="validationCustom01">نام</label>
+                                <input name="Name" type="text" class="form-control" placeholder="نام" value="@Model.Name" required="">
+                                <div class="invalid-feedback">
+                                    وارد کردن این فیلد الزامیست
+                                </div>
+                            </div>
+                            <div class="col-md-8 mb-4">
+                                <label for="validationCustom01">نام خانوادگی</label>
+                                <input name="Family" type="text" class="form-control" placeholder="نام خانوادگی" value="@Model.Family" required="">
+                                <div class="invalid-feedback">
+                                    وارد کردن این فیلد الزامیست
+                                </div>
+                            </div>
+                            <div class="col-md-8 mb-4">
+                                <label for="validationCustom01"> تاریخ تولد  </label>
+                                <input name="BirthDate" type="text" class="form-control" placeholder="  تاریخ تولد   " value="@Model.BirthDate">
+                                <div class="invalid-feedback">
+                                    وارد کردن این فیلد الزامیست
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="col-md-8 mb-4">
+                                <label for="validationCustom01"> جنسیت  </label>
+                                <select name="Gender" class="custom-select" required="">
+                                    <option value="" selected="@Model.Gender">لطفا انتخاب کنید</option>
+                                    <option value="1">مرد</option>
+                                    <option value="0">زن</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    وارد کردن این فیلد الزامیست
+                                </div>
+                            </div>
+                            <div class="col-md-8 mb-4">
+                                <label for="validationCustom01">نام پدر</label>
+                                <input name="Father" type="text" class="form-control" placeholder="نام پدر" value="@Model.Father" required="">
+                                <div class="invalid-feedback">
+                                    وارد کردن این فیلد الزامیست
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-wrapper text-right">
+                        <button class="btn btn-primary mt-3" type="submit">ذخیره  </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('#profileForm').ajaxForm({
+
+        validation: true,
+        url: '/Account/CompleteProfile',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+
+        success: function (response) {
+
+            if (response.result) {
+
+
+            }
+        },
+        // error: function (xhr, status, error) {
+        //     $('#loginResult').html(response.message).show();
+        //     // $('#loginResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').removeClass('hide');
+        //     console.error('Form submission failed:', error);
+        // }
+    });
+
+</script>

@@ -1,0 +1,15 @@
+﻿@model dynamic
+@{
+    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+
+}
+@section Label{
+    @Html.LabelFor(m => m)
+}
+
+@section Input{
+@{
+    string id = Html.NameFor(m => m).ToString().Replace("_", ".");
+}
+    @Util.DropDownListFor(id, Html.ValueFor(m => m)).IsMultiple()
+}

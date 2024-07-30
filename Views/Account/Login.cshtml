@@ -1,0 +1,88 @@
+﻿@model G_APIs.Models.User
+@{
+    Layout = "~/Views/Shared/_LayoutSign.cshtml";
+}
+
+<div class="form-content">
+
+    <h1 class="">صفحه ورود به <a href="#"><span class="brand-name">داشبورد</span></a></h1>
+    @* <p class="signup-link">      تازه واردید؟ <a asp-action="Signup" asp-controller="Account"> ساخت اکانت جدید</a></p> *@
+
+    <form id="loginForm" class="loginForm clearfix" action="javascript:void(0);" novalidate>
+
+        <div class="form">
+
+            <div id="username-field" class="field-wrapper input">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input id="username" name="username" type="text" class="form-control" placeholder="نام کاربری/ کد ملی" required>
+
+                <div class="invalid-feedback">
+                    لطفا نام کاربری را وارد نمایید
+                </div>
+            </div>
+            <div id="password-field" class="field-wrapper input mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input id="password" name="password" type="password" class="form-control" placeholder="رمز عبور" autocomplete="off" required>
+                <div class="invalid-feedback">
+                    لطفا   رمز عبور را وارد نمایید
+                </div>
+            </div>
+
+            <div id="captcha-field" class="field-wrapper input mb-2 clearfix">
+
+                <img src="~/Content/Captcha/@(Model.Captcha)" />
+                <input id="captcha" name="captcha" type="text" class="form-control" placeholder="متن تصویر" autocomplete="off" required>
+
+                <div class="invalid-feedback">
+                    لطفا متن تصویر را وارد نمایید
+                </div>
+
+            </div>
+            <div id="loginResult" class="alert alert-danger hide" role="alert">
+                <p></p>
+            </div>
+
+        </div>
+        <div class="field-wrapper clearfix mb-2">
+            <a href="auth_pass_recovery.html" class="forgot-pass-link float-left mt-0">  فراموشی رمز عبور؟</a>
+        </div>
+
+        <div class="field-wrapper clearfix">
+            <button class="btn btn-primary submit-fn col-md-5 float-right" type="submit">  ورود</button>
+            <a class="btn btn-success   col-md-5 " asp-controller="Account" asp-action="Signup"> عضویت   </a>
+        </div>
+    </form>
+
+    @* <p class="terms-conditions">©  تمامی حقوق محفوظ است.</p> *@
+
+</div>
+
+<script>
+
+    $('#loginForm').ajaxForm({
+
+        validation: true,
+        url: '/Account/Login',
+        jwt: false,
+        blockui: true,
+        mixin: true,
+
+        success: function (response) {
+            debugger
+            console.log(response)
+            if (response.result) {
+
+                //document.cookie = "auth=" + response.data + "; path=/";
+                window.location.href = '/Home';
+
+            }
+        },
+        // error: function (xhr, status, error) {
+        //     $('#loginResult').html(response.message).show();
+        //     // $('#loginResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').removeClass('hide');
+        //     console.error('Form submission failed:', error);
+        // }
+    });
+
+</script>
+

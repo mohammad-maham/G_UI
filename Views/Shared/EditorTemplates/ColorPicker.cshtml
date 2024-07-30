@@ -1,0 +1,37 @@
+﻿@model string
+@{
+    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+}
+
+@section Label{
+    @Html.LabelFor(m => m)
+}
+
+@section Input{
+
+    @Html.Raw("<div id=\"@{id}\" class=\"input-group colorpicker-component\"><input type=\"text\"  name=\"@{name}\" value=\""+ Html.ValueFor(m => m) + "\" class=\"form-control\" />" +
+                             "<span class=\"input-group-addon\" style=\"line-height:0!important;\"><i></i></span></div>"+
+                             "<script>$(function() {$('#@{id}').colorpicker({" +
+                             "colorSelectors:" +
+                             "{'#777777': '#777777','#337ab7': '#337ab7','#5cb85c': '#5cb85c', '#5bc0de': '#5bc0de','#f0ad4e': '#f0ad4e','#d9534f': '#d9534f'}});});</script>")
+
+
+}
+@*<div id="cp2" class="input-group colorpicker-component">
+    <input type="text" value="#00AABB" class="form-control" />
+    <span class="input-group-addon" style="line-height:0!important;"><i></i></span>
+</div>
+<script>
+    $(function() {
+        $('#cp2').colorpicker({
+            colorSelectors: {
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        });
+    });
+</script>*@

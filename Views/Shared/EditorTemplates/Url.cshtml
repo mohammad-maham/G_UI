@@ -1,0 +1,14 @@
+﻿@model string
+@{
+    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+}
+
+@section Label{
+    @Html.LabelFor(m => m)
+}
+
+@section Input{
+    @Html.Raw(string.Format("<input type=\"{0}\" id=\"@{{id}}\" name=\"@{{name}}\" value=\"{1}\" class=\"form-control\" />"
+        , "url"
+        , Html.ValueFor(m => m)))
+}

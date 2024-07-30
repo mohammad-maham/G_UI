@@ -1,0 +1,13 @@
+﻿@model int?
+@{
+    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
+}
+@section Label{
+    @Html.LabelFor(m => m)
+}
+
+@section Input{
+    <label class="checkbox-inline">
+        <input type="checkbox" value="" name="@("@{name}")" class="square-red" @(Model.GetValueOrDefault() == 1 ? "checked='checked'" : "")>
+    </label>
+}
