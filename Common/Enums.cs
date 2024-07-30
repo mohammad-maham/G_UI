@@ -14,6 +14,7 @@ public class Enums
         IPG,
         Store,
         Wallet,
+        Gateway
     }
 
     public enum TransactionType

@@ -1,0 +1,99 @@
+﻿@using G_APIs.Models
+@model BuyVM
+@{
+    string price = Model.CurrentCalculatedPrice.ToString("N0");
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" />
+<link rel="stylesheet" type="text/css" href="https://select2.github.io/select2-bootstrap-theme/css/select2-bootstrap.css">
+
+<style>
+    .input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
+        border-top-right-radius: 6px !important;
+        border-bottom-right-radius: 6px !important;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 45px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 45px !important;
+    }
+</style>
+
+<div class="row layout-top-spacing">
+    <div id="custom_styles" class="col-lg-12 layout-spacing col-md-12">
+        <h3><b>باکس خرید</b></h3>
+        <div class="statbox widget box box-shadow">
+            <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="CurrentCalculatedPrice">قیمت آنلاین</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="CurrentCalculatedPrice-addon">ريال</span>
+                            </div>
+                            <input name="CurrentCalculatedPrice" type="text" class="form-control text-right" value="@price" aria-describedby="CurrentCalculatedPrice-addon" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Weight">وزن درخواستی</label>
+                        <div class="mb-3">
+                            <input name="Weight" type="number" class="form-control text-right" value="@Model.Weight" aria-describedby="Weight-addon" required>
+                            <div class="invalid-feedback">
+                                وارد کردن این گزینه الزامیست
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Carat">عیار</label>
+                        <div class="mb-3">
+                            @Html.DropDownList("Carat", Model.Carat)
+                        </div>
+                    </div>
+                </div>
+                <div class="field-wrapper mt-3">
+                    <button class="btn btn-outline-primary submit-fn col-md-2 float-right" type="submit">
+                        <i class="far fa-user text-warning"></i>
+                        محاسبه و خرید
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+
+<script>
+    $(function () {
+        $("#Carat").select2({
+            placeholder: "لطفا انتخاب کنید ...",
+            theme: "bootstrap",
+            allowClear: true,
+            width: "100%",
+            dir: "rtl",
+            //dropdownAutoWidth: true,
+        });
+        var interval = 500;
+        function doAjax() {
+            $.ajax({
+                type: 'POST',
+                url: '/Store/GetOnlinePrice',
+                success: function (data) {
+                    $("input[name='@nameof(Model.CurrentCalculatedPrice)']").val(data);
+                },
+                complete: function (data) {
+                    setTimeout(doAjax, interval);
+                }
+            });
+        }
+        setTimeout(doAjax, interval);
+    });
+</script>

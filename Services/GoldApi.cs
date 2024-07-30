@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using G_APIs.Models;
+﻿using G_APIs.Models;
+using Newtonsoft.Json;
 using RestSharp;
-using static G_APIs.Common.Enums;
-using Newtonsoft.Json.Linq;
-using System.Text.Json.Serialization;
-using System.Text.Json.Nodes;
+using System;
 using System.Configuration;
 using System.Threading.Tasks;
-using System;
+using static G_APIs.Common.Enums;
 
 namespace G_APIs.Services
 {
@@ -39,21 +36,34 @@ namespace G_APIs.Services
         public GoldApi(GoldHost host, string action, object data, Method method = Method.Post, string authorization = null)
         {
             if (host == GoldHost.Accounting)
-                this.ApiPath = ConfigurationManager.AppSettings["Accounting"];
+            {
+                ApiPath = ConfigurationManager.AppSettings["Accounting"];
+            }
 
             if (host == GoldHost.IPG)
-                this.ApiPath = ConfigurationManager.AppSettings["GoldApi:IPG"];
+            {
+                ApiPath = ConfigurationManager.AppSettings["GoldApi:IPG"];
+            }
 
             if (host == GoldHost.Store)
-                this.ApiPath = ConfigurationManager.AppSettings["GoldApi:Store"];
+            {
+                ApiPath = ConfigurationManager.AppSettings["GoldApi:Store"];
+            }
 
             if (host == GoldHost.Wallet)
-                this.ApiPath = ConfigurationManager.AppSettings["GoldApi:Wallet"];
+            {
+                ApiPath = ConfigurationManager.AppSettings["GoldApi:Wallet"];
+            }
 
-            this.Action = action;
-            this.Authorization = authorization;
-            this.Data = data;
-            this._Method = method;
+            if (host == GoldHost.Gateway)
+            {
+                ApiPath = ConfigurationManager.AppSettings["Gateway"];
+            }
+
+            Action = action;
+            Authorization = authorization;
+            Data = data;
+            _Method = method;
         }
 
         public async Task<ApiResult> PostAsync()
@@ -61,15 +71,17 @@ namespace G_APIs.Services
             try
             {
                 //var json = JsonConvert.SerializeObject(this.Data);
-                var client = new RestClient(this.ApiPath + this.Action);
-                var request = new RestRequest
+                RestClient client = new RestClient(ApiPath + Action);
+                RestRequest request = new RestRequest
                 {
-                    Method = this._Method,
+                    Method = _Method,
                     Timeout = TimeSpan.FromSeconds(20),
                 };
 
-                if (this.Authorization != null)
-                    request.AddHeader("Authorization", "Bearer " + this.Authorization);
+                if (Authorization != null)
+                {
+                    request.AddHeader("Authorization", "Bearer " + Authorization);
+                }
 
                 request.AddHeader("content-type", "application/json");
                 request.AddHeader("cache-control", "no-cache");
@@ -77,13 +89,15 @@ namespace G_APIs.Services
                 //request.AddParameter("username", "1382532326");
                 //request.AddParameter("password", "admin");
 
-                request.AddJsonBody(this.Data);
+                request.AddJsonBody(Data);
 
-                var response = await client.ExecuteAsync(request);
-                var res = JsonConvert.DeserializeObject<ApiResult>(response.Content);
+                RestResponse response = await client.ExecuteAsync(request);
+                ApiResult res = JsonConvert.DeserializeObject<ApiResult>(response.Content);
 
                 if (res != null && res.Message != null && res.Message.ToLower().Contains("unauthorize"))
+                {
                     res.Message = "ورود غیر مجاز لطفا دوباره وارد شوید.";
+                }
 
                 return res;
 
