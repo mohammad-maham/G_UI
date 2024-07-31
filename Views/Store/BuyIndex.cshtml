@@ -49,6 +49,7 @@
 
 <script>
     $(function () {
+        var inpPrice=$("input[name='@nameof(Model.CurrentCalculatedPrice)']");
         var interval = 1000;
         var dowhile;
         function getOnlinePrice() {
@@ -56,8 +57,15 @@
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 success: function (data) {
-                    $("input[name='@nameof(Model.CurrentCalculatedPrice)']").val(data);
-                    setTimeout(doAjax, interval);
+                    debugger;
+                    if ($.isNumeric(data)) {
+                        var formattedData = Number(data).toLocaleString('en');
+                        inpPrice.val(formattedData);
+                        inpPrice.css("background-color", "#25b61738");
+                        setTimeout(getOnlinePrice, interval);
+                    } else {
+                        window.location = "/Account/Login";
+                    }
                 },
                 error: function (data) {
                     clearTimeout(dowhile);
@@ -65,7 +73,7 @@
             });
         }
         dowhile = setTimeout(getOnlinePrice, interval);
-    });
+    })
     $('#frmBuy').ajaxForm({
         validation: true,
         url: '/Store/SubmitBuy',

@@ -54,12 +54,12 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<string> GetOnlinePrice()
+        public async Task<double> GetOnlinePrice()
         {
             try
             {
                 double price = await _store.GetOnlinePrice();
-                return price.ToString("N0");
+                return price;
             }
             catch (Exception ex)
             {

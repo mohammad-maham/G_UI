@@ -1,9 +1,6 @@
-﻿
-(function ($) {
+﻿(function ($) {
     $.fn.ajaxForm = function (options) {
-
         var settings = $.extend({
-
             url: '',
             method: 'POST',
             validation: true,
@@ -11,7 +8,6 @@
             miniloader: false,
             blockui: false,
             mixin: false,
-
             additionalData: {},
             success: function (response) { },
             error: function (xhr, status, error) { }
@@ -19,17 +15,14 @@
         }, options);
 
         this.each(function () {
-
             var form = $(this);
             form.on('submit', function (e) {
-
                 if (settings.validation && this.checkValidity() === false) {
                     e.preventDefault();
                     e.stopPropagation();
                     this.classList.add('was-validated');
                 }
                 else {
-
                     var _data = form.serialize()
 
                     if (!settings.miniloader && !settings.blockui)
@@ -46,32 +39,32 @@
                         method: settings.method || form.attr('method'),
                         data: _data,
                         beforeSend: function (xhr) {
-          
                             var auth = GetCookie('gldauth');
-                            if (auth !=null)  
-                                xhr.setRequestHeader('Authorization',  auth);
+                            if (auth != null)
+                                xhr.setRequestHeader('Authorization', auth);
                         },
-
                         success: (response) => {
-
                             debugger
-                            if (settings.mixin)
-                                if (response.message != undefined && response.message != null && response.message != "")
-                                    if (response.result)
+                            if (settings.mixin) {
+                                if (response.message != undefined && response.message != null && response.message != "") {
+                                    if (response.result) {
                                         toast({
                                             type: 'success',
                                             title: response.message,
                                         })
-                                    else
+                                    }
+                                    else {
                                         toast({
                                             type: 'error',
                                             title: response.message,
                                         })
-
-
+                                    }
+                                } else {
+                                    GetRedirectToUrl("/Account/Login");
+                                }
+                            }
                             settings.success(response);
                         },
-
                         error: (xhr, status, error) => {
 
                             if (settings.mixin)
@@ -86,25 +79,18 @@
                             settings.error(xhr, status, error);
                         },
                         complete: () => {
-               
                             HideLoader();
-
                             if (settings.miniloader)
                                 HideMiniLoader(this);
-
                             if (settings.blockui)
                                 UnBlock(this);
                         }
                     });
                 }
-
             });
-
         });
-
         return this;
     };
-
 })(jQuery);
 
 const toast = swal.mixin({
@@ -130,32 +116,21 @@ let HideLoader = () => {
 }
 
 let ShowMiniLoader = (form) => {
-
     let submit = $(form).find('[type = "submit"]');
     let text = $(submit).html();
-
     $(submit).data('text', text);
-
     let miniloader = '<div class="spinner-border text-white mr-2 align-self-center loader-sm "></div>لطفا صبر کنید . . .'
-
     $(submit).attr('disabled', true).html(miniloader);
-
-
 }
 
 let HideMiniLoader = (form) => {
-
     let submit = $(form).find('[type = "submit"]');
     let text = $(submit).data('text');
-
     $(submit).attr('disabled', false).html(text);
-
 }
 
 let BlockUi = (form) => {
-
     var block = $(form).parent();
-
     $(block).block({
 
         ignoreIfBlocked: true,
@@ -184,4 +159,8 @@ function GetCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function GetRedirectToUrl(url) {
+    window.location = url;
 }
