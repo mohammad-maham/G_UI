@@ -14,5 +14,12 @@ namespace G_APIs.BussinesLogic
             string result = response.Data;
             return !string.IsNullOrEmpty(result) ? double.Parse(result) : 0;
         }
+
+        public async Task<long> PerformBuy(BuyPerformVM buyVM, string token)
+        {
+            ApiResult response = await new GoldApi(GoldHost.Store, "/api/Shopping/Buy", buyVM,authorization:token).PostAsync();
+            string result = response.Data;
+            return !string.IsNullOrEmpty(result) ? long.Parse(result) : 0;
+        }
     }
 }

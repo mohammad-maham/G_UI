@@ -47,7 +47,7 @@ namespace G_APIs.Services
 
             if (host == GoldHost.Store)
             {
-                ApiPath = ConfigurationManager.AppSettings["GoldApi:Store"];
+                ApiPath = ConfigurationManager.AppSettings["Store"];
             }
 
             if (host == GoldHost.Wallet)

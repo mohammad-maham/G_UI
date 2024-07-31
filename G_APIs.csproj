@@ -1285,9 +1285,9 @@
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Shared\_LayoutSign.cshtml" />
     <Content Include="Views\Store\BuyIndex.cshtml" />
-    <Content Include="Views\Store\Sell.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\double.cshtml" />
     <Content Include="Views\Store\SellIndex.cshtml" />
+    <Content Include="Views\Store\SubmitBuy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

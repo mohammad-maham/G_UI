@@ -24,4 +24,17 @@ namespace G_APIs.Models
         [Display(Name = "عیار")]
         public List<SelectListItem> Carat { get; set; }
     }
+
+    public class BuyPerformVM
+    {
+        public int Weight { get; set; }
+        public long UserId { get; set; }
+        public long WalleId { get; set; }
+        public long? SourceAddress { get; set; } = 1; // Currency
+        public long? DestinationAddress { get; set; } = 2; // Gold
+        public double SourceAmount { get; set; }
+        public double DestinationAmount { get; set; }
+        public double CurrentCalculatedPrice { get; set; }
+        public int Carat { get; set; } = 750;
+    }
 }

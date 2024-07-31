@@ -3,7 +3,7 @@
 @{
     string price = Model.CurrentCalculatedPrice.ToString("N0");
 }
- 
+
 <div class="row layout-top-spacing">
     <div id="custom_styles" class="col-lg-12 layout-spacing col-md-12">
         <h3><b>باکس خرید</b></h3>
@@ -28,12 +28,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="Carat">عیار</label>
-                        <div class="mb-3">
-                            @Html.DropDownList("Carat", Model.Carat)
-                        </div>
-                    </div>
+                    @*<div class="col-md-4">
+                            <label for="Carat">عیار</label>
+                            <div class="mb-3">
+                                @Html.DropDownList("Carat", Model.Carat)
+                            </div>
+                        </div>*@
                 </div>
                 <div class="field-wrapper mt-3">
                     <button class="btn btn-outline-primary submit-fn col-md-2 float-right" type="submit">
@@ -49,8 +49,7 @@
 
 <script>
     $(function () {
-     
-        var interval = 5000;
+        var interval = 500;
         function doAjax() {
             $.ajax({
                 type: 'POST',
@@ -64,5 +63,15 @@
             });
         }
         setTimeout(doAjax, interval);
+    });
+    $('#frmBuy').ajaxForm({
+        validation: true,
+        url: '/Store/SubmitBuy',
+        jwt: false,
+        blockui: true,
+        mixin: true,
+        success: function (response) {
+            console.log(response)
+        }
     });
 </script>
