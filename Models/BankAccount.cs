@@ -23,5 +23,6 @@ namespace G_APIs.Models
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string CardNumber { get; set; }
 
+        public bool ActiveCard { get; set; }
     }
 }

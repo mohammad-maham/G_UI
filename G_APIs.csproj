@@ -224,6 +224,7 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="BussinesLogic\Store.cs" />
     <Compile Include="Common\Captcha.cs" />
+    <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Common\HtmlAttributesExtensions.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\DataTableExtention.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Dashboard.cs" />
+    <Compile Include="Models\HtmlAttributes.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\OtpInfo.cs" />
@@ -294,6 +296,7 @@
     <Content Include="Content\assets\css\elements\popover.css" />
     <Content Include="Content\assets\css\elements\search.css" />
     <Content Include="Content\assets\css\elements\tooltip.css" />
+    <Content Include="Content\assets\css\font-awesome.min.css" />
     <Content Include="Content\assets\css\fonts.css" />
     <Content Include="Content\assets\css\forms\bootstrap-form.css" />
     <Content Include="Content\assets\css\forms\custom-clipboard.css" />

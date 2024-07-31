@@ -3,11 +3,13 @@
 
 
 @{
+    var ahtmlAttributes = ViewData.Values.FirstOrDefault();
     var displayName = ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName;
     var propertyName = ViewData.ModelMetadata.PropertyName;
     var required = ViewData.ModelMetadata.IsRequired;
     var isReadOny = ViewData.ModelMetadata.IsReadOnly ? "readonly" : null;
-
+    var aahtmlAttributes = ViewData["HtmlAttributes"] as IDictionary<string, object> ?? new Dictionary<string, object>();
+    var aaqhtmlAttributes = ViewData.Values.FirstOrDefault() as IDictionary<string, object> ?? new Dictionary<string, object>();
 
     var errorMessage = string.Empty;
     var requiredAttribute = ViewData.ModelMetadata.ContainerType.GetProperty(propertyName)

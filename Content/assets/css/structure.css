@@ -1589,3 +1589,13 @@ footer {
         font-size: 17px;
         text-align:center;
     }
+
+.rtl{
+    text-align:left;
+    direction:ltr;
+}
+
+.pointer{
+    cursor:pointer;
+}
+
