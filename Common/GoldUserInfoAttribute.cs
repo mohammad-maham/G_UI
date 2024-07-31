@@ -1,43 +1,25 @@
-﻿
-using G_APIs.BussinesLogic.Interface;
-using G_APIs.Models;
+﻿using G_APIs.Models;
 using G_APIs.Services;
 using System;
-using System.Configuration;
-using System.Web.Http.Filters;
+using System.Web;
 using System.Web.Mvc;
 using static G_APIs.Common.Enums;
-using IActionFilter = System.Web.Mvc.IActionFilter;
 
-public class GoldUserInfoAttribute : Attribute, IActionFilter
+public class GoldUserInfoAttribute : ActionFilterAttribute
 {
-    private readonly string authEndpoint = ConfigurationManager.AppSettings["Accounting"] + "/api/Attributes/GetAuthorize";
-    private ISession _session;
-    public GoldUserInfoAttribute(ISession session)
-    {
-        _session = session;
-    }
-    public GoldUserInfoAttribute()
-    {
-            
-    }
-
-    public void OnActionExecuted(ActionExecutedContext filterContext)
-    {
-        return;
-    }
-
-    public void OnActionExecuting(ActionExecutingContext filterContext)
+    public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
         try
         {
-            /* if (httpContext.User.Identity.IsAuthenticated)
-                 return true;*/
-            if (filterContext.HttpContext.Request.Cookies["gldauth"] != null)
+            HttpRequestBase request = filterContext.HttpContext.Request;
+            if (request.Cookies["gldauth"] != null)
             {
-                string token = filterContext.HttpContext.Request.Cookies["gldauth"].Value.Replace("Bearer ", "");
-                G_APIs.Models.ApiResult res = new GoldApi(GoldHost.Accounting, "/api/Attributes/GetUserInfo", new { Token = token }).Post();
-                _session.Set("UserInfo", res.Data);
+                string token = request.Cookies["gldauth"].Value.Replace("Bearer ", "");
+                ApiResult res = new GoldApi(GoldHost.Accounting, "/api/Attributes/GetUserInfo", new { Token = token }).Post();
+                if (res != null && !string.IsNullOrEmpty(res.Data))
+                {
+                    request.Headers["UserInfo"] = res.Data;
+                }
             }
         }
         catch (Exception)
@@ -45,6 +27,5 @@ public class GoldUserInfoAttribute : Attribute, IActionFilter
             throw;
         }
     }
-
 }
 

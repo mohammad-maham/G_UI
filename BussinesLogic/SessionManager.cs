@@ -1,7 +1,7 @@
-﻿using System.Web;
-using System.Web.SessionState;
-using G_APIs.BussinesLogic.Interface;
+﻿using G_APIs.BussinesLogic.Interface;
 using Newtonsoft.Json;
+using System.Web;
+using System.Web.SessionState;
 
 namespace G_APIs.BussinesLogic
 {
@@ -32,8 +32,7 @@ namespace G_APIs.BussinesLogic
 
         public T Get<T>(string key)
         {
-            var value = _session[key] as string;
-            return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
+            return !(_session[key] is string value) ? default : JsonConvert.DeserializeObject<T>(value);
         }
     }
 }

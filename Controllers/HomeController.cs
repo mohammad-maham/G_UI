@@ -1,18 +1,32 @@
+using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
+using G_APIs.Services;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using static G_APIs.Common.Enums;
 
 namespace G_APIs.Controllers
 {
     public class HomeController : Controller
     {
-  
+        private readonly ISession _session;
+
+        public HomeController(ISession session)
+        {
+            _session = session;
+        }
+
+        [GoldUserInfo]
         [GoldAuthorize]
         public ActionResult Index(Dashboard model)
         {
+            string userInfo = Request.Headers["UserInfo"];
+            if (!string.IsNullOrEmpty(userInfo))
+                _session.Set("UserInfo", userInfo);
             return (ActionResult)View(model);
+
         }
 
         [GoldAuthorize]
@@ -44,6 +58,6 @@ namespace G_APIs.Controllers
         {
             return View(model);
         }
- 
+
     }
 }

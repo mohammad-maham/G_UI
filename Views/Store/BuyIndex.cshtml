@@ -49,20 +49,22 @@
 
 <script>
     $(function () {
-        var interval = 5000;
-        function doAjax() {
+        var interval = 1000;
+        var dowhile;
+        function getOnlinePrice() {
             $.ajax({
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 success: function (data) {
                     $("input[name='@nameof(Model.CurrentCalculatedPrice)']").val(data);
-                },
-                complete: function (data) {
                     setTimeout(doAjax, interval);
+                },
+                error: function (data) {
+                    clearTimeout(dowhile);
                 }
             });
         }
-        setTimeout(doAjax, interval);
+        dowhile = setTimeout(getOnlinePrice, interval);
     });
     $('#frmBuy').ajaxForm({
         validation: true,

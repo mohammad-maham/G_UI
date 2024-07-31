@@ -1,5 +1,6 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -10,15 +11,14 @@ namespace G_APIs.Controllers
     {
         private readonly IStore _store;
         private readonly ISession _session;
-        // private readonly ILogger<StoreController> _logger;
 
-        public StoreController(IStore store/*, ILogger<StoreController> logger*/, ISession session)
+        public StoreController(IStore store, ISession session)
         {
             _store = store;
             _session = session;
-            /*_logger = logger;*/
         }
 
+        [GoldAuthorize]
         public async Task<ActionResult> BuyIndex()
         {
             BuyVM buyVM = new BuyVM
@@ -34,13 +34,11 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        //[GoldUserInfo]
         public async Task<ActionResult> SubmitBuy(BuyPerformVM buyVM)
         {
-            User user = _session.Get<User>("UserInfo");
+            User userInfo = _session.Get<User>("UserInfo");
             string token = Request.Headers["gldauth"];
-            
-            buyVM.UserId = user.Id.Value;
+            buyVM.UserId = userInfo.Id.Value;
 
             if (token == null || !token.StartsWith("Bearer "))
             {
@@ -55,10 +53,18 @@ namespace G_APIs.Controllers
             return View();
         }
 
+        [GoldAuthorize]
         public async Task<string> GetOnlinePrice()
         {
-            double price = await _store.GetOnlinePrice();
-            return price.ToString("N0");
+            try
+            {
+                double price = await _store.GetOnlinePrice();
+                return price.ToString("N0");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -73,7 +73,6 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
-        [GoldUserInfo]
         public async Task<ActionResult> Login(User model)
         {
             try
