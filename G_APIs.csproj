@@ -313,6 +313,8 @@
     <Content Include="Content\assets\css\pages\privacy\privacy.css" />
     <Content Include="Content\assets\css\plugins.css" />
     <Content Include="Content\assets\css\scrollspyNav.css" />
+    <Content Include="Content\assets\css\select2-bootstrap.css" />
+    <Content Include="Content\assets\css\select2.min.css" />
     <Content Include="Content\assets\css\structure.css" />
     <Content Include="Content\assets\css\tables\table-basic.css" />
     <Content Include="Content\assets\css\users\account-setting.css" />
@@ -386,6 +388,7 @@
     <Content Include="Content\assets\js\pages\faq\faq2.js" />
     <Content Include="Content\assets\js\pages\helpdesk.js" />
     <Content Include="Content\assets\js\scrollspyNav.js" />
+    <Content Include="Content\assets\js\select2.min.js" />
     <Content Include="Content\assets\js\users\account-settings.js" />
     <Content Include="Content\assets\js\widgets\modules-widgets.js" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />

@@ -36,3 +36,20 @@ input[type="number"]{
         transform: scale(1.1);  
     }
 }
+
+.input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+}
+
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+
+.select2-container .select2-selection--single {
+    height: 45px !important;
+}
+
+.select2-selection__arrow {
+    height: 45px !important;
+}

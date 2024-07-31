@@ -1,4 +1,4 @@
-/*
+﻿/*
 =========================================
 |                                       |
 |           Scroll To Top               |
@@ -132,3 +132,15 @@ function GetIEVersion() {
   else
     return 0; //It is not IE
 }
+
+$(function () {
+
+    $("select").select2({
+        placeholder: "لطفا انتخاب کنید ...",
+        theme: "bootstrap",
+        allowClear: true,
+        width: "100%",
+        dir: "rtl",
+        //dropdownAutoWidth: true,
+    });
+})
