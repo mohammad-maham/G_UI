@@ -53,3 +53,13 @@ input[type="number"]{
 .select2-selection__arrow {
     height: 45px !important;
 }
+
+.fa {
+    margin: 0 2px;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    color: #888ea8;
+}
+.navbar-item .fa {
+    vertical-align: middle;
+}

@@ -35,7 +35,7 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public ActionResult Profile(User model)
+        public ActionResult UserProfile(User model)
         {
             return View(new User() {Name= "sayid"});
         }
@@ -44,6 +44,12 @@ namespace G_APIs.Controllers
         public ActionResult BankAccount(BankAccount model)
         {
             return View(model ?? new BankAccount());
+        }
+
+        [GoldAuthorize]
+        public ActionResult ActiveCard(BankAccount model)
+        {
+            return RedirectToAction("BankAccount");
         }
 
         [GoldAuthorize]
@@ -278,5 +284,6 @@ namespace G_APIs.Controllers
 
         }
     }
+
 
 }
