@@ -57,7 +57,6 @@
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 success: function (data) {
-                    debugger;
                     if ($.isNumeric(data)) {
                         var formattedData = Number(data).toLocaleString('en');
                         inpPrice.val(formattedData);
