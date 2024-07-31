@@ -3,29 +3,7 @@
 @{
     string price = Model.CurrentCalculatedPrice.ToString("N0");
 }
-
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" />
-<link rel="stylesheet" type="text/css" href="https://select2.github.io/select2-bootstrap-theme/css/select2-bootstrap.css">
-
-<style>
-    .input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
-        border-top-right-radius: 6px !important;
-        border-bottom-right-radius: 6px !important;
-    }
-
-    .select2-selection__rendered {
-        line-height: 31px !important;
-    }
-
-    .select2-container .select2-selection--single {
-        height: 45px !important;
-    }
-
-    .select2-selection__arrow {
-        height: 45px !important;
-    }
-</style>
-
+ 
 <div class="row layout-top-spacing">
     <div id="custom_styles" class="col-lg-12 layout-spacing col-md-12">
         <h3><b>باکس خرید</b></h3>
@@ -69,18 +47,9 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-
 <script>
     $(function () {
-        $("#Carat").select2({
-            placeholder: "لطفا انتخاب کنید ...",
-            theme: "bootstrap",
-            allowClear: true,
-            width: "100%",
-            dir: "rtl",
-            //dropdownAutoWidth: true,
-        });
+     
         var interval = 500;
         function doAjax() {
             $.ajax({
