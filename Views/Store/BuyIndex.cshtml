@@ -37,7 +37,7 @@
                 </div>
                 <div class="field-wrapper mt-3">
                     <button class="btn btn-outline-primary submit-fn col-md-2 float-right" type="submit">
-                        <i class="far fa-user text-warning"></i>
+                        <i class="fa fa-calculator fa-2x"></i>
                         محاسبه و خرید
                     </button>
                 </div>
@@ -49,7 +49,7 @@
 
 <script>
     $(function () {
-        var interval = 500;
+        var interval = 5000;
         function doAjax() {
             $.ajax({
                 type: 'POST',
@@ -67,7 +67,7 @@
     $('#frmBuy').ajaxForm({
         validation: true,
         url: '/Store/SubmitBuy',
-        jwt: false,
+        jwt: true,
         blockui: true,
         mixin: true,
         success: function (response) {

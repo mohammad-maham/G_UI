@@ -47,7 +47,7 @@
                         data: _data,
                         beforeSend: function (xhr) {
           
-                            var auth = GetCookie('auth');
+                            var auth = GetCookie('gldauth');
                             if (auth !=null)  
                                 xhr.setRequestHeader('Authorization',  auth);
                         },

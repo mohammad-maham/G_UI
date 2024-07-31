@@ -111,6 +111,52 @@ namespace G_APIs.Services
                 };
             }
         }
+
+        public  ApiResult Post()
+        {
+            try
+            {
+                //var json = JsonConvert.SerializeObject(this.Data);
+                RestClient client = new RestClient(ApiPath + Action);
+                RestRequest request = new RestRequest
+                {
+                    Method = _Method,
+                    Timeout = TimeSpan.FromSeconds(20),
+                };
+
+                if (Authorization != null)
+                {
+                    request.AddHeader("Authorization", "Bearer " + Authorization);
+                }
+
+                request.AddHeader("content-type", "application/json");
+                request.AddHeader("cache-control", "no-cache");
+
+                //request.AddParameter("username", "1382532326");
+                //request.AddParameter("password", "admin");
+
+                request.AddJsonBody(Data);
+
+                RestResponse response = client.Execute(request);
+                ApiResult res = JsonConvert.DeserializeObject<ApiResult>(response.Content);
+
+                if (res != null && res.Message != null && res.Message.ToLower().Contains("unauthorize"))
+                {
+                    res.Message = "ورود غیر مجاز لطفا دوباره وارد شوید.";
+                }
+
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult()
+                {
+                    StatusCode = -1,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
 

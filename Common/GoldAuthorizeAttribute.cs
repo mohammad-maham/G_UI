@@ -25,17 +25,17 @@ public class GoldAuthorizeAttribute : AuthorizeAttribute
     {
         try
         {
-            if (httpContext.User.Identity.IsAuthenticated)
-                return true;
+           /* if (httpContext.User.Identity.IsAuthenticated)
+                return true;*/
 
             if (httpContext.Request.Cookies["gldauth"] != null)
             {
                 var token = httpContext.Request.Cookies["gldauth"].Value.Replace("Bearer ", "");
 
-                var res = new GoldApi(GoldHost.Accounting, "/api/Attributes/GetAuthorize", new { Token = token }).PostAsync();
+                var res = new GoldApi(GoldHost.Accounting, "/api/Attributes/GetAuthorize", new { Token = token }).Post();
 
                  
-                 return res.GetAwaiter().GetResult().StatusCode == 200 ? true : false;
+                 return res.StatusCode == 200 ? true : false;
 
             }
 

@@ -7,7 +7,7 @@ namespace G_APIs.Models
     [Serializable]
     public class User
     {
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         [Display(Name = "نام کاربری")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]

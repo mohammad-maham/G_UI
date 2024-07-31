@@ -23,6 +23,7 @@ namespace G_APIs.Controllers
             _account = account;
             _session = session;
         }
+
         public ActionResult Login()
         {
 
@@ -72,6 +73,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
+        [GoldUserInfo]
         public async Task<ActionResult> Login(User model)
         {
             try

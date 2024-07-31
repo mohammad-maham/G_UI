@@ -12,7 +12,7 @@ namespace G_APIs.Controllers
         private readonly ISession _session;
         // private readonly ILogger<StoreController> _logger;
 
-        public StoreController(IStore store/*, ILogger<StoreController> logger*/,ISession session)
+        public StoreController(IStore store/*, ILogger<StoreController> logger*/, ISession session)
         {
             _store = store;
             _session = session;
@@ -34,9 +34,13 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
+        //[GoldUserInfo]
         public async Task<ActionResult> SubmitBuy(BuyPerformVM buyVM)
         {
-            string token = _session.Get<string>("UserInfo");
+            User user = _session.Get<User>("UserInfo");
+            string token = Request.Headers["gldauth"];
+            
+            buyVM.UserId = user.Id.Value;
 
             if (token == null || !token.StartsWith("Bearer "))
             {

@@ -224,6 +224,7 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="BussinesLogic\Store.cs" />
     <Compile Include="Common\Captcha.cs" />
+    <Compile Include="Common\GoldUserInfoAttribute.cs" />
     <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Common\HtmlAttributesExtensions.cs" />
     <Compile Include="Common\Common.cs" />
