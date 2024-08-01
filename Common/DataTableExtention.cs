@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -42,6 +43,39 @@ namespace G_Wallet_API.Common
 
         }
 
+        public static DataTable AsDataTable(this string jsonString)
+        {
+            // Parse the JSON string into a JArray
+            JArray jsonArray = JArray.Parse(jsonString);
+
+            // Create a new DataTable
+            DataTable dataTable = new DataTable();
+
+            // Assume the first object in the array represents the schema
+            if (jsonArray.Count > 0)
+            {
+                JObject firstObject = (JObject)jsonArray[0];
+
+                // Add columns to the DataTable based on the properties of the first object
+                foreach (var property in firstObject.Properties())
+                {
+                    dataTable.Columns.Add(property.Name, typeof(string));
+                }
+
+                // Add rows to the DataTable based on the objects in the array
+                foreach (JObject jsonObject in jsonArray)
+                {
+                    DataRow row = dataTable.NewRow();
+                    foreach (var property in jsonObject.Properties())
+                    {
+                        row[property.Name] = property.Value.ToString();
+                    }
+                    dataTable.Rows.Add(row);
+                }
+            }
+
+            return dataTable;
+        }
     }
 
 }
