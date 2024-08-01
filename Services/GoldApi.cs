@@ -1,8 +1,11 @@
-﻿using G_APIs.Models;
+﻿using Autofac.Core.Activators;
+using G_APIs.Models;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Threading.Tasks;
 using static G_APIs.Common.Enums;
 
@@ -42,7 +45,7 @@ namespace G_APIs.Services
 
             if (host == GoldHost.IPG)
             {
-                ApiPath = ConfigurationManager.AppSettings["GoldApi:IPG"];
+                ApiPath = ConfigurationManager.AppSettings["IPG"];
             }
 
             if (host == GoldHost.Store)
@@ -52,7 +55,7 @@ namespace G_APIs.Services
 
             if (host == GoldHost.Wallet)
             {
-                ApiPath = ConfigurationManager.AppSettings["GoldApi:Wallet"];
+                ApiPath = ConfigurationManager.AppSettings["Wallet"];
             }
 
             if (host == GoldHost.Gateway)
@@ -112,7 +115,7 @@ namespace G_APIs.Services
             }
         }
 
-        public  ApiResult Post()
+        public ApiResult Post()
         {
             try
             {
