@@ -1,6 +1,7 @@
 using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -23,8 +24,12 @@ namespace G_APIs.Controllers
         public ActionResult Index(Dashboard model)
         {
             string userInfo = Request.Headers["UserInfo"];
+
             if (!string.IsNullOrEmpty(userInfo))
                 _session.Set("UserInfo", userInfo);
+            else
+                _session.Set("UserInfo", JsonConvert.SerializeObject(new User { Id= 100000080 }));
+
             return (ActionResult)View(model);
 
         }

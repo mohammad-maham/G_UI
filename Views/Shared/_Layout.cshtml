@@ -77,17 +77,19 @@
 
 
         <div id="content" class="main-content">
-            <div class="layout-px-spacing">
-                @RenderBody()
-
+            <div class="row layout-top-spacing">
+                <div id="custom_styles" class="col-lg-12 col-md-12 pl-0">
+                    <div class="layout-px-spacing">
+                        @RenderBody()
+                    </div>
+                </div>
 
             </div>
         </div>
-
     </div>
     @*<footer>
-        <p>کلیه حقوق محفوظ است.</p>
-    </footer>*@
+            <p>کلیه حقوق محفوظ است.</p>
+        </footer>*@
     @RenderSection("scripts", required: false)
 </body>
 </html>
