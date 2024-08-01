@@ -245,6 +245,8 @@
     <Compile Include="Models\BuyVM.cs" />
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\ComponentModels\BaseModel.cs" />
+    <Compile Include="Models\ComponentModels\GoldButton.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\HtmlAttributes.cs" />
@@ -1290,6 +1292,7 @@
     <Content Include="Views\Shared\EditorTemplates\double.cshtml" />
     <Content Include="Views\Store\SellIndex.cshtml" />
     <Content Include="Views\Store\SubmitBuy.cshtml" />
+    <Content Include="Views\Shared\_GoldButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

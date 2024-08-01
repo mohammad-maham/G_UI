@@ -1,4 +1,5 @@
 ﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
 @model BuyVM
 @{
     string price = Model.CurrentCalculatedPrice.ToString("N0");
@@ -35,12 +36,20 @@
                             </div>
                         </div>*@
                 </div>
-                <div class="field-wrapper mt-3">
-                    <button class="btn btn-outline-primary submit-fn col-md-2 float-right" type="submit">
-                        <i class="fa fa-calculator fa-2x"></i>
-                        محاسبه و خرید
-                    </button>
-                </div>
+                @Html.Partial("_GoldButton", new GoldButton()
+           {
+               ButtonType = GoldButtonTypes.submit,
+               Name = "btnCalcBuy",
+               Icon = "fa fa-calculator fa-2x",
+               Text = "محاسبه و خرید",
+               OnClick = "btnCalc()"
+           })
+                @*<div class="field-wrapper mt-3">
+                        <button class="btn btn-outline-primary submit-fn col-md-2 float-right" type="submit">
+                            <i class="fa fa-calculator fa-2x"></i>
+                            محاسبه و خرید
+                        </button>
+                    </div>*@
             </form>
         </div>
 
@@ -48,39 +57,49 @@
 </div>
 
 <script>
+    var dowhile;
     $(function () {
-        var inpPrice=$("input[name='@nameof(Model.CurrentCalculatedPrice)']");
         var interval = 1000;
-        var dowhile;
+        var inpPrice = $("input[name='@nameof(Model.CurrentCalculatedPrice)']");
         function getOnlinePrice() {
+            debugger;
             $.ajax({
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 success: function (data) {
+                    debugger;
                     if ($.isNumeric(data)) {
                         var formattedData = Number(data).toLocaleString('en');
                         inpPrice.val(formattedData);
                         inpPrice.css("background-color", "#25b61738");
-                        setTimeout(getOnlinePrice, interval);
+                        if (dowhile) {
+                            dowhile = setTimeout(getOnlinePrice, interval);
+                        }
                     } else {
                         window.location = "/Account/Login";
                     }
                 },
                 error: function (data) {
-                    clearTimeout(dowhile);
+                    debugger;
+                    window.clearTimeout(dowhile);
                 }
             });
         }
         dowhile = setTimeout(getOnlinePrice, interval);
-    })
-    $('#frmBuy').ajaxForm({
-        validation: true,
-        url: '/Store/SubmitBuy',
-        jwt: true,
-        blockui: true,
-        mixin: true,
-        success: function (response) {
-            console.log(response)
-        }
     });
+    function btnCalc() {
+        debugger;
+        window.clearTimeout(dowhile);
+        dowhile = null;
+        $('#frmBuy').ajaxForm({
+            validation: true,
+            url: '/Store/SubmitBuy',
+            jwt: true,
+            blockui: true,
+            mixin: true,
+            success: function (response) {
+                console.log(response)
+            }
+        });
+    }
 </script>

@@ -36,14 +36,13 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public async Task<ActionResult> SubmitBuy(BuyPerformVM buyVM)
         {
+            string token = Request.Headers["Authorization"];
             User userInfo = _session.Get<User>("UserInfo");
-            string token = Request.Headers["gldauth"];
             buyVM.UserId = userInfo.Id.Value;
 
-            if (token == null || !token.StartsWith("Bearer "))
-            {
+            if (string.IsNullOrEmpty(token))
                 return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
-            }
+
             long transactionId = await _store.PerformBuy(buyVM, token);
             return View(transactionId);
         }

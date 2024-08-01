@@ -1,0 +1,33 @@
+﻿@using G_APIs.Models.ComponentModels
+@model GoldButton
+@{
+    string isReadOnly = Model.Readonly ? "readonly" : "";
+    string isDisabled = Model.Disabled ? "disabled" : "";
+    if (string.IsNullOrEmpty(Model.Id))
+    {
+        Model.Id = Model.Name;
+    }
+}
+
+<div class="field-wrapper mt-3">
+    @if (Model.Schema == GoldButtonSchemas.button)
+    {
+        <button id="@Model.Id" name="@Model.Name" class="@Model.Class" type="@Model.ButtonType" @isReadOnly @isDisabled onclick="@Model.OnClick">
+            @if (!string.IsNullOrEmpty(Model.Icon))
+            {
+                <i class="@Model.Icon"></i>
+            }
+            @Model.Text
+        </button>
+    }
+    else
+    {
+        <a id="@Model.Id" name="@Model.Name" class="@Model.Class" href="@Model.Href" target="@Model.LinkTarget" @isReadOnly @isDisabled onclick="@Model.OnClick">
+            @if (!string.IsNullOrEmpty(Model.Icon))
+            {
+                <i class="@Model.Icon"></i>
+            }
+            @Model.Text
+        </a>
+    }
+</div>
