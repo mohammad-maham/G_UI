@@ -1,9 +1,11 @@
-﻿@model  G_APIs.Models.Menu
+﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
+@model Menu
 @{
     Layout = null;
 }
-<nav id="sidebar">
 
+<nav id="sidebar">
     <ul class="navbar-nav theme-brand flex-row  text-center">
         <li class="nav-item theme-logo">
             <a asp-controller="Home" asp-action="Index">
@@ -14,7 +16,6 @@
             <a href="@Url.Action("Index","Home")" class="nav-link"> Gold </a>
         </li>
     </ul>
-
     <ul class="list-unstyled menu-categories" id="accordionExample">
         <li class="menu active">
             <a href="#dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
@@ -27,23 +28,40 @@
                 </div>
             </a>
             <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="dashboard" data-parent="#accordionExample">
-
                 <li>
-                    <a href="@Url.Action("AddressInfo","Account")">
-                        <span>  تکمیل اطلاعات آدرس</span>
-                    </a>
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.button,
+                        Schema = GoldButtonSchemas.link,
+                        Name = "mnuAddressInfo",
+                        Icon = "",
+                        Class = "",
+                        Text = "تکمیل اطلاعات آدرس",
+                        Href = Url.Action("AddressInfo", "Account")
+                    })
                 </li>
                 <li>
-                    <a href="@Url.Action("BankAccount","Account")">
-                        <span>  تکمیل اطلاعات بانک</span>
-                    </a>
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.button,
+                        Schema = GoldButtonSchemas.link,
+                        Name = "mnuBankAccount",
+                        Icon = "",
+                        Class = "",
+                        Text = "تکمیل اطلاعات بانک",
+                        Href = Url.Action("BankAccount", "Account")
+                    })
                 </li>
             </ul>
         </li>
         <li class="menu ">
             <a href="#store" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
-                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
                     <span>فروشگاه</span>
                 </div>
                 <div>
@@ -52,14 +70,28 @@
             </a>
             <ul class="collapse submenu list-unstyled" id="store" data-parent="#accordionExample">
                 <li>
-                    <a href="@Url.Action("BuyIndex","Store")">
-                        <span>خرید</span>
-                    </a>
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.button,
+                        Schema = GoldButtonSchemas.link,
+                        Name = "mnuBuyIndex",
+                        Icon = "",
+                        Class = "",
+                        Text = "خرید",
+                        Href = Url.Action("BuyIndex", "Store")
+                    })
                 </li>
                 <li>
-                    <a href="@Url.Action("SellIndex","Store")">
-                        <span>فروش</span>
-                    </a>
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.button,
+                        Schema = GoldButtonSchemas.link,
+                        Name = "mnuSellIndex",
+                        Icon = "",
+                        Class = "",
+                        Text = "فروش",
+                        Href = Url.Action("SellIndex", "Store")
+                    })
                 </li>
             </ul>
         </li>
@@ -75,14 +107,28 @@
             </a>
             <ul class="collapse submenu list-unstyled" id="dashboard" data-parent="#accordionExample">
                 <li>
-                    <a href="@Url.Action("Report1","Report")">
-                        <span>       گزارش یک</span>
-                    </a>
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.button,
+                        Schema = GoldButtonSchemas.link,
+                        Name = "mnuReport1",
+                        Icon = "",
+                        Class = "",
+                        Text = "گزارش یک",
+                        Href = Url.Action("Report1", "Report")
+                    })
                 </li>
                 <li>
-                    <a href="@Url.Action("Report2","Report")">
-                        <span>  گزارش 2    </span>
-                    </a>
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.button,
+                        Schema = GoldButtonSchemas.link,
+                        Name = "mnuReport2",
+                        Icon = "",
+                        Class = "",
+                        Text = "گزارش دو",
+                        Href = Url.Action("Report2", "Report")
+                    })
                 </li>
             </ul>
         </li>
@@ -105,14 +151,12 @@
                     </li>
                 </ul>
             </li>
-
             <li class="menu menu-heading">
                 <div class="heading">
                     <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>
                     <span>ابزارها</span>
                 </div>
             </li>
-
             <li class="menu">
                 <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -130,12 +174,7 @@
                     <li>
                         <a href="#"> زیر منو 2 </a>
                     </li>
-
                 </ul>
             </li>
-
-
-
         </ul> *@
-
 </nav>

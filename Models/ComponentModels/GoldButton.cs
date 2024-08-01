@@ -10,7 +10,7 @@
         public bool Readonly { get; set; } = false;
         public bool Disabled { get; set; } = false;
         public bool IsRTL { get; set; } = true;
-        public string LinkTarget { get; set; } = "_blank";
+        public string LinkTarget { get; set; } = "_self";
         public string Href { get; set; } = "#";
         public string OnClick { get; set; }
     }

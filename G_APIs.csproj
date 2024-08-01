@@ -1293,6 +1293,7 @@
     <Content Include="Views\Store\SellIndex.cshtml" />
     <Content Include="Views\Store\SubmitBuy.cshtml" />
     <Content Include="Views\Shared\_GoldButton.cshtml" />
+    <Content Include="Views\Shared\_FormTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

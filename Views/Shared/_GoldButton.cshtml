@@ -9,7 +9,7 @@
     }
 }
 
-<div class="field-wrapper mt-3">
+<div class="field-wrapper">
     @if (Model.Schema == GoldButtonSchemas.button)
     {
         <button id="@Model.Id" name="@Model.Name" class="@Model.Class" type="@Model.ButtonType" @isReadOnly @isDisabled onclick="@Model.OnClick">
