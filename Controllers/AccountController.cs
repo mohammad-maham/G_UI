@@ -97,7 +97,7 @@ namespace G_APIs.Controllers
                         FormsAuthentication.SetAuthCookie(model.Name, false);
 
                         HttpCookie authCookie = new HttpCookie("gldauth", res.Data);
-                        authCookie.Expires = DateTime.Now.AddMinutes(5);
+                        //authCookie.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Add(authCookie);
 
                         return Json(new { result = true, data = res.Data });

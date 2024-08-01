@@ -8,6 +8,13 @@ namespace G_APIs.BussinesLogic
 {
     public class Store : IStore
     {
+        public async Task<double> GetOnlineBuyPrice(PriceCalcVM priceCalc, string token)
+        {
+            ApiResult response = await new GoldApi(GoldHost.Store, "/api/Shopping/GetPrices", priceCalc, authorization: token).PostAsync();
+            string result = response.Data;
+            return !string.IsNullOrEmpty(result) ? double.Parse(result) : 0;
+        }
+
         public async Task<double> GetOnlinePrice()
         {
             ApiResult response = await new GoldApi(GoldHost.Gateway, "/api/Prices/GetGoldOnlinePrice", new { }).PostAsync();
@@ -15,11 +22,10 @@ namespace G_APIs.BussinesLogic
             return !string.IsNullOrEmpty(result) ? double.Parse(result) : 0;
         }
 
-        public async Task<long> PerformBuy(BuyPerformVM buyVM, string token)
+        public async Task<ApiResult> PerformBuy(BuyPerformVM buyVM, string token)
         {
-            ApiResult response = await new GoldApi(GoldHost.Store, "/api/Shopping/Buy", buyVM,authorization:token).PostAsync();
-            string result = response.Data;
-            return !string.IsNullOrEmpty(result) ? long.Parse(result) : 0;
+            ApiResult response = await new GoldApi(GoldHost.Store, "/api/Shopping/Buy", buyVM, authorization: token).PostAsync();
+            return response;
         }
     }
 }

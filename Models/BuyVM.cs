@@ -36,5 +36,20 @@ namespace G_APIs.Models
         public double DestinationAmount { get; set; }
         public double CurrentCalculatedPrice { get; set; }
         public int Carat { get; set; } = 750;
+        public int GoldType { get; set; } = 2; // Remittance
+    }
+
+    public enum CalcTypes
+    {
+        none = 0,
+        buy = 1,
+        sell = 2
+    }
+
+    public class PriceCalcVM
+    {
+        public CalcTypes GoldCalcType { get; set; }
+        public double GoldWeight { get; set; }
+        public double GoldCarat { get; set; }
     }
 }

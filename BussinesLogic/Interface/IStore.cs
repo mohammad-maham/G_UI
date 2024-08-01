@@ -6,6 +6,7 @@ namespace G_APIs.BussinesLogic.Interface
     public interface IStore
     {
         Task<double> GetOnlinePrice();
-        Task<long> PerformBuy(BuyPerformVM buyVM,string token);
+        Task<double> GetOnlineBuyPrice(PriceCalcVM priceCalc, string token);
+        Task<ApiResult> PerformBuy(BuyPerformVM buyVM, string token);
     }
 }

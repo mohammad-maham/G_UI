@@ -36,15 +36,41 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public async Task<ActionResult> SubmitBuy(BuyPerformVM buyVM)
         {
+            ApiResult response = new ApiResult();
             string token = Request.Headers["Authorization"];
             User userInfo = _session.Get<User>("UserInfo");
-            buyVM.UserId = userInfo.Id.Value;
+            try
+            {
+                if (userInfo != null)
+                {
+                    buyVM.UserId = userInfo.Id.Value;
 
-            if (string.IsNullOrEmpty(token))
-                return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
+                    if (string.IsNullOrEmpty(token))
+                    {
+                        return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
+                    }
 
-            long transactionId = await _store.PerformBuy(buyVM, token);
-            return View(transactionId);
+                    double buyPrice = await _store.GetOnlineBuyPrice(new PriceCalcVM()
+                    {
+                        GoldCalcType = CalcTypes.buy,
+                        GoldWeight = buyVM.Weight
+                    }, token);
+
+                    buyVM.CurrentCalculatedPrice = buyPrice;
+
+                    response = await _store.PerformBuy(buyVM, token);
+
+                    if (response.StatusCode != 200)
+                    {
+                        return Json(new { result = false, message = response.Message });
+                    }
+                }
+                return View(!string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ActionResult SellIndex()
