@@ -3,7 +3,7 @@
     public class GoldButton : BaseModel
     {
         public string Icon { get; set; } = "fa fa-home fa-2x";
-        public string Class { get; set; } = "btn btn-default col-md-2 float-right";
+        public string Class { get; set; } = "btn";
         public string Text { get; set; } = "ثبت";
         public GoldButtonTypes ButtonType { get; set; } = GoldButtonTypes.button;
         public GoldButtonSchemas Schema { get; set; } = GoldButtonSchemas.button;
@@ -20,6 +20,7 @@
         none = 0,
         button = 1,
         submit = 2,
+        cancel = 3
     }
 
     public enum GoldButtonSchemas

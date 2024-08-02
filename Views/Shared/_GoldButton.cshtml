@@ -9,10 +9,11 @@
     }
 }
 
-<div class="field-wrapper">
-    @if (Model.Schema == GoldButtonSchemas.button)
+@if (Model.Schema == GoldButtonSchemas.button)
+{
+    if (Model.ButtonType != GoldButtonTypes.cancel)
     {
-        <button id="@Model.Id" name="@Model.Name" class="@Model.Class" type="@Model.ButtonType" @isReadOnly @isDisabled onclick="@Model.OnClick">
+        <button id="@Model.Id" name="@Model.Name" class="@Model.Class col-md-3 float-right" type="@Model.ButtonType" @isReadOnly @isDisabled onclick="@Model.OnClick">
             @if (!string.IsNullOrEmpty(Model.Icon))
             {
                 <i class="@Model.Icon"></i>
@@ -22,12 +23,19 @@
     }
     else
     {
-        <a id="@Model.Id" name="@Model.Name" class="@Model.Class" href="@Model.Href" target="@Model.LinkTarget" @isReadOnly @isDisabled onclick="@Model.OnClick">
-            @if (!string.IsNullOrEmpty(Model.Icon))
-            {
-                <i class="@Model.Icon"></i>
-            }
-            @Model.Text
-        </a>
+        <button id="@Model.Id" name="@Model.Name" class="@Model.Class btn-danger col-md-4 float-right" type="button" @isReadOnly @isDisabled onclick="javascript:window.location='/'">
+            <i class="fa fa-undo fa-2x"></i>
+            انصراف/بازگشت
+        </button>
     }
-</div>
+}
+else
+{
+    <a id="@Model.Id" name="@Model.Name" class="@Model.Class" href="@Model.Href" target="@Model.LinkTarget" @isReadOnly @isDisabled onclick="@Model.OnClick">
+        @if (!string.IsNullOrEmpty(Model.Icon))
+        {
+            <i class="@Model.Icon"></i>
+        }
+        @Model.Text
+    </a>
+}

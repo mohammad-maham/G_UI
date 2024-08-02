@@ -17,23 +17,24 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
 .input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
 .input-group,
-input[type="number"]{
-    direction:ltr;
+input[type="number"] {
+    direction: ltr;
 }
 
 @keyframes scaleUp {
     from {
-        transform: scale(1);  
+        transform: scale(1);
     }
 
     to {
-        transform: scale(1.1);  
+        transform: scale(1.1);
     }
 }
 
@@ -55,11 +56,22 @@ input[type="number"]{
 }
 
 .fa {
-    margin: 0 2px;
-    font-weight: 400 !important;
+    margin: 0 5px;
+    /*    font-weight: 400 !important;*/
     font-size: 16px !important;
-    color: #888ea8;
+    /*    color: #888ea8;*/
 }
+
 .navbar-item .fa {
     vertical-align: middle;
+}
+
+.field-wrapper.command-panel {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 10px;
 }

@@ -246,6 +246,7 @@
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\ComponentModels\BaseModel.cs" />
+    <Compile Include="Models\ComponentModels\FormTitle.cs" />
     <Compile Include="Models\ComponentModels\GoldButton.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Dashboard.cs" />

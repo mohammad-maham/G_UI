@@ -18,17 +18,25 @@ namespace G_APIs.Controllers
             _session = session;
         }
 
+        [HttpGet]
         [GoldAuthorize]
         public async Task<ActionResult> BuyIndex()
         {
+            string token = Request.Cookies["gldauth"].Value;
+            double buyPrice = await _store.GetOnlineBuyPrice(new PriceCalcVM()
+            {
+                GoldCalcType = CalcTypes.buy,
+                GoldWeight = 1
+            }, token);
+
             BuyVM buyVM = new BuyVM
             {
-                CurrentCalculatedPrice = await _store.GetOnlinePrice(),
-                Carat = new List<SelectListItem>() {
+                CurrentOnlinePrice = buyPrice,
+                /*Carat = new List<SelectListItem>() {
                 new SelectListItem() { Text="18 عیار",Value="750"},
                 new SelectListItem() { Text="22 عیار",Value="900"},
                 new SelectListItem() { Text="24 عیار",Value="1000"}
-            }
+            }*/
             };
             return View(buyVM);
         }
@@ -57,7 +65,7 @@ namespace G_APIs.Controllers
                     }, token);
 
                     buyVM.CurrentCalculatedPrice = buyPrice;
-
+                    buyVM.WalleId = 4;
                     response = await _store.PerformBuy(buyVM, token);
 
                     if (response.StatusCode != 200)
@@ -79,12 +87,17 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<double> GetOnlinePrice()
+        public async Task<double> GetOnlinePrice(string weight = "1")
         {
             try
             {
-                double price = await _store.GetOnlinePrice();
-                return price;
+                string token = Request.Cookies["gldauth"].Value;
+                double buyPrice = await _store.GetOnlineBuyPrice(new PriceCalcVM()
+                {
+                    GoldCalcType = CalcTypes.buy,
+                    GoldWeight = double.Parse(weight)
+                }, token);
+                return buyPrice;
             }
             catch (Exception ex)
             {

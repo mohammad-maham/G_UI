@@ -1,62 +1,123 @@
 ﻿@using G_APIs.Models
 @using G_APIs.Models.ComponentModels
 @model BuyVM
-@{
-    string price = Model.CurrentCalculatedPrice.ToString("N0");
-}
 
-<div class="row layout-top-spacing">
-    <div id="custom_styles" class="col-lg-12 layout-spacing col-md-12">
-        @Html.Partial("_FormTitle", "باکس خرید")
-        <div class="statbox widget box box-shadow">
-            <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="CurrentCalculatedPrice">قیمت آنلاین</label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="CurrentCalculatedPrice-addon">ريال</span>
-                            </div>
-                            <input name="CurrentCalculatedPrice" type="text" class="form-control text-right" value="@price" aria-describedby="CurrentCalculatedPrice-addon" readonly>
-                        </div>
+@Html.Partial("_FormTitle", new FormTitle()
+{
+    Icon = Html.Raw("<svg viewBox=\"0 0 24 24\" width=\"42\" height=\"42\" class=\"main-grid-item-icon\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.50\">\r\n  <circle cx=\"9\" cy=\"21\" r=\"1\" />\r\n  <circle cx=\"20\" cy=\"21\" r=\"1\" />\r\n  <path d=\"M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6\"/>\r\n</svg>\r\n"),
+    Title = "خرید طلا",
+    Description = "صفحه خرید، مشاهده آنی قیمت طلا و مشاهده آنلاین اطلاعات کیف پول"
+})
+
+@using (Html.Box(cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-left"))
+{
+    <div class="widget-content widget-content-area">
+        <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
+            <div class="col-auto">
+                <label for="CurrentOnlinePrice">قیمت واحد خرید</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="CurrentOnlinePrice-addon">ريال</span>
                     </div>
-                    <div class="col-md-4">
-                        <label for="Weight">وزن درخواستی</label>
-                        <div class="mb-3">
-                            <input name="Weight" type="number" class="form-control text-right" value="@Model.Weight" aria-describedby="Weight-addon" required>
-                            <div class="invalid-feedback">
-                                وارد کردن این گزینه الزامیست
-                            </div>
-                        </div>
+                    <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.CurrentOnlinePrice.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
+                </div>
+            </div>
+            <div class="col-auto">
+                <label for="Weight">وزن درخواستی (گرم)</label>
+                <div class="mb-3">
+                    <input name="Weight" type="number" class="form-control text-right" value="@Model.Weight" aria-describedby="Weight-addon" required>
+                    <div class="invalid-feedback">
+                        وارد کردن این گزینه الزامیست
                     </div>
                 </div>
+            </div>
+            <div class="col-auto">
+                <label for="CurrentCalculatedPrice">کل مبلغ</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="CurrentCalculatedPrice-addon">ريال</span>
+                    </div>
+                    <input name="CurrentCalculatedPrice" type="text" class="form-control text-right" value="@Model.CurrentCalculatedPrice.ToString("N0")" aria-describedby="CurrentCalculatedPrice-addon">
+                </div>
+            </div>
+            <hr />
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <h6 class="alert-heading"><strong>نکته</strong></h6>
+                <p>کاربر محترم، مبلغ کل از کیف پول کسر و به صورت وزن بر حسب گرم به کیف پول شما اضافه خواهد شد.</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-auto field-wrapper command-panel">
                 @Html.Partial("_GoldButton", new GoldButton()
                 {
                     ButtonType = GoldButtonTypes.submit,
-                    Name = "btnCalcBuy",
-                    Icon = "fa fa-calculator fa-2x",
-                    Text = "محاسبه و خرید",
-                    OnClick = "btnCalc()"
+                    Name = "btnBuy",
+                    Icon = "fa fa-shopping-basket fa-2x",
+                    Class = "btn btn-success",
+                    Text = "خرید",
+                    OnClick = "performBuy()"
                 })
-            </form>
-        </div>
+                @Html.Partial("_GoldButton", new GoldButton()
+                {
+                    ButtonType = GoldButtonTypes.cancel,
+                    Name = "btnCancel"
+                })
+            </div>
+        </form>
+
     </div>
-</div>
+}
+@using (Html.Box("وضعیت کیف پول", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-right"))
+{
+    <div class="widget-content widget-content-area br-6">
+        <div class="col-auto">
+            <label for="WalletGoldValue">مقدار طلا</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="WalletGoldValue-addon">گرم</span>
+                </div>
+                <input name="WalletGoldValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletGoldValue-addon" readonly>
+            </div>
+        </div>
+        <div class="col-auto">
+            <label for="WalletCurrencyValue">مقدار پول</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="WalletCurrencyValue-addon">ريال</span>
+                </div>
+                <input name="WalletCurrencyValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletCurrencyValue-addon" readonly>
+            </div>
+        </div>
+
+    </div>
+}
 
 <script>
     var dowhile;
     $(function () {
-        var interval = 1000;
-        var inpPrice = $("input[name='@nameof(Model.CurrentCalculatedPrice)']");
+        var interval = 3000;
+        var inpPrice = $("input[name='@nameof(Model.CurrentOnlinePrice)']");
         function getOnlinePrice() {
             $.ajax({
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
+                data: {
+                    weight: 1.0
+                },
                 success: function (data) {
                     if ($.isNumeric(data)) {
+                        var preVal = inpPrice.val();
                         var formattedData = Number(data).toLocaleString('en');
                         inpPrice.val(formattedData);
-                        inpPrice.css("background-color", "#25b61738");
+                        if (preVal <= formattedData) {
+                            inpPrice.css("background-color", "#25b61738");
+                        } else if (preVal > formattedData){
+                            inpPrice.css("background-color", "#b6171738");
+                        }
+                        setTimeout(function () {
+                            inpPrice.css("background-color", "");
+                        }, 1000);
                         if (dowhile) {
                             dowhile = setTimeout(getOnlinePrice, interval);
                         }
@@ -69,9 +130,13 @@
                 }
             });
         }
+        $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
+            e.stopPropagation();
+            return false;
+        });
         dowhile = setTimeout(getOnlinePrice, interval);
     });
-    function btnCalc() {
+    function performBuy() {
         window.clearTimeout(dowhile);
         dowhile = null;
         $('#frmBuy').ajaxForm({
@@ -80,9 +145,35 @@
             jwt: true,
             blockui: true,
             mixin: true,
-            success: function (response) {
-                console.log(response)
+            success: function (data) {
+                console.log(data)
             }
         });
     }
+    $("input[name='@nameof(Model.Weight)']").bind('change', function (e) {
+        var inpCurrentCalculatedPrice = $("input[name='@nameof(Model.CurrentCalculatedPrice)']");
+        var value = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '/Store/GetOnlinePrice',
+            data: {
+                weight: value
+            },
+            success: function (data) {
+                if ($.isNumeric(data)) {
+                    var formattedData = Number(data).toLocaleString('en');
+                    inpCurrentCalculatedPrice.val(formattedData);
+                    inpCurrentCalculatedPrice.css("background-color", "#25b61738");
+                    setTimeout(function () {
+                        inpCurrentCalculatedPrice.css("background-color", "");
+                    }, 1000);
+                } else {
+                    window.location = "/Account/Login";
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    });
 </script>

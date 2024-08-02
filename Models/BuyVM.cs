@@ -20,6 +20,7 @@ namespace G_APIs.Models
         public double SourceAmount { get; set; }
         public double DestinationAmount { get; set; }
         [Display(Name = "قیمت لحظه ای"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public double CurrentOnlinePrice { get; set; }
         public double CurrentCalculatedPrice { get; set; }
         [Display(Name = "عیار")]
         public List<SelectListItem> Carat { get; set; }
