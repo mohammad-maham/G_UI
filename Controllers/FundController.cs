@@ -22,16 +22,17 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<ActionResult> Wallet(WalletCurrency model)
+        public    ActionResult  Wallet(Wallet model)
         {
             try
             {
                 var user = _session.Get<User>("UserInfo");
+                model.UserId = user.Id;
 
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res =await _fund.GetWalletCurrency((int)user.Id);
+                var res =    _fund.GetWalletCurrency(model);
 
                 return View(res);
             }
@@ -52,7 +53,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res = await _fund.GetWalletCurrency((int)user.Id);
+                var res = await _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.Id });
 
                 return View(res);
             }
@@ -78,7 +79,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res =await _fund.GetWalletCurrency((int)user.Id);
+                var res = await _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.Id });
 
                 return View(res);
             }
@@ -98,7 +99,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res =await _fund.GetWalletCurrency((int)user.Id);
+                var res = await _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.Id });
 
                 return View(res);
             }

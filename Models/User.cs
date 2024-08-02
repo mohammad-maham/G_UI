@@ -47,7 +47,6 @@ namespace G_APIs.Models
         public DateTime RegDate { get; set; }
         public short Status { get; set; }
         public object Otpinfo { get; set; }
-        public long UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDay { get; set; }

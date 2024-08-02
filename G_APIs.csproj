@@ -1294,6 +1294,10 @@
     <Content Include="Views\Store\SubmitBuy.cshtml" />
     <Content Include="Views\Shared\_GoldButton.cshtml" />
     <Content Include="Views\Shared\_FormTitle.cshtml" />
+    <Content Include="Views\Fund\Windrow.cshtml" />
+    <Content Include="Views\Fund\Exchange.cshtml" />
+    <Content Include="Views\Fund\Deposit.cshtml" />
+    <Content Include="Views\Fund\DepoResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

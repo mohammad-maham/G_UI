@@ -19,16 +19,14 @@
 
             <div class="inv-detail">
 
-                <div class="info-detail-1">
-
-                    @foreach (var w in Model)
-                    {
+                @foreach (var w in Model)
+                {
+                    <div class="info-detail-1">
                         <p> @w.CurrencyName</p>
-                        <p> @w.Amount - @w.Unit  </p>
-                    }
+                        <p> @w.Amount.ToString("N0")   @w.Unit  </p>
+                    </div>
+                }
 
-                </div>
-                
             </div>
 
             <div class="inv-action">
