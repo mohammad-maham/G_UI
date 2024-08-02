@@ -7,8 +7,9 @@ namespace G_APIs.BussinesLogic.Interface
 
     public interface IFund
     {
-        Task<WalletCurrency> GetWallet(int userId);
-        Task<List<WalletCurrency>> GetWalletCurrency(int userId);
+        Task<WalletCurrency> GetWallet(Wallet model);
+        Task<List<WalletCurrency>> GetWalletCurrencyAsync(Wallet model);
+        List<WalletCurrency> GetWalletCurrency(Wallet model);
         Task<ApiResult> Windrow(WalletCurrency model);
         Task<ApiResult> Deposit(WalletCurrency model);
         Task<ApiResult> Exchange(Xchenger model);
