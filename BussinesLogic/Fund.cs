@@ -11,17 +11,27 @@ namespace G_APIs.BussinesLogic
 
     public class Fund : IFund
     {
-        public async Task<WalletCurrency> GetWallet(int userId)
+        public async Task<WalletCurrency> GetWallet(Wallet model)
         {
-            var res = await new GoldApi(GoldHost.Wallet, "/api/Fund/GetWallet", new { userId }).PostAsync();
+            var res = await new GoldApi(GoldHost.Wallet, "/api/Fund/GetWallet", model).PostAsync();
             var w = JsonConvert.DeserializeObject<WalletCurrency>(res.Data);
 
             return w;
         }
 
-        public async Task<List<WalletCurrency>> GetWalletCurrency(int userId)
+        public List<WalletCurrency>  GetWalletCurrency(Wallet model)
         {
-            var res = await new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", new { userId }).PostAsync();
+            var res =   new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency",model).Post();
+            
+            var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
+
+            return w;
+        }
+
+        public async Task<List<WalletCurrency>> GetWalletCurrencyAsync(Wallet model)
+        {
+            var res = await    new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", model).PostAsync();
+
             var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
 
             return w;
