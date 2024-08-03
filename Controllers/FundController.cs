@@ -27,7 +27,7 @@ namespace G_APIs.Controllers
             try
             {
                 var user = _session.Get<User>("UserInfo");
-                model.UserId = user.Id;
+                model.UserId = user.UserId;
 
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });

@@ -7,6 +7,9 @@ namespace G_APIs.Models
     public class User
     {
         public long? Id { get; set; }
+        public long? UserId { get; set; }
+
+
         [Display(Name = "نام کاربری")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string Username { get; set; }
