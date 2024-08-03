@@ -9,90 +9,90 @@
     Description = "صفحه خرید، مشاهده آنی قیمت طلا و مشاهده آنلاین اطلاعات کیف پول"
 })
 
-@using (Html.Box(cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-left"))
-{
-    <div class="widget-content widget-content-area">
-        <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
+<div class="row gold-row">
+    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-left"))
+    {
+        <div class="widget-content widget-content-area">
+            <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
+                <div class="col-auto">
+                    <label for="CurrentOnlinePrice">قیمت واحد خرید</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="CurrentOnlinePrice-addon">ريال</span>
+                        </div>
+                        <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.CurrentOnlinePrice.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label for="Weight">وزن درخواستی (گرم)</label>
+                    <div class="mb-3">
+                        <input name="Weight" type="number" class="form-control text-right" value="@Model.Weight" aria-describedby="Weight-addon" required>
+                        <div class="invalid-feedback">
+                            وارد کردن این گزینه الزامیست
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label for="CurrentCalculatedPrice">کل مبلغ</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="CurrentCalculatedPrice-addon">ريال</span>
+                        </div>
+                        <input name="CurrentCalculatedPrice" type="text" class="form-control text-right" value="@Model.CurrentCalculatedPrice.ToString("N0")" aria-describedby="CurrentCalculatedPrice-addon">
+                    </div>
+                </div>
+                <hr />
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <h6 class="alert-heading"><strong>نکته</strong></h6>
+                    <p>کاربر محترم، مبلغ کل از کیف پول کسر و به صورت وزن بر حسب گرم به کیف پول شما اضافه خواهد شد.</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col-auto field-wrapper command-panel">
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.submit,
+                        Name = "btnBuy",
+                        Icon = "fa fa-shopping-basket fa-2x",
+                        Class = "btn btn-success",
+                        Text = "خرید",
+                        OnClick = "performBuy()"
+                    })
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.cancel,
+                        Name = "btnCancel"
+                    })
+                </div>
+            </form>
+        </div>
+    }
+    @using (Html.Box("وضعیت کیف پول", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-right"))
+    {
+        <div class="widget-content widget-content-area br-6">
             <div class="col-auto">
-                <label for="CurrentOnlinePrice">قیمت واحد خرید</label>
+                <label for="WalletGoldValue">مقدار طلا</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="CurrentOnlinePrice-addon">ريال</span>
+                        <span class="input-group-text" id="WalletGoldValue-addon">گرم</span>
                     </div>
-                    <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.CurrentOnlinePrice.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
+                    <input name="WalletGoldValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletGoldValue-addon" readonly>
                 </div>
             </div>
             <div class="col-auto">
-                <label for="Weight">وزن درخواستی (گرم)</label>
-                <div class="mb-3">
-                    <input name="Weight" type="number" class="form-control text-right" value="@Model.Weight" aria-describedby="Weight-addon" required>
-                    <div class="invalid-feedback">
-                        وارد کردن این گزینه الزامیست
-                    </div>
-                </div>
-            </div>
-            <div class="col-auto">
-                <label for="CurrentCalculatedPrice">کل مبلغ</label>
+                <label for="WalletCurrencyValue">مقدار پول</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="CurrentCalculatedPrice-addon">ريال</span>
+                        <span class="input-group-text" id="WalletCurrencyValue-addon">ريال</span>
                     </div>
-                    <input name="CurrentCalculatedPrice" type="text" class="form-control text-right" value="@Model.CurrentCalculatedPrice.ToString("N0")" aria-describedby="CurrentCalculatedPrice-addon">
+                    <input name="WalletCurrencyValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletCurrencyValue-addon" readonly>
                 </div>
             </div>
-            <hr />
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <h6 class="alert-heading"><strong>نکته</strong></h6>
-                <p>کاربر محترم، مبلغ کل از کیف پول کسر و به صورت وزن بر حسب گرم به کیف پول شما اضافه خواهد شد.</p>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="col-auto field-wrapper command-panel">
-                @Html.Partial("_GoldButton", new GoldButton()
-                {
-                    ButtonType = GoldButtonTypes.submit,
-                    Name = "btnBuy",
-                    Icon = "fa fa-shopping-basket fa-2x",
-                    Class = "btn btn-success",
-                    Text = "خرید",
-                    OnClick = "performBuy()"
-                })
-                @Html.Partial("_GoldButton", new GoldButton()
-                {
-                    ButtonType = GoldButtonTypes.cancel,
-                    Name = "btnCancel"
-                })
-            </div>
-        </form>
 
-    </div>
-}
-@using (Html.Box("وضعیت کیف پول", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-right"))
-{
-    <div class="widget-content widget-content-area br-6">
-        <div class="col-auto">
-            <label for="WalletGoldValue">مقدار طلا</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="WalletGoldValue-addon">گرم</span>
-                </div>
-                <input name="WalletGoldValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletGoldValue-addon" readonly>
-            </div>
         </div>
-        <div class="col-auto">
-            <label for="WalletCurrencyValue">مقدار پول</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="WalletCurrencyValue-addon">ريال</span>
-                </div>
-                <input name="WalletCurrencyValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletCurrencyValue-addon" readonly>
-            </div>
-        </div>
-
-    </div>
-}
-
+    }
+</div>
 <script>
     var dowhile;
     $(function () {

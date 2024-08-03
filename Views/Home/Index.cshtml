@@ -1,10 +1,11 @@
 ﻿@model G_APIs.Models.Dashboard
 
-<div class="row layout-top-spacing">
 
-    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+<div class="row gold-row">
+    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-8 col-sm-12 float-left"))
+    {
 
-        <div class="widget widget-chart-one">
+        <div class=" widget-chart-one">
             <div class="widget-heading">
                 <h5 class="">نمودار 1</h5>
                 @* <ul class="tabs tab-pills">
@@ -15,30 +16,34 @@
             <div class="widget-content">
                 <div class="tabs tab-content">
                     <div id="content_1" class="tabcontent">
-                       @Html.Action("Chart1","Home") 
+                        @Html.Action("Chart1", "Home")
 
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
+    }
+    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-4 col-sm-12 float-right"))
+    {
 
-    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="widget widget-chart-two">
+        <div class=" widget-chart-two">
             <div class="widget-heading">
                 <h5 class="">    نمودار 2</h5>
             </div>
             <div class="widget-content">
-                 @Html.Action("Chart2","Home")
-                
+                @Html.Action("Chart2", "Home")
+
             </div>
         </div>
-    </div>
+    }
+</div>
 
+<div class="row gold-row">
+    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-8 col-sm-12 float-left"))
+    {
 
-    <div class="col-xl-8 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-        <div class="widget widget-chart-three">
+        <div class=" widget-chart-three">
             <div class="widget-heading">
                 <div class="">
                     <h5 class="">نمودار 3</h5>
@@ -46,17 +51,12 @@
             </div>
 
             <div class="widget-content">
-                 @Html.Action("Chart3","Home")
+                @Html.Action("Chart3", "Home")
             </div>
         </div>
-    </div>
-
-
-    @**@<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-       @Html.Action("Wallet", "Fund")
-    </div>
-
-
+    }
+    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-4 col-sm-12 float-right"))
+    {
+        @Html.Action("Wallet", "Fund")
+    }
 </div>
-
-

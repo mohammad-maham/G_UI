@@ -155,18 +155,29 @@ code {
     padding-bottom: 40px;
 }
 
+.gold-row {
+    display: inline-flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: space-between;
+    align-items: stretch;
+    column-gap: 15px;
+    row-gap: 15px;
+    margin: 0 -5px 0 10px !important;
+}
+
 .layout-px-spacing {
-    /*    position:relative;
-    padding: 0 16px !important;*/
     position: relative;
     padding: 0 23px !important;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    /* align-content: center; */
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
     column-gap: 15px;
+    align-content: stretch;
+    flex-wrap: nowrap;
+    row-gap: 15px;
 }
 
 .row.statbox.widget.box.box-shadow.form-header {
