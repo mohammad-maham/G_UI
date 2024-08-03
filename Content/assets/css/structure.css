@@ -156,15 +156,23 @@ code {
 }
 
 .gold-row {
-    display: inline-flex !important;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: space-around;
-    justify-content: space-between;
-    align-items: stretch;
-    column-gap: 15px;
-    row-gap: 15px;
-    margin: 0 -5px 0 10px !important;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 992px) {
+    .gold-row {
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: space-around;
+        justify-content: space-between;
+        align-items: stretch;
+        column-gap: 15px;
+        row-gap: 15px;
+        margin: 0 -5px 0 10px !important;
+    }
 }
 
 .layout-px-spacing {
