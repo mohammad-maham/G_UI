@@ -677,7 +677,7 @@
         padding: 0 0;
         margin-bottom: 18px;
         padding-bottom: 18px;
-        border-bottom: 1px dashed #bfc9d4;
+        border-bottom: 1px dashed #646a70;
     }
 
     .widget-account-invoice-one .invoice-box h5 {
@@ -699,18 +699,24 @@
     .widget-account-invoice-one .invoice-box .inv-detail {
         margin-bottom: 18px;
         padding-bottom: 18px;
-        border-bottom: 1px dashed #bfc9d4;
+        /*border-bottom: 1px dashed #bfc9d4;*/
     }
 
     .widget-account-invoice-one .invoice-box [class*="info-detail-"]:not(.info-sub) {
         display: flex;
         justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px dashed #bfc9d4;
     }
 
         .widget-account-invoice-one .invoice-box [class*="info-detail-"]:not(.info-sub) p {
             margin-bottom: 13px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 18px;
+        }
+
+        .widget-account-invoice-one .invoice-box [class*="info-detail-"]:not(.info-sub) p.unit {
+            color:gray;
         }
 
     .widget-account-invoice-one .invoice-box [class*="info-detail-"].info-sub .info-detail {
@@ -739,6 +745,7 @@
         text-align: center;
         display: flex;
         justify-content: space-around;
+        margin-block:30px;
     }
 
         .widget-account-invoice-one .invoice-box .inv-action a {
