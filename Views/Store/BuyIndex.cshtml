@@ -10,7 +10,7 @@
 })
 
 <div class="row gold-row">
-    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-left"))
+    @using (Html.Box("باکس خرید", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-left"))
     {
         <div class="widget-content widget-content-area">
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
@@ -43,7 +43,12 @@
                 </div>
                 <hr />
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <h6 class="alert-heading"><strong>نکته</strong></h6>
+                    <h6 class="alert-heading">
+                        <strong>
+                            <i class="fa fa-bell fa-5x"></i>
+                            نکته
+                        </strong>
+                    </h6>
                     <p>کاربر محترم، مبلغ کل از کیف پول کسر و به صورت وزن بر حسب گرم به کیف پول شما اضافه خواهد شد.</p>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -77,7 +82,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="WalletGoldValue-addon">گرم</span>
                     </div>
-                    <input name="WalletGoldValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletGoldValue-addon" readonly>
+                    <input name="WalletGoldValue" type="number" class="form-control text-right" value="@Model.GoldAmount" aria-describedby="WalletGoldValue-addon" readonly>
                 </div>
             </div>
             <div class="col-auto">
@@ -86,7 +91,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="WalletCurrencyValue-addon">ريال</span>
                     </div>
-                    <input name="WalletCurrencyValue" type="number" class="form-control text-right" value="0" aria-describedby="WalletCurrencyValue-addon" readonly>
+                    <input name="WalletCurrencyValue" type="number" class="form-control text-right" value="@Model.CurrencyAmount" aria-describedby="WalletCurrencyValue-addon" readonly>
                 </div>
             </div>
 

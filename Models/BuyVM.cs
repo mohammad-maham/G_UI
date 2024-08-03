@@ -24,6 +24,8 @@ namespace G_APIs.Models
         public double CurrentCalculatedPrice { get; set; }
         [Display(Name = "عیار")]
         public List<SelectListItem> Carat { get; set; }
+        public double GoldAmount { get; set; }
+        public double CurrencyAmount { get; set; }
     }
 
     public class BuyPerformVM

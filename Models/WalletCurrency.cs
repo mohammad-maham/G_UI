@@ -17,7 +17,7 @@ namespace G_APIs.Models
 
         public DateTime RegDate { get; set; }
 
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
 
         public string WcAddress { get; set; }
 
