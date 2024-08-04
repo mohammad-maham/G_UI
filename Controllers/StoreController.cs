@@ -33,15 +33,9 @@ namespace G_APIs.Controllers
                 GoldWeight = 1
             }, token);
 
-            List<WalletCurrency> lstUserWalletCurr = await _wallet.GetWalletCurrencyAsync(new Wallet() { UserId = userInfo.UserId });
-            double currencyAmount = lstUserWalletCurr.FirstOrDefault(x => x.CurrencyId == 1)?.Amount ?? 0.0;
-            double goldAmount = lstUserWalletCurr.FirstOrDefault(x => x.CurrencyId == 2)?.Amount ?? 0.0;
-
             BuyVM buyVM = new BuyVM
             {
                 CurrentOnlinePrice = buyPrice,
-                GoldAmount = goldAmount,
-                CurrencyAmount = currencyAmount,
             };
             return View(buyVM);
         }

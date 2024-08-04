@@ -75,7 +75,7 @@
     }
     @using (Html.Box("وضعیت کیف پول", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-right"))
     {
-        <div class="widget-content widget-content-area br-6">
+        /*<div class="widget-content widget-content-area br-6">
             <div class="col-auto">
                 <label for="WalletGoldValue">مقدار طلا</label>
                 <div class="input-group mb-3">
@@ -95,7 +95,8 @@
                 </div>
             </div>
 
-        </div>
+        </div>*/
+        @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }
 </div>
 <script>
