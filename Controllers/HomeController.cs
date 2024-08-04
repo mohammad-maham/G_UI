@@ -26,11 +26,12 @@ namespace G_APIs.Controllers
             string userInfo = Request.Headers["UserInfo"];
 
             if (!string.IsNullOrEmpty(userInfo))
+            {
                 _session.Set("UserInfo", userInfo);
-            else
-                _session.Set("UserInfo", JsonConvert.SerializeObject(new User { Id= 100000080 }));
+                return (ActionResult)View(model);
+            }
 
-            return (ActionResult)View(model);
+            return RedirectToAction("Login","Account");
 
         }
 

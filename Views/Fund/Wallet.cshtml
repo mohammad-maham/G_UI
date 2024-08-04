@@ -3,6 +3,7 @@
 @model  List<WalletCurrency>
 @{
     Layout = null;
+    var showButtons = ViewBag.ShowButtons ;
 }
   
 <style>
@@ -44,39 +45,32 @@
                 }
 
             </div>
+            @if (showButtons)
+            {
+                <div class="inv-action">
+                    @Html.Partial("_GoldButton", new GoldButton()
+                       {
+                           Schema = GoldButtonSchemas.link,
+                           Name = "btnDeposit",
+                           Icon = "fa fa-money fa-2x",
+                           Class = "btn btn-success col-md-5",
+                           Text = "واریز",
+                           Href = @Url.Action("Deposit", "Fund")
+                       })
 
-            <div class="inv-action">
-                @Html.Partial("_GoldButton", new GoldButton()
-                   {
-                       Schema = GoldButtonSchemas.link,
-                       Name = "btnDeposit",
-                       Icon = "fa fa-money fa-2x",
-                       Class = "btn btn-success col-md-5",
-                       Text = "واریز",
-                       Href = @Url.Action("Deposit", "Fund")
-                   })
+                    @Html.Partial("_GoldButton", new GoldButton()
+                       {
+                           Schema = GoldButtonSchemas.link,
+                           Name = "btnWindrow",
+                           Icon = "fa fa-upload fa-2x ",
+                           Class = "btn btn-danger col-md-5",
+                           Text = "برداشت",
+                           Href = @Url.Action("Windrow", "Fund")
+                       })
 
-                @*@Html.Partial("_GoldButton", new GoldButton()
-                    {
-                        Schema = GoldButtonSchemas.link,
-                        Name = "btnExchange",
-                        Icon = "fa fa-exchange fa-2x",
-                        Class = "btn btn-warning",
-                        Text = "تبادل",
-                        Href = @Url.Action("Exchange", "Fund")
-                    })*@
+                </div>
+            }
 
-                @Html.Partial("_GoldButton", new GoldButton()
-                   {
-                       Schema = GoldButtonSchemas.link,
-                       Name = "btnWindrow",
-                       Icon = "fa fa-upload fa-2x ",
-                       Class = "btn btn-danger col-md-5",
-                       Text = "برداشت",
-                       Href = @Url.Action("Windrow", "Fund")
-                   })
-
-            </div>
         </div>
     </div>
 

@@ -1,26 +1,38 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Routing;
 
-public static class HtmlAttributesExtensions
+public static partial class HtmlHelperExtensions
 {
-    public static object Merge(this object attributes, object additionalAttributes)
+    public static IDictionary<string, object> MergeHtmlAttributes(this HtmlHelper helper, object htmlAttributesObject, object defaultHtmlAttributesObject)
     {
-        var dictionary = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
-        var attr = "";
+        var concatKeys = new string[] { "class" };
 
-        if (additionalAttributes != null)
+        var htmlAttributesDict = htmlAttributesObject as IDictionary<string, object>;
+        var defaultHtmlAttributesDict = defaultHtmlAttributesObject as IDictionary<string, object>;
+
+        RouteValueDictionary htmlAttributes = (htmlAttributesDict != null)
+            ? new RouteValueDictionary(htmlAttributesDict)
+            : HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObject);
+        RouteValueDictionary defaultHtmlAttributes = (defaultHtmlAttributesDict != null)
+            ? new RouteValueDictionary(defaultHtmlAttributesDict)
+            : HtmlHelper.AnonymousObjectToHtmlAttributes(defaultHtmlAttributesObject);
+
+        foreach (var item in htmlAttributes)
         {
-            foreach (var kvp in HtmlHelper.AnonymousObjectToHtmlAttributes(additionalAttributes))
+            if (concatKeys.Contains(item.Key))
             {
-                if (dictionary.ContainsKey(kvp.Key))
-                {
-                    dictionary[kvp.Key] = kvp.Value;
-                }
-                else
-                {
-                    attr += kvp.Key.ToString() + kvp.Value.ToString();
-                }
+                defaultHtmlAttributes[item.Key] = (defaultHtmlAttributes[item.Key] != null)
+                    ? string.Format("{0} {1}", defaultHtmlAttributes[item.Key], item.Value)
+                    : item.Value;
+            }
+            else
+            {
+                defaultHtmlAttributes[item.Key] = item.Value;
             }
         }
-        return attr;
+
+        return defaultHtmlAttributes;
     }
 }
