@@ -22,7 +22,7 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public    ActionResult  Wallet(Wallet model)
+        public ActionResult Wallet(Wallet model)
         {
             try
             {
@@ -32,8 +32,9 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res =    _fund.GetWalletCurrency(model);
+                var res = _fund.GetWalletCurrency(model);
 
+                ViewBag.ShowButtons = model.ShowButtons;
                 return View(res);
             }
             catch (Exception)

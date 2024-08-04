@@ -3,13 +3,9 @@
 
 
 @{
-    var ahtmlAttributes = ViewData.Values.FirstOrDefault();
     var displayName = ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName;
     var propertyName = ViewData.ModelMetadata.PropertyName;
-    var required = ViewData.ModelMetadata.IsRequired;
-    var isReadOny = ViewData.ModelMetadata.IsReadOnly ? "readonly" : null;
-    var aahtmlAttributes = ViewData["HtmlAttributes"] as IDictionary<string, object> ?? new Dictionary<string, object>();
-    var aaqhtmlAttributes = ViewData.Values.FirstOrDefault() as IDictionary<string, object> ?? new Dictionary<string, object>();
+    var required = ViewData.ModelMetadata.IsRequired ? "required" : null;
 
     var errorMessage = string.Empty;
     var requiredAttribute = ViewData.ModelMetadata.ContainerType.GetProperty(propertyName)
@@ -21,27 +17,23 @@
         errorMessage = requiredAttribute.ErrorMessage;
     }
 
-    var additionalAttributes = ViewData["HtmlAttributes"] as object;
-    var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(additionalAttributes);
+
+    var defaultHtmlAttributesObject = new { type = "text", @class = "form-control",  required  };
+    var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
+    var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
 }
+
+
 
 <div class="form-group">
 
-    <label for="@propertyName">@displayName</label>
-
-    @if (required)
+    <label for="@propertyName">@displayName</label>      
+    @Html.TextBoxFor(m => m, ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes)
+    @if (required != null)
     {
-
-        @*<input name="@propertyName" type="text" class="form-control" value="@Model" required @isReadOny>*@
-
-        @Html.TextBoxFor(m => m, new { @class = "form-control",  @required = required ? "required" : null,  isReadOny  })
-
         <div class="invalid-feedback">
             @errorMessage
         </div>
     }
-    else
-    {
-        <input name="Name" type="text" class="form-control" value="@Model" @isReadOny>
-    }
+   
 </div>

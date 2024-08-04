@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace G_APIs.Models
 {
@@ -21,6 +22,7 @@ namespace G_APIs.Models
 
         [Display(Name = "شماره کارت")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
+        [ReadOnly(true)]
         public string CardNumber { get; set; }
 
         public bool ActiveCard { get; set; }
