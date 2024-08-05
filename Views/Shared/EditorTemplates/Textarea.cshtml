@@ -1,13 +1,3 @@
 ﻿@model string
-@{
-    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
-}
-@section Label{
-    @Html.LabelFor(m => m)
-}
 
-@section Input{
-    @Html.Raw(string.Format("<textarea type=\"{0}\" id=\"@{{id}}\" name=\"@{{name}}\" class=\"form-control\" >{1}</textarea>"
-        , "text"
-        , Html.ValueFor(m => m)))
-}
+@Html.TextAreaFor(m => m, new { @class = "form-control", rows = 4 })

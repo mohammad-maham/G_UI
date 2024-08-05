@@ -2,15 +2,19 @@
 using System.Web.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Web.Services.Description;
 
 public static class HtmlExtensions
 {
-    public static IDisposable Box(this HtmlHelper htmlHelper, string title = "", string cssClass = "", Dictionary<string, string> attributes = null)
+    public static IDisposable Box(this HtmlHelper htmlHelper, string title = "", int col = 12, string cssClass = "", Dictionary<string, string> attributes = null)
     {
         var tagBuilder = new TagBuilder("div");
 
         tagBuilder.MergeAttributes(attributes);
+
+        var _cssClass = $"statbox widget box box-shadow col-xl-{col} col-md-{col} col-sm-12 col-12";
         tagBuilder.AddCssClass($"{cssClass}");
+        tagBuilder.AddCssClass(_cssClass);
 
         htmlHelper.ViewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
 

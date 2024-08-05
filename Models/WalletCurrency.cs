@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace G_APIs.Models
 {
@@ -15,8 +16,11 @@ namespace G_APIs.Models
 
         public short Status { get; set; }
 
+        [Display(Name = "تاریخ")]
         public DateTime RegDate { get; set; }
 
+        [Display(Name = "مبلغ")]
+        [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public double Amount { get; set; }
 
         public string WcAddress { get; set; }
@@ -26,6 +30,10 @@ namespace G_APIs.Models
         public string Unit { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        [UIHint("Textarea")]
+        [Display(Name = "توضیحات در صورت لزوم")]
+        public string Description { get; set; }
 
     }
 }

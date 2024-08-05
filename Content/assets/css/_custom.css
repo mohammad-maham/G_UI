@@ -60,6 +60,7 @@ input[type="number"] {
     /*    font-weight: 400 !important;*/
     font-size: 16px !important;
     /*    color: #888ea8;*/
+    vertical-align:middle;
 }
 
 .navbar-item .fa {
