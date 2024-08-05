@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 namespace G_APIs.Controllers
@@ -45,18 +48,21 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<ActionResult> Deposit()
+        public ActionResult Deposit()
         {
             try
             {
                 var user = _session.Get<User>("UserInfo");
 
-                if (user == null)
-                    return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
+                //var res =await   _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.UserId });
+                //return View(res.Where(x => x.CurrencyId == 1).FirstOrDefault());
 
-                var res = await _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.Id });
+                var now = DateTime.Now;
+                var pc = new PersianCalendar();
+                var today = pc.GetYear(now) + "/" + pc.GetMonth(now) + "/" + pc.GetDayOfMonth(now);
 
-                return View(res);
+                return View(new WalletCurrency { RegDate = Convert.ToDateTime(today) });
+
             }
             catch (Exception)
             {

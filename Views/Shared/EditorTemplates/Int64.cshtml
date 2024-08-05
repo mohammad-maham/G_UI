@@ -1,13 +1,67 @@
-﻿@model long?
+﻿
+@using System.ComponentModel.DataAnnotations
+@model long?
+
+
 @{
-    LayoutRenderType = UFO.Core.UI.WebApplication.LayoutRenderTypes.EditorFullWrapper;
-}
-@section Label{
-    @Html.LabelFor(m => m)
+    var displayName = ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName;
+    var propertyName = ViewData.ModelMetadata.PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired ? "required" : null;
+
+    var errorMessage = string.Empty;
+    var requiredAttribute = ViewData.ModelMetadata.ContainerType.GetProperty(propertyName)
+        ?.GetCustomAttributes(typeof(RequiredAttribute), false)
+        .FirstOrDefault() as RequiredAttribute;
+
+    if (requiredAttribute != null)
+    {
+        errorMessage = requiredAttribute.ErrorMessage;
+    }
+
+
+    var defaultHtmlAttributesObject = new { type = "number", @class = "form-control", required };
+    var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
+    var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
 }
 
-@section Input{
-    @Html.Raw(string.Format("<input type=\"{0}\" id=\"@{{id}}\" name=\"@{{name}}\" value=\"{1}\" class=\"form-control\" />"
-        , "number"
-        , Html.ValueFor(m => m)))
+@if (htmlAttributes.ContainsKey("inputGroup"))
+{
+    <div class="mt-3">
+
+        <label for="@propertyName">@displayName</label>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">IR</div>
+            </div>
+            @Html.TextBoxFor(m => m, ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes)
+
+            @if (required != null)
+            {
+                <div class="invalid-feedback">
+                    @errorMessage
+                </div>
+            }
+
+        </div>
+    </div>
+
+}
+
+@if (!htmlAttributes.ContainsKey("inputGroup"))
+{
+    <div class="mt-3">
+        <div class="form-group">
+
+            <label for="@propertyName">@displayName</label>
+            @Html.TextBoxFor(m => m, ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes)
+            @if (required != null)
+            {
+                <div class="invalid-feedback">
+                    @errorMessage
+                </div>
+            }
+
+        </div>
+    </div>
 }

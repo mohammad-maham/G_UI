@@ -22,7 +22,6 @@
 <div class="home-wallet widget-account-invoice-one">
 
     <div class="widget-heading">
-        
         <h5 class="">  <i class="fa fa-money"></i>  کیف پول</h5>
     </div>
 
@@ -39,8 +38,8 @@
                 @foreach (var w in Model)
                 {
                     <div class="info-detail-1">
-                        <p class="cur-name"> <i class="fa fa-google-wallet"></i>  @w.CurrencyName </p>
-                        <p class="unit"> @w.Amount.ToString("N0") <span> @w.Unit </span>  </p>
+                        <p class="cur-name"> <i class="fa fa-google-wallet"></i>  @(w.CurrencyName ?? "") </p>
+                        <p class="unit"> @w.Amount.ToString("N0") <span> @(w.Unit ?? "") </span>  </p>
                     </div>
                 }
 

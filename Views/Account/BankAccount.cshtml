@@ -13,7 +13,7 @@
 @*<script src="~/Content/plugins/input-mask/input-mask.js"></script>*@
 
 <div class="row gold-row">
-    @using (Html.Box(cssClass: "statbox widget box box-shadow col-md-4 col-sm-12 float-left"))
+    @using (Html.Box(col: 4))
     {
         <div class="row d-block text-center">
             <div class="widget-content widget-content-area">
@@ -32,40 +32,36 @@
             </div>
         </div>
 
-        <div class="col-md-12">
-            <form form class="bankForm" id="bankForm" action="javascript:void(0);" novalidate>
+        <form form class="bankForm" id="bankForm" action="javascript:void(0);" novalidate>
 
-                <input id="bankname" name="BankName" type="hidden" />
 
-                <div class="">
-                    @Html.EditorFor(x => x.CardNumber, new { HtmlAttributes = new { @class = "rtl", id = "cardNumber" } })
-                </div>
-                <div class="mt-3">
-                    @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab" } })
-                </div>
+            @Html.HiddenFor(x => x.BankName, new { HtmlAttributes = new {  id = "bankname" } })
 
-                <div class=" mt-3">
-                    <label for="validationCustom01">شبا  </label>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">IR</div>
-                        </div>
-                        <input name="Shaba" type="number" class="form-control text-right " value="@Model.Shaba" required>
-                        <div class="invalid-feedback">
-                            وارد کردن این فیلد الزامیست
-                        </div>
-                    </div>
-                </div>
+            @Html.EditorFor(x => x.CardNumber, new { HtmlAttributes = new { @class = "rtl", id = "cardNumber" } })
+            @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number" } })
+            @Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR" } })
 
-                <div class="field-wrapper  mt-4">
-                    <button class="btn btn-primary submit-fn col-md-5 float-right" type="submit">  ذخیره      </button>
-                </div>
+            <div class="col-auto field-wrapper command-panel mt-4">
+                @Html.Partial("_GoldButton", new GoldButton()
+                {
+                    ButtonType = GoldButtonTypes.submit,
+                    Name = "btnBuy",
+                    Icon = "fa fa-save fa-2x",
+                    Class = "btn btn-success",
+                    Text = "ذخیره",
+                })
+                @Html.Partial("_GoldButton", new GoldButton()
+                {
+                    ButtonType = GoldButtonTypes.cancel,
+                    Name = "btnCancel",
+                    Text = "بازگشت",
 
-            </form>
+                })
+            </div>
+        </form>
 
-        </div>
     }
-    @using (Html.Box(title: "کارت های ذخیره شده", cssClass: "statbox widget box box-shadow col-md-8 col-sm-12 float-right"))
+    @using (Html.Box(title: "کارت های ذخیره شده", col: 8))
     {
         <div class="widget-content widget-content-area br-6">
 
@@ -88,8 +84,8 @@
                             <td>2342324 </td>
                             <td> Ir-234324234234242423</td>
                             <td>
-                                <a href="@Url.Action("ActiveCard",new {CardNumber="6104-1234-4543-3434",ActiveCard=false})" title="غیر فعال کردن">
-                                    <i class="fa fa-times-circle text-danger pointer "></i>
+                                <a href="@Url.Action("ActiveCard",new {CardNumber="6104-1234-4543-3434",ActiveCard=false})" title="">
+                                    <div class="td-content"><span class="badge outline-badge-danger">غیر فعال کردن</span></div>
                                 </a>
                             </td>
                         </tr>
@@ -99,8 +95,9 @@
                             <td>2342324 </td>
                             <td> Ir-234324234234242423</td>
                             <td>
-                                <a href="@Url.Action("ActiveCard")" title="  فعال کردن">
-                                    <i class="fa fa-times-circle text-success pointer"></i>
+
+                                <a href="@Url.Action("ActiveCard")" title=" فعال کردن ">
+                                    <div class="td-content"><span class="badge outline-badge-primary">فعال کردن</span></div>
                                 </a>
                             </td>
                         </tr>
@@ -111,7 +108,8 @@
                             <td> Ir-234324234234242423</td>
                             <td>
                                 <a href="@Url.Action("ActiveCard")" title="غیر فعال کردن">
-                                    <i class="fa fa-times-circle text-danger pointer"></i>
+                                    <div class="td-content"><span class="badge outline-badge-danger">غیر فعال کردن</span></div>
+                                    @*<i class="fa fa-times-circle text-danger pointer"></i>*@
                                 </a>
 
                             </td>
@@ -147,28 +145,11 @@
     //}
 
     $('#bankForm').ajaxForm({
-
         validation: true,
         url: '/Fund/AddBankAccount',
         jwt: false,
         blockui: true,
         mixin: true,
-
-        success: function (response) {
-
-            console.log(response)
-            if (response.result) {
-
-                localStorage.setItem('auth', response.data);
-                window.location.href = '/Home';
-
-            }
-        },
-        // error: function (xhr, status, error) {
-        //     $('#loginResult').html(response.message).show();
-        //     // $('#loginResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').removeClass('hide');
-        //     console.error('Form submission failed:', error);
-        // }
     });
 
 

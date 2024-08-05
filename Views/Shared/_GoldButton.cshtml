@@ -7,6 +7,12 @@
     {
         Model.Id = Model.Name;
     }
+
+    var cancelButtonText = " انصراف / بازگشت";
+    if (!string.IsNullOrEmpty(Model.Text) && Model.ButtonType!= GoldButtonTypes.cancel)
+    {
+        cancelButtonText = Model.Text;
+    }
 }
 
 @if (Model.Schema == GoldButtonSchemas.button)
@@ -25,7 +31,7 @@
     {
         <button id="@Model.Id" name="@Model.Name" class="@Model.Class btn-danger col-md-4 float-right" type="button" @isReadOnly @isDisabled onclick="javascript:window.location='/'">
             <i class="fa fa-undo fa-2x"></i>
-            انصراف/بازگشت
+            @cancelButtonText
         </button>
     }
 }
