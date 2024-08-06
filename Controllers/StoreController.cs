@@ -90,6 +90,11 @@ namespace G_APIs.Controllers
             return View();
         }
 
+        public ActionResult GoldOnlinePrice()
+        {
+            return View();
+        }
+
         [GoldAuthorize]
         public async Task<double> GetOnlinePrice(string weight = "1")
         {

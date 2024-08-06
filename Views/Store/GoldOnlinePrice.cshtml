@@ -1,0 +1,44 @@
+﻿
+
+@Html.Editor("CurrentGoldOnlinePrice");
+
+<script>
+    var dowhile;
+    $(function () {
+        var interval = 3000;
+        var inpPrice = $("input[name='CurrentGoldOnlinePrice']");
+        function getOnlinePrice() {
+            $.ajax({
+                type: 'POST',
+                url: '/Store/GetOnlinePrice',
+                data: {
+                    weight: 1.0
+                },
+                success: function (data) {
+                    if ($.isNumeric(data)) {
+                        var preVal = inpPrice.val();
+                        var formattedData = Number(data).toLocaleString('en');
+                        inpPrice.val(formattedData);
+                        if (preVal <= formattedData) {
+                            inpPrice.css("background-color", "#25b61738");
+                        } else if (preVal > formattedData){
+                            inpPrice.css("background-color", "#b6171738");
+                        }
+                        setTimeout(function () {
+                            inpPrice.css("background-color", "");
+                        }, 1000);
+                        if (dowhile) {
+                            dowhile = setTimeout(getOnlinePrice, interval);
+                        }
+                    } else {
+                        window.location = "/Account/Login";
+                    }
+                },
+                error: function (data) {
+                    window.clearTimeout(dowhile);
+                }
+            });
+        }
+        dowhile = setTimeout(getOnlinePrice, interval);
+    });
+</script>

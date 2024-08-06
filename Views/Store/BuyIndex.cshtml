@@ -15,15 +15,16 @@
     {
         <div class="widget-content widget-content-area">
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
-                <div class="col-auto">
-                    <label for="CurrentOnlinePrice">قیمت واحد خرید</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="CurrentOnlinePrice-addon">ريال</span>
+                @*<div class="col-auto">
+                        <label for="CurrentOnlinePrice">قیمت واحد خرید</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="CurrentOnlinePrice-addon">ريال</span>
+                            </div>
+                            <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.CurrentOnlinePrice.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
                         </div>
-                        <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.CurrentOnlinePrice.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
-                    </div>
-                </div>
+                    </div>*@
+                @{Html.RenderAction("GoldOnlinePrice");}
                 <div class="col-auto">
                     <label for="Weight">وزن درخواستی (گرم)</label>
                     <div class="mb-3">
@@ -104,7 +105,7 @@
 <script>
     var dowhile;
     $(function () {
-        var interval = 3000;
+        @*    var interval = 3000;
         var inpPrice = $("input[name='@nameof(Model.CurrentOnlinePrice)']");
         function getOnlinePrice() {
             $.ajax({
@@ -137,12 +138,12 @@
                     window.clearTimeout(dowhile);
                 }
             });
-        }
+        }*@
         $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
             e.stopPropagation();
             return false;
         });
-        dowhile = setTimeout(getOnlinePrice, interval);
+        //dowhile = setTimeout(getOnlinePrice, interval);
     });
     function performBuy() {
         window.clearTimeout(dowhile);
