@@ -1,4 +1,13 @@
-﻿@Html.Editor("CurrentGoldOnlinePrice");
+﻿@model double
+<div class="col-auto">
+    <label for="CurrentOnlinePrice">قیمت واحد</label>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="CurrentOnlinePrice-addon">IR</span>
+        </div>
+        <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
+    </div>
+</div>
 
 <script>
     var dowhile;
@@ -19,7 +28,7 @@
                         inpPrice.val(formattedData);
                         if (preVal <= formattedData) {
                             inpPrice.css("background-color", "#25b61738");
-                        } else if (preVal > formattedData){
+                        } else if (preVal > formattedData) {
                             inpPrice.css("background-color", "#b6171738");
                         }
                         setTimeout(function () {

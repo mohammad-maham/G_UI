@@ -1,9 +1,6 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace G_APIs.Controllers
@@ -23,11 +20,11 @@ namespace G_APIs.Controllers
 
         [HttpGet]
         [GoldAuthorize]
-        public async Task<ActionResult> BuyIndex()
+        public ActionResult BuyIndex()
         {
             string token = Request.Cookies["gldauth"].Value;
             User userInfo = _session.Get<User>("UserInfo");
-            double buyPrice = await _store.GetOnlineBuyPrice(new PriceCalcVM()
+            double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
             {
                 GoldCalcType = CalcTypes.buy,
                 GoldWeight = 1
@@ -41,7 +38,7 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<ActionResult> SubmitBuy(BuyPerformVM buyVM)
+        public ActionResult SubmitBuy(BuyPerformVM buyVM)
         {
             ApiResult response = new ApiResult();
             User userInfo = _session.Get<User>("UserInfo");
@@ -52,12 +49,12 @@ namespace G_APIs.Controllers
                 if (userInfo != null && !string.IsNullOrEmpty(token))
                 {
                     // Business
-                    double buyPrice = await _store.GetOnlineBuyPrice(new PriceCalcVM()
+                    double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
                     {
                         GoldCalcType = CalcTypes.buy,
                         GoldWeight = buyVM.Weight
                     }, token);
-                    WalletCurrency walletCurrency = await _wallet.GetWallet(new Wallet() { UserId = userInfo.UserId });
+                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.UserId });
 
                     // Binding
                     buyVM.WalleId = walletCurrency.Id;
@@ -65,7 +62,7 @@ namespace G_APIs.Controllers
                     buyVM.CurrentCalculatedPrice = buyPrice;
 
                     // Perform Buy
-                    response = await _store.PerformBuy(buyVM, token);
+                    response = _store.PerformBuy(buyVM, token);
 
                     // Response Reaction
                     if (response.StatusCode != 200)
@@ -90,20 +87,26 @@ namespace G_APIs.Controllers
             return View();
         }
 
-        public ActionResult GoldOnlinePrice()
+        public ActionResult GoldOnlinePrice(bool isBuy = true)
         {
-            return View();
+            string token = Request.Cookies["gldauth"].Value;
+            double price = _store.GetOnlineBuyPrice(new PriceCalcVM()
+            {
+                GoldCalcType = isBuy ? CalcTypes.buy : CalcTypes.sell,
+                GoldWeight = 1
+            }, token);
+            return View(price);
         }
 
         [GoldAuthorize]
-        public async Task<double> GetOnlinePrice(string weight = "1")
+        public double GetOnlinePrice(string weight = "1", bool isBuy = true)
         {
             try
             {
                 string token = Request.Cookies["gldauth"].Value;
-                double buyPrice = await _store.GetOnlineBuyPrice(new PriceCalcVM()
+                double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
                 {
-                    GoldCalcType = CalcTypes.buy,
+                    GoldCalcType = isBuy ? CalcTypes.buy : CalcTypes.sell,
                     GoldWeight = double.Parse(weight)
                 }, token);
                 return buyPrice;

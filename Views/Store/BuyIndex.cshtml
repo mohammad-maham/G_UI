@@ -10,21 +10,11 @@
 })
 
 <div class="row gold-row">
-    @*@using (Html.Box("باکس خرید", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-left"))*@
     @using (Html.Box("باکس خرید", col: 6))
     {
         <div class="widget-content widget-content-area">
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
-                @*<div class="col-auto">
-                        <label for="CurrentOnlinePrice">قیمت واحد خرید</label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="CurrentOnlinePrice-addon">ريال</span>
-                            </div>
-                            <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.CurrentOnlinePrice.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
-                        </div>
-                    </div>*@
-                @{Html.RenderAction("GoldOnlinePrice");}
+                @*@{Html.RenderAction("GoldOnlinePrice", new { isBuy = true });}*@
                 <div class="col-auto">
                     <label for="Weight">وزن درخواستی (گرم)</label>
                     <div class="mb-3">
@@ -75,75 +65,17 @@
             </form>
         </div>
     }
-    @*@using (Html.Box("وضعیت کیف پول", cssClass: "statbox widget box box-shadow col-md-6 col-sm-12 float-right"))*@
     @using (Html.Box("وضعیت کیف پول", col: 6))
     {
-        /*<div class="widget-content widget-content-area br-6">
-            <div class="col-auto">
-                <label for="WalletGoldValue">مقدار طلا</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="WalletGoldValue-addon">گرم</span>
-                    </div>
-                    <input name="WalletGoldValue" type="number" class="form-control text-right" value="@Model.GoldAmount" aria-describedby="WalletGoldValue-addon" readonly>
-                </div>
-            </div>
-            <div class="col-auto">
-                <label for="WalletCurrencyValue">مقدار پول</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="WalletCurrencyValue-addon">ريال</span>
-                    </div>
-                    <input name="WalletCurrencyValue" type="number" class="form-control text-right" value="@Model.CurrencyAmount" aria-describedby="WalletCurrencyValue-addon" readonly>
-                </div>
-            </div>
-
-        </div>*/
         @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }
 </div>
 <script>
-    var dowhile;
     $(function () {
-        @*    var interval = 3000;
-        var inpPrice = $("input[name='@nameof(Model.CurrentOnlinePrice)']");
-        function getOnlinePrice() {
-            $.ajax({
-                type: 'POST',
-                url: '/Store/GetOnlinePrice',
-                data: {
-                    weight: 1.0
-                },
-                success: function (data) {
-                    if ($.isNumeric(data)) {
-                        var preVal = inpPrice.val();
-                        var formattedData = Number(data).toLocaleString('en');
-                        inpPrice.val(formattedData);
-                        if (preVal <= formattedData) {
-                            inpPrice.css("background-color", "#25b61738");
-                        } else if (preVal > formattedData){
-                            inpPrice.css("background-color", "#b6171738");
-                        }
-                        setTimeout(function () {
-                            inpPrice.css("background-color", "");
-                        }, 1000);
-                        if (dowhile) {
-                            dowhile = setTimeout(getOnlinePrice, interval);
-                        }
-                    } else {
-                        window.location = "/Account/Login";
-                    }
-                },
-                error: function (data) {
-                    window.clearTimeout(dowhile);
-                }
-            });
-        }*@
         $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
             e.stopPropagation();
             return false;
         });
-        //dowhile = setTimeout(getOnlinePrice, interval);
     });
     function performBuy() {
         window.clearTimeout(dowhile);
@@ -166,7 +98,8 @@
             type: 'POST',
             url: '/Store/GetOnlinePrice',
             data: {
-                weight: value
+                weight: value,
+                isBuy: true
             },
             success: function (data) {
                 if ($.isNumeric(data)) {
