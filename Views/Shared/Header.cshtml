@@ -1,14 +1,15 @@
 ﻿@model G_APIs.Models.User
 @{
     Layout = null;
+    var profAvatar = $"https://ui-avatars.com/api/?name={Model.Username ?? "SaeedZavvar"}";
 }
 <header class="header navbar navbar-expand-sm expand-header">
-    <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+    <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
     <ul class="navbar-item flex-row ml-auto">
 
         <li class="nav-item align-self-center search-animated">
-            <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <form class="form-inline search-full form-inline search" role="search">
                 <div class="search-bar">
                     <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="جستجو...">
@@ -18,12 +19,12 @@
 
         <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
             </a>
             <div class="dropdown-menu position-absolute e-animated e-fadeInUp" aria-labelledby="userProfileDropdown">
                 <div class="user-profile-section">
                     <div class="media mx-auto">
-                        <img src="~/Content/assets/img/90x90.jpg" class="img-fluid mr-2" alt="avatar">
+                        <img src="@profAvatar" class="img-fluid mr-2" alt="avatar">
                         <div class="media-body">
                             <h5>   @(Model.Username ?? Model.NationalCode)  </h5>
                             <p>@Model.Role</p>

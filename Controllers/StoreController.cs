@@ -57,8 +57,12 @@ namespace G_APIs.Controllers
                     WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.UserId });
 
                     // Binding
+                    buyVM.Carat = 750;
+                    buyVM.GoldType = 2;
+                    buyVM.SourceAmount = buyPrice;
                     buyVM.WalleId = walletCurrency.Id;
                     buyVM.UserId = userInfo.UserId.Value;
+                    buyVM.DestinationAmount = buyVM.Weight;
                     buyVM.CurrentCalculatedPrice = buyPrice;
 
                     // Perform Buy

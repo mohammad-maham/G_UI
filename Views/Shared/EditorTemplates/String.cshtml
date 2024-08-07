@@ -1,57 +1,50 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @model string
-
-
 @{
-    var displayName = ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName;
-    var propertyName = ViewData.ModelMetadata.PropertyName;
-    var required = ViewData.ModelMetadata.IsRequired ? "required" : null;
-
-    var errorMessage = string.Empty;
-    var requiredAttribute = ViewData.ModelMetadata.ContainerType.GetProperty(propertyName)
-        ?.GetCustomAttributes(typeof(RequiredAttribute), false)
-        .FirstOrDefault() as RequiredAttribute;
-
-    if (requiredAttribute != null)
+    string errorMessage = string.Empty;
+    string displayName = ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName;
+    string propertyName = ViewData.ModelMetadata.PropertyName;
+    string required = ViewData.ModelMetadata.IsRequired ? "required" : null;
+    if (ViewData.ModelMetadata.ContainerType != null)
     {
-        errorMessage = requiredAttribute.ErrorMessage;
+        RequiredAttribute requiredAttribute = ViewData.ModelMetadata.ContainerType
+            .GetProperty(propertyName)?
+            .GetCustomAttributes(typeof(RequiredAttribute), false)
+            .FirstOrDefault() as RequiredAttribute;
+
+        if (requiredAttribute != null)
+        {
+            errorMessage = requiredAttribute.ErrorMessage;
+        }
     }
-
-
     var defaultHtmlAttributesObject = new { type = "text", @class = "form-control", required };
     var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
     var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
+    displayName = displayName ?? htmlAttributes["DisplayName"].ToString();
 }
 
 @if (htmlAttributes.ContainsKey("inputGroup"))
 {
-    <div class="mt-3">
-
+    <div class="col-auto mt-3">
         <label for="@propertyName">@displayName</label>
-
-        <div class="input-group mb-2">
+        <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <div class="input-group-text">IR</div>
+                <div class="input-group-text">@(htmlAttributes["inputGroup"].ToString())</div>
             </div>
             @Html.TextBoxFor(m => m, ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes)
-
             @if (required != null)
             {
                 <div class="invalid-feedback">
                     @errorMessage
                 </div>
             }
-
         </div>
     </div>
-
 }
-
-@if (!htmlAttributes.ContainsKey("inputGroup"))
+else if (!htmlAttributes.ContainsKey("inputGroup"))
 {
-    <div class="mt-3">
+    <div class="col-auto mt-3">
         <div class="form-group">
-
             <label for="@propertyName">@displayName</label>
             @Html.TextBoxFor(m => m, ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes)
             @if (required != null)
@@ -60,7 +53,6 @@
                     @errorMessage
                 </div>
             }
-
         </div>
     </div>
 }

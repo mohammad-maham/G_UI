@@ -31,13 +31,15 @@ namespace G_APIs.Models
         public int Weight { get; set; }
         public long UserId { get; set; }
         public long WalleId { get; set; }
-        public long? SourceAddress { get; set; } = 1; // Currency
-        public long? DestinationAddress { get; set; } = 2; // Gold
+        public string SourceAddress { get; set; } = "1"; // Currency
+        public string DestinationAddress { get; set; } = "2"; // Gold
         public double SourceAmount { get; set; }
         public double DestinationAmount { get; set; }
         public double CurrentCalculatedPrice { get; set; }
         public int Carat { get; set; } = 750;
         public int GoldType { get; set; } = 2; // Remittance
+        public int? SourceWalletCurrency { get; set; } = 1; // Currency
+        public int? DestinationWalletCurrency { get; set; } = 2; // Gold
     }
 
     public enum CalcTypes

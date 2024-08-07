@@ -3,22 +3,13 @@
     Layout = null;
 }
 
-@Html.Editor("CurrentOnlinePrice", new { DisplayName = "قیمت واحد", DefaultValue = Model.ToString("N0"), InputGroup = "IR" })
-@*<div class="col-auto">
-        <label for="CurrentOnlinePrice">قیمت واحد</label>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="CurrentOnlinePrice-addon">IR</span>
-            </div>
-            <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
-        </div>
-    </div>*@
+@Html.Editor("CurrentOnlinePrice", new { HtmlAttributes = new { DisplayName = "قیمت واحد",/* DefaultValue = Model.ToString("N0"),*/ InputGroup = "ریال" } })
 
 <script>
     var dowhile;
     $(function () {
         var interval = 3000;
-        var inpPrice = $("input[name='CurrentGoldOnlinePrice']");
+        var inpPrice = $("input[name='CurrentOnlinePrice']");
         function getOnlinePrice() {
             $.ajax({
                 type: 'POST',
