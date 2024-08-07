@@ -99,14 +99,14 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public double GetOnlinePrice(string weight = "1", bool isBuy = true)
+        public double GetOnlinePrice(string weight = "1")
         {
             try
             {
                 string token = Request.Cookies["gldauth"].Value;
                 double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
                 {
-                    GoldCalcType = isBuy ? CalcTypes.buy : CalcTypes.sell,
+                    GoldCalcType = CalcTypes.buy,
                     GoldWeight = double.Parse(weight)
                 }, token);
                 return buyPrice;

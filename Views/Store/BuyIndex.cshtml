@@ -14,7 +14,7 @@
     {
         <div class="widget-content widget-content-area">
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
-                @*@{Html.RenderAction("GoldOnlinePrice", new { isBuy = true });}*@
+                @Html.Action("GoldOnlinePrice", new { isBuy = true })
                 <div class="col-auto">
                     <label for="Weight">وزن درخواستی (گرم)</label>
                     <div class="mb-3">
@@ -98,8 +98,7 @@
             type: 'POST',
             url: '/Store/GetOnlinePrice',
             data: {
-                weight: value,
-                isBuy: true
+                weight: value
             },
             success: function (data) {
                 if ($.isNumeric(data)) {
