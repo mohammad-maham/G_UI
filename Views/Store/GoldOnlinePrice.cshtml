@@ -2,15 +2,17 @@
 @{
     Layout = null;
 }
-<div class="col-auto">
-    <label for="CurrentOnlinePrice">قیمت واحد</label>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="CurrentOnlinePrice-addon">IR</span>
+
+@Html.Editor("CurrentOnlinePrice", new { DisplayName = "قیمت واحد", DefaultValue = Model.ToString("N0"), InputGroup = "IR" })
+@*<div class="col-auto">
+        <label for="CurrentOnlinePrice">قیمت واحد</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="CurrentOnlinePrice-addon">IR</span>
+            </div>
+            <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
         </div>
-        <input name="CurrentOnlinePrice" type="text" class="form-control text-right" value="@Model.ToString("N0")" aria-describedby="CurrentOnlinePrice-addon">
-    </div>
-</div>
+    </div>*@
 
 <script>
     var dowhile;

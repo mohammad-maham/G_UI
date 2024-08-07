@@ -65,11 +65,12 @@
             </form>
         </div>
     }
-    @using (Html.Box("وضعیت کیف پول", col: 6))
+    @using (Html.Box(col: 6))
     {
         @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }
 </div>
+
 <script>
     $(function () {
         $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
