@@ -37,6 +37,7 @@ namespace G_APIs.Controllers
             return View(buyVM);
         }
 
+        //[AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
         [GoldAuthorize]
         public ActionResult SubmitBuy(BuyPerformVM buyVM)
         {
@@ -78,7 +79,8 @@ namespace G_APIs.Controllers
                 {
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
-                return View(!string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0);
+                double transactionId = !string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0;
+                return View(transactionId);
             }
             catch (Exception ex)
             {
