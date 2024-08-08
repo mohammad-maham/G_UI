@@ -85,7 +85,6 @@
             mixin: false,
             target:".transaction-result",
             success: function (data) {
-                debugger;
                 $("input[name='@nameof(Model.Weight)']").val('');
                 disableBuy();
                 //window.clearTimeout(dowhile);
@@ -105,7 +104,8 @@
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 data: {
-                    weight: value
+                    weight: value,
+                    calcType: 1,
                 },
                 success: function (data) {
                     if ($.isNumeric(data)) {
@@ -130,14 +130,4 @@
             disableBuy();
         }
     });
-
-
-
-
-
-
-
-    timer.pause();
-    // Do some stuff...
-    timer.resume();
 </script>

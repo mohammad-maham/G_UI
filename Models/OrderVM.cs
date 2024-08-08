@@ -26,7 +26,7 @@ namespace G_APIs.Models
         public List<SelectListItem> Carat { get; set; }
     }
 
-    public class BuyPerformVM
+    public class OrderPerformVM
     {
         public int Weight { get; set; }
         public long UserId { get; set; }

@@ -1,9 +1,11 @@
-﻿@model double
+﻿@using G_APIs.Models
+@model OnlinePriceVM
 @{
     Layout = null;
+    int calcType = Model.CalcTypes == CalcTypes.buy ? 1 : 2;
 }
 
-@Html.Editor("CurrentOnlinePrice", new { HtmlAttributes = new { DisplayName = "قیمت واحد",/* DefaultValue = Model.ToString("N0"),*/ InputGroup = "ریال" } })
+@Html.Editor("CurrentOnlinePrice", new { HtmlAttributes = new { DisplayName = "قیمت واحد", @Value = Model.Price.ToString("N0"), InputGroup = "ریال" } })
 
 <script>
     var dowhile;
@@ -15,7 +17,8 @@
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 data: {
-                    weight: 1.0
+                    weight: 1.0,
+                    calcType: @calcType
                 },
                 success: function (data) {
                     if ($.isNumeric(data)) {

@@ -16,7 +16,7 @@
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
                 @Html.Action("GoldOnlinePrice", new { isBuy = false })
                 <div class="col-auto">
-                    <label for="Weight">وزن درخواستی (گرم)</label>
+                    <label for="Weight">وزن (گرم)</label>
                     <div class="mb-3">
                         <input name="Weight" type="number" class="form-control text-right" value="@Model.Weight" aria-describedby="Weight-addon" required>
                         <div class="invalid-feedback">
@@ -67,3 +67,67 @@
         @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }
 </div>
+
+<script>
+    $(function () {
+        disableSell();
+        $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
+            e.stopPropagation();
+            return false;
+        });
+    });
+    function performSell() {
+        $('#frmBuy').ajaxForm({
+            validation: true,
+            url: '/Store/SubmitSell',
+            jwt: true,
+            blockui: true,
+            mixin: false,
+            target: ".transaction-result",
+            success: function (data) {
+                $("input[name='@nameof(Model.Weight)']").val('');
+                disableSell();
+                //window.clearTimeout(dowhile);
+                //dowhile = null;
+            }
+        });
+    }
+    function disableSell() {
+        $("#btnSell").attr("disabled", "disabled");
+        $("input[name='@nameof(Model.CurrentCalculatedPrice)']").val('');
+    }
+    $("input[name='@nameof(Model.Weight)']").bind('change', function (e) {
+        var inpCurrentCalculatedPrice = $("input[name='@nameof(Model.CurrentCalculatedPrice)']");
+        var value = $(this).val();
+        if (value > 0) {
+            $.ajax({
+                type: 'POST',
+                url: '/Store/GetOnlinePrice',
+                data: {
+                    weight: value,
+                    calcType: 2,
+                },
+                success: function (data) {
+                    if ($.isNumeric(data)) {
+                        if (data > 0) {
+                            $("#btnSell").removeAttr("disabled", "disabled");
+                            var formattedData = Number(data).toLocaleString('en');
+                            inpCurrentCalculatedPrice.val(formattedData);
+                            inpCurrentCalculatedPrice.css("background-color", "#25b61738");
+                            setTimeout(function () {
+                                inpCurrentCalculatedPrice.css("background-color", "");
+                            }, 1000);
+                        }
+                    } else {
+                        window.location = "/Account/Login";
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        } else {
+            disableBuy();
+        }
+    });
+</script>

@@ -45,7 +45,6 @@
                                 xhr.setRequestHeader('Authorization', auth);
                         },
                         success: (response) => {
-                            debugger
                             if (settings.mixin && !settings.target) {
                                 if (response.message != undefined && response.message != null && response.message != "") {
                                     if (response.result) {
@@ -76,7 +75,6 @@
                             settings.success(response);
                         },
                         error: (xhr, status, error) => {
-                            debugger;
                             if (settings.mixin)
                                 toast({
                                     type: 'error',

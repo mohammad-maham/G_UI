@@ -242,6 +242,7 @@
     </Compile>
     <Compile Include="Models\ApiResult.cs" />
     <Compile Include="Models\BankAccount.cs" />
+    <Compile Include="Models\OnlinePriceVM.cs" />
     <Compile Include="Models\OrderVM.cs" />
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Class1.cs" />
@@ -1167,7 +1168,7 @@
     <Content Include="Views\Store\BuyIndex.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Double.cshtml" />
     <Content Include="Views\Store\SellIndex.cshtml" />
-    <Content Include="Views\Store\SubmitBuy.cshtml" />
+    <Content Include="Views\Store\OrderResult.cshtml" />
     <Content Include="Views\Shared\_GoldButton.cshtml" />
     <Content Include="Views\Shared\_FormTitle.cshtml" />
     <Content Include="Views\Fund\Windrow.cshtml" />

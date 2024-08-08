@@ -6,6 +6,7 @@ namespace G_APIs.BussinesLogic.Interface
     {
         double GetOnlinePrice();
         double GetOnlineBuyPrice(PriceCalcVM priceCalc, string token);
-        ApiResult PerformBuy(BuyPerformVM buyVM, string token);
+        ApiResult PerformBuy(OrderPerformVM buyVM, string token);
+        ApiResult PerformSell(OrderPerformVM sellVM, string token);
     }
 }
