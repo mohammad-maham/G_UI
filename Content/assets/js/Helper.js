@@ -8,6 +8,7 @@
             miniloader: false,
             blockui: false,
             mixin: false,
+            target: "",
             additionalData: {},
             success: function (response) { },
             error: function (xhr, status, error) { }
@@ -45,7 +46,7 @@
                         },
                         success: (response) => {
                             debugger
-                            if (settings.mixin) {
+                            if (settings.mixin && !settings.target) {
                                 if (response.message != undefined && response.message != null && response.message != "") {
                                     if (response.result) {
                                         toast({
@@ -62,11 +63,20 @@
                                 } else {
                                     GetRedirectToUrl("/Account/Login");
                                 }
+                            } else {
+                                if (response) {
+                                    if (settings.target) {
+                                        $(settings.target).empty();
+                                        $(settings.target).append(response);
+                                    }
+                                } else {
+                                    GetRedirectToUrl("/Account/Login");
+                                }
                             }
                             settings.success(response);
                         },
                         error: (xhr, status, error) => {
-
+                            debugger;
                             if (settings.mixin)
                                 toast({
                                     type: 'error',

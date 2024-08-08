@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace G_APIs.Models
 {
-    public class BuyVM
+    public class OrderVM
     {
         [Display(Name = "وزن(گرم)"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int Weight { get; set; }

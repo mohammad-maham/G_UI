@@ -1,0 +1,64 @@
+﻿@using G_APIs.Models.ComponentModels
+@model GoldAlert
+@{
+    string alertType = getAlertType((int)Model.AlertType);
+}
+
+@functions {
+    string getAlertType(int type)
+    {
+        string alertType = string.Empty;
+        switch (type)
+        {
+            case 1:
+                alertType = "info";
+                break;
+            case 2:
+                alertType = "warning";
+                break;
+            case 3:
+                alertType = "danger";
+                break;
+            case 4:
+                alertType = "success";
+                break;
+
+            default:
+                break;
+        }
+        return alertType;
+    }
+}
+
+
+<style>
+    .alert {
+        position: relative;
+    }
+
+    #alertclose {
+        position: absolute;
+        top: 50%;
+        left: 1%;
+        line-height: 0;
+    }
+
+    .alert-heading {
+        font-size: 15pt !important;
+    }
+</style>
+
+<div class="col-md-12" style="padding:0;">
+    <div class="alert alert-@(alertType) alert-dismissible show" role="alert">
+        <p class="alert-heading"><span class="@(Model.AlertTitleIcon)"></span><strong> @(Model.AlertTitleText) </strong></p>
+        <dl>
+            @foreach (string contentText in Model.AlertContentTexts)
+            {
+                <dd>&#9672; @(contentText) </dd>
+            }
+        </dl>
+        <button type="button" id="alertclose" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>

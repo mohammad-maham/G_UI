@@ -30,7 +30,7 @@ namespace G_APIs.Controllers
                 GoldWeight = 1
             }, token);
 
-            BuyVM buyVM = new BuyVM
+            OrderVM buyVM = new OrderVM
             {
                 CurrentOnlinePrice = buyPrice,
             };

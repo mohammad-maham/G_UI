@@ -242,11 +242,12 @@
     </Compile>
     <Compile Include="Models\ApiResult.cs" />
     <Compile Include="Models\BankAccount.cs" />
-    <Compile Include="Models\BuyVM.cs" />
+    <Compile Include="Models\OrderVM.cs" />
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\ComponentModels\BaseModel.cs" />
     <Compile Include="Models\ComponentModels\FormTitle.cs" />
+    <Compile Include="Models\ComponentModels\GoldAlert.cs" />
     <Compile Include="Models\ComponentModels\GoldButton.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Dashboard.cs" />
@@ -1178,6 +1179,7 @@
     <Content Include="Views\Shared\EditorTemplates\Long.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Store\GoldOnlinePrice.cshtml" />
+    <Content Include="Views\Shared\_GoldAlert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

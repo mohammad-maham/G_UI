@@ -1,6 +1,6 @@
 ﻿@using G_APIs.Models
 @using G_APIs.Models.ComponentModels
-@model BuyVM
+@model OrderVM
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
@@ -34,17 +34,14 @@
                     </div>
                 </div>
                 <hr />
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <h6 class="alert-heading">
-                        <strong>
-                            <i class="fa fa-bell fa-5x"></i>
-                            نکته
-                        </strong>
-                    </h6>
-                    <p>کاربر محترم، مبلغ کل از کیف پول کسر و به صورت وزن بر حسب گرم به کیف پول شما اضافه خواهد شد.</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="transaction-result">
+                    @Html.Partial("_GoldAlert", new GoldAlert
+                    {
+                        AlertContentTexts = new List<string> { "کاربر محترم، مبلغ کل از کیف پول کسر و به صورت وزن بر حسب گرم به کیف پول شما اضافه خواهد شد." },
+                        AlertTitleIcon = "fa fa-bolt fa-xl",
+                        AlertTitleText = "نکته",
+                        AlertType = GoldAlertTypes.Warning,
+                    })
                 </div>
                 <div class="col-auto field-wrapper command-panel">
                     @Html.Partial("_GoldButton", new GoldButton()
@@ -73,49 +70,74 @@
 
 <script>
     $(function () {
+        disableBuy();
         $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
             e.stopPropagation();
             return false;
         });
     });
     function performBuy() {
-        window.clearTimeout(dowhile);
-        dowhile = null;
         $('#frmBuy').ajaxForm({
             validation: true,
             url: '/Store/SubmitBuy',
             jwt: true,
             blockui: true,
-            mixin: true,
+            mixin: false,
+            target:".transaction-result",
             success: function (data) {
-                console.log(data)
+                debugger;
+                $("input[name='@nameof(Model.Weight)']").val('');
+                disableBuy();
+                //window.clearTimeout(dowhile);
+                //dowhile = null;
             }
         });
+    }
+    function disableBuy() {
+        $("#btnBuy").attr("disabled", "disabled");
+        $("input[name='@nameof(Model.CurrentCalculatedPrice)']").val('');
     }
     $("input[name='@nameof(Model.Weight)']").bind('change', function (e) {
         var inpCurrentCalculatedPrice = $("input[name='@nameof(Model.CurrentCalculatedPrice)']");
         var value = $(this).val();
-        $.ajax({
-            type: 'POST',
-            url: '/Store/GetOnlinePrice',
-            data: {
-                weight: value
-            },
-            success: function (data) {
-                if ($.isNumeric(data)) {
-                    var formattedData = Number(data).toLocaleString('en');
-                    inpCurrentCalculatedPrice.val(formattedData);
-                    inpCurrentCalculatedPrice.css("background-color", "#25b61738");
-                    setTimeout(function () {
-                        inpCurrentCalculatedPrice.css("background-color", "");
-                    }, 1000);
-                } else {
-                    window.location = "/Account/Login";
+        if (value > 0) {
+            $.ajax({
+                type: 'POST',
+                url: '/Store/GetOnlinePrice',
+                data: {
+                    weight: value
+                },
+                success: function (data) {
+                    if ($.isNumeric(data)) {
+                        if (data > 0) {
+                            $("#btnBuy").removeAttr("disabled", "disabled");
+                            var formattedData = Number(data).toLocaleString('en');
+                            inpCurrentCalculatedPrice.val(formattedData);
+                            inpCurrentCalculatedPrice.css("background-color", "#25b61738");
+                            setTimeout(function () {
+                                inpCurrentCalculatedPrice.css("background-color", "");
+                            }, 1000);
+                        }
+                    } else {
+                        window.location = "/Account/Login";
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
                 }
-            },
-            error: function (data) {
-                console.log(data)
-            }
-        });
+            });
+        } else {
+            disableBuy();
+        }
     });
+
+
+
+
+
+
+
+    timer.pause();
+    // Do some stuff...
+    timer.resume();
 </script>
