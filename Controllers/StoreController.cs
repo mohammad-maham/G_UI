@@ -30,11 +30,11 @@ namespace G_APIs.Controllers
                 GoldWeight = 1
             }, token);
 
-            OrderVM buyVM = new OrderVM
+            OrderVM orderVM = new OrderVM
             {
                 CurrentOnlinePrice = buyPrice,
             };
-            return View(buyVM);
+            return View(orderVM);
         }
 
         //[AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
@@ -88,9 +88,23 @@ namespace G_APIs.Controllers
             }
         }
 
+        [HttpGet]
+        [GoldAuthorize]
         public ActionResult SellIndex()
         {
-            return View();
+            string token = Request.Cookies["gldauth"].Value;
+            User userInfo = _session.Get<User>("UserInfo");
+            double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
+            {
+                GoldCalcType = CalcTypes.sell,
+                GoldWeight = 1
+            }, token);
+
+            OrderVM orderVM = new OrderVM
+            {
+                CurrentOnlinePrice = buyPrice,
+            };
+            return View(orderVM);
         }
 
         public ActionResult GoldOnlinePrice(bool isBuy = true)
