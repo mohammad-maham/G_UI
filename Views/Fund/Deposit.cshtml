@@ -25,12 +25,12 @@
             <div class="col-auto field-wrapper command-panel">
                 @Html.Partial("_GoldButton", new GoldButton()
                 {
-                    ButtonType = GoldButtonTypes.submit,
-                    Name = "btnBuy",
+                    ButtonType = GoldButtonTypes.button,
+                    Name = "btnDeposit",
                     Icon = "fa fa-shopping-basket fa-2x",
                     Class = "btn btn-success",
                     Text = "واریز",
-                    OnClick = "performBuy()"
+                    OnClick = "Deposit()"
                 })
                 @Html.Partial("_GoldButton", new GoldButton()
                 {
@@ -75,5 +75,16 @@
 
         },
     });
+
+    function Deposit() {
+
+        var amount = $('#amount').val();
+        if (amount <= 0) {
+            alert("لطفا مبلغ مورد نظر را وارد نمایید.")
+            return;
+        }
+        
+        window.location.href = "http://194.60.231.81:7124/Home/Deposit?walletId="+ @Model.WalletId + "&amount=" + amount
+    }
 
 </script>
