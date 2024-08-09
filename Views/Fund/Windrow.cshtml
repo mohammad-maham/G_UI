@@ -1,6 +1,6 @@
 ﻿@using G_APIs.Models
 @using G_APIs.Models.ComponentModels
-@model  List<WalletCurrency>
+@model  WalletCurrency
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
@@ -8,3 +8,69 @@
     Title = "برداشت  ",
     Description = "ثبت برداشت پول"
 })
+
+<div class="row gold-row">
+    @using (Html.Box(col: 6))
+    {
+        <form form class="frmDeposit" id="frmDeposit" action="javascript:void(0);" novalidate>
+
+            @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
+
+
+            @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
+            @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
+
+            <hr />
+
+            <div class="col-auto field-wrapper command-panel">
+                @Html.Partial("_GoldButton", new GoldButton()
+                {
+                    ButtonType = GoldButtonTypes.submit,
+                    Name = "btnBuy",
+                    Icon = "fa fa-shopping-basket fa-2x",
+                    Class = "btn btn-success",
+                    Text = "ثبت درخواست  "
+                })
+                @Html.Partial("_GoldButton", new GoldButton()
+                {
+                    ButtonType = GoldButtonTypes.cancel,
+                    Name = "btnCancel",
+                    Text = "برگشت",
+
+                })
+            </div>
+        </form>
+    }
+
+    @using (Html.Box("وضعیت کیف پول", col: 4))
+    {
+        @Html.Action("Wallet", "Fund", new { ShowButtons = false })
+    }
+</div>
+<div class="row gold-row">
+    @using (Html.Box(title: "   لیست تراکنش ها    ", col: 12))
+    {
+        @Html.Action("GetTransactions", "Fund", new );
+    }
+</div>
+<script>
+
+    $('#frmDeposit').ajaxForm({
+
+        validation: true,
+        url: '/Fund/Windrow',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+
+        success: function (response) {
+
+            console.log(response)
+            location.reload();
+            $('#amount').val('');
+        },
+
+    });
+
+
+</script>

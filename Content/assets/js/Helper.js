@@ -26,6 +26,8 @@
                 else {
                     var _data = form.serialize()
 
+                    debugger;
+
                     if (!settings.miniloader && !settings.blockui)
                         ShowLoader();
 

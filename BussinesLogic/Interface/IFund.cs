@@ -1,4 +1,5 @@
 ﻿using G_APIs.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,10 +9,14 @@ namespace G_APIs.BussinesLogic.Interface
     public interface IFund
     {
         WalletCurrency GetWallet(Wallet model);
-        Task<List<WalletCurrency>> GetWalletCurrencyAsync(Wallet model);
+        List<WalletCurrency> GetWalletCurrencyAsync(Wallet model);
         List<WalletCurrency> GetWalletCurrency(Wallet model);
-        Task<ApiResult> Windrow(WalletCurrency model);
-        Task<ApiResult> Deposit(WalletCurrency model);
-        Task<ApiResult> Exchange(Xchenger model);
+        ApiResult  Windrow(WalletCurrency model);
+        ApiResult  Deposit(WalletCurrency model);
+        IEnumerable<WalletBankAccount> GetBankAccounts(User userId);
+        ApiResult AddBankAccount(WalletBankAccount model);
+        ApiResult ToggleBankCard(WalletBankAccount model);
+        IEnumerable<Transaction> GetTransactions(Wallet model);
+
     }
 }

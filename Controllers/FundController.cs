@@ -1,14 +1,8 @@
 ﻿using G_APIs.BussinesLogic.Interface;
-using G_APIs.Common;
 using G_APIs.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 namespace G_APIs.Controllers
 {
@@ -22,6 +16,20 @@ namespace G_APIs.Controllers
         {
             _fund = fund;
             _session = session;
+        }
+
+        [GoldAuthorize]
+        public ActionResult BankAccount()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
         [GoldAuthorize]
@@ -54,14 +62,144 @@ namespace G_APIs.Controllers
             {
                 var user = _session.Get<User>("UserInfo");
 
-                //var res =await   _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.UserId });
-                //return View(res.Where(x => x.CurrencyId == 1).FirstOrDefault());
+                if (user == null)
+                    return View(new WalletCurrency());
 
-                var now = DateTime.Now;
-                var pc = new PersianCalendar();
-                var today = pc.GetYear(now) + "/" + pc.GetMonth(now) + "/" + pc.GetDayOfMonth(now);
+                //var res = _fund.GetWalletCurrency(new WalletCurrency());
 
-                return View(new WalletCurrency { RegDate = Convert.ToDateTime(today) });
+                return View(new WalletCurrency());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [GoldAuthorize]
+        public ActionResult GetBankAccounts()
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View(new List<WalletBankAccount> { new WalletBankAccount { Shaba = "بروز خطا در دریافت اطلاعات" } });
+
+                var res = _fund.GetBankAccounts(user).OrderBy(x => x.Id).ToList();
+
+                return View(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [GoldAuthorize]
+        public ActionResult GetTransactions()
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View(new List<Transaction>());
+
+                var res = _fund.GetTransactions(new Wallet { UserId = user.UserId }).OrderBy(x => x.Id).ToList();
+
+                return View(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        [HttpPost]
+        [GoldAuthorize]
+        public ActionResult Deposit(WalletCurrency model)
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
+
+                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.UserId })
+                    .Where(x => x.CurrencyId == 1).FirstOrDefault();
+
+                if (wc == null)
+                    return Json(new { result = false, message = "بروز خطا : کیف پول پیدا نشد." });
+
+
+                wc.Amount = model.Amount;
+                wc.WalletCurrencyId = 1;
+
+                var res = _fund.Deposit(wc);
+
+                if (res.StatusCode == 200)
+                    return Json(new { result = true, message = res.Message });
+
+                return Json(new { result = false, message = res.Message });
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [GoldAuthorize]
+        public ActionResult ToggleBankCard(int id)
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View(new List<WalletBankAccount> { new WalletBankAccount { Shaba = "بروز خطا در دریافت اطلاعات" } });
+
+                var res = _fund.ToggleBankCard(new WalletBankAccount { Id = id });
+
+                return View("BankAccount");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [GoldAuthorize]
+        public ActionResult AddBankAccount(WalletBankAccount model)
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
+
+                var wallet = _fund.GetWallet(new Wallet { UserId = user.UserId });
+                model.BankAccountNumber = model.BankAccountNumber.Replace("-", "");
+                model.WalletId = wallet.Id;
+
+                var res = _fund.AddBankAccount(model);
+
+                if (res != null)
+                {
+
+                    if (res.StatusCode != 200)
+                        return Json(new { result = false, message = res.Message });
+
+                    if (res.StatusCode == 200)
+                        return Json(new { result = true, message = res.Message });
+
+                }
+
+                return Json(new { result = false, message = "بروز خطا لطفا دوباره تلاش کنید." });
 
             }
             catch (Exception)
@@ -77,7 +215,7 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<ActionResult> Windrow()
+        public ActionResult Windrow()
         {
             try
             {
@@ -86,9 +224,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res = await _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.Id });
-
-                return View(res);
+                return View(new WalletCurrency());
             }
             catch (Exception)
             {
@@ -96,79 +232,54 @@ namespace G_APIs.Controllers
             }
         }
 
+        [HttpPost]
         [GoldAuthorize]
-        public async Task<ActionResult> Exchange()
+        public ActionResult Windrow(WalletCurrency model)
         {
             try
             {
+                if (model.Amount <= 0)
+                    return Json(new { result = false, message = " لطفا مبلغ درخواستی را وارد نمایید." });
+
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res = await _fund.GetWalletCurrencyAsync(new Wallet { UserId = user.Id });
+                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.UserId })
+                  .Where(x => x.CurrencyId == 1).FirstOrDefault();
 
-                return View(res);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+                if (wc == null)
+                    return Json(new { result = false, message = "بروز خطا : کیف پول پیدا نشد." });
 
 
-        [HttpPatch]
-        [GoldAuthorize]
-        public async Task<ActionResult> Windrow(WalletCurrency model)
-        {
-            try
-            {
-                var res = await _fund.Windrow(model);
+                if (wc.Amount < model.Amount)
+                    return Json(new { result = false, message = "بروز خطا :مقدار درخواستی بیش از موجودی میباشد." });
+
+                wc.Amount = model.Amount;
+                var res = _fund.Windrow(wc);
 
                 if (res != null)
                 {
-
                     if (res.StatusCode != 200)
-                        return Json(new { result = false, message = "عملیات ناموفق بود لطفا دوباره تلاش نمایید." });
+                        return Json(new { result = false, message = res.Message });
 
-                    if (res.StatusCode == 200 && res.Data != null)
-                        return Json(new ApiResult(200));
+                    if (res.StatusCode == 200)
+                        return Json(new { result = true, message = res.Message });
                 }
 
                 return Json(new { result = false, message = "بروز خطا لطفا دوباره تلاش کنید." });
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-            }
-
-        }
-
-        [HttpPatch]
-        [GoldAuthorize]
-        public async Task<ActionResult> Exchange(Xchenger model)
-        {
-            try
-            {
-                var res = await _fund.Exchange(model);
-
-                if (res != null)
+                return Json(new
                 {
-
-                    if (res.StatusCode != 200)
-                        return Json(new { result = false, message = "عملیات ناموفق بود لطفا دوباره تلاش نمایید." });
-
-                    if (res.StatusCode == 200 && res.Data != null)
-                        return Json(new ApiResult(200));
-                }
-
-                return Json(new { result = false, message = "بروز خطا لطفا دوباره تلاش کنید." });
+                    result = false,
+                    message = ex.Message
+                });
             }
-            catch (Exception)
-            {
-                throw;
-            }
-
         }
+
     }
 }

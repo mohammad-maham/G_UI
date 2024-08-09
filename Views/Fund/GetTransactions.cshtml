@@ -1,0 +1,37 @@
+﻿@using G_APIs.Models
+@model List<Transaction>
+@{
+    Layout = null;
+}
+
+
+
+        <table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
+            <thead class="">
+                <tr>
+                    <th>    </th>
+                    <th>  نوع ارز </th>
+                    <th> مدل تراکنش  </th>
+                    <th> نوع تراکنش  </th>
+                    <th> تاریح  </th>
+                    <th>مبلغ  </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var b in Model)
+                {
+                    <tr class="gra">
+                        <td>@b.Id</td>
+                        <td>@(b.WalletCurrencyId ==1 ?"پول":"طلا")  </td>
+                        <td>@(b.TransactionModeId ==2 ?"آنلاین":"آفلاین")  </td>
+                        <td>@(b.TransactionTypeId ==4 ?"واریز":"برداشت")  </td>
+                        <td>@b.TransactionDate </td>
+                        <td>@b.Amount </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+@Html.Partial("_LayoutReport");
+
+

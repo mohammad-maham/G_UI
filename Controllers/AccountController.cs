@@ -42,18 +42,6 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public ActionResult BankAccount(BankAccount model)
-        {
-            return View(model ?? new BankAccount());
-        }
-
-        [GoldAuthorize]
-        public ActionResult ActiveCard(BankAccount model)
-        {
-            return RedirectToAction("BankAccount");
-        }
-
-        [GoldAuthorize]
         public async Task<ActionResult> AddressInfo(User model)
         {
             var token = Request.Cookies["auth"].ToString();

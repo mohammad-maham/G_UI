@@ -35,5 +35,8 @@ namespace G_APIs.Models
         [Display(Name = "توضیحات در صورت لزوم")]
         public string Description { get; set; }
 
+        public long WalletCurrencyId { get; set; }
+
+
     }
 }
