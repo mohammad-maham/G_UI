@@ -65,9 +65,11 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new WalletCurrency());
 
-                //var res = _fund.GetWalletCurrency(new WalletCurrency());
+                var res = _fund.GetWalletCurrency(new Wallet { UserId = user.UserId })
+                    .FirstOrDefault(x => x.CurrencyId == 1);
 
-                return View(new WalletCurrency());
+                res.Amount = 0;
+                return View(res);
             }
             catch (Exception)
             {
