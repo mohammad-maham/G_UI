@@ -1,26 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace G_APIs.Models { 
-
-public partial class Xchenger
+namespace G_APIs.Models
 {
-    public long Id { get; set; }
 
-    public long WalleId { get; set; }
+    public partial class Xchenger
+    {
+        public long Id { get; set; }
 
-    public string SourceAddress { get; set; }  
+        public long WalleId { get; set; }
 
-    public long SourceWalletCurrency { get; set; }
+        public string SourceAddress { get; set; }
 
-    public decimal SourceAmount { get; set; }
+        public long SourceWalletCurrency { get; set; }
 
-    public string DestinationAddress { get; set; }  
+        public decimal SourceAmount { get; set; }
 
-    public long DestinationWalletCurrency { get; set; }
+        public string DestinationAddress { get; set; }
 
-    public decimal DestinationAmount { get; set; }
+        public long DestinationWalletCurrency { get; set; }
 
-    public DateTime XchengData { get; set; } 
-}
+        public decimal DestinationAmount { get; set; }
+
+        public DateTime XchengData { get; set; }
+        public string PersianDate
+        {
+            get
+            {
+                if (XchengData is DateTime pdate)
+                    return new PersianDateTime(pdate).ToString("yyyy/MM/dd HH:mm:ss");
+
+                return string.Empty;
+            }
+        }
+    }
 }
