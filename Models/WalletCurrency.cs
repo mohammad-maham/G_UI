@@ -18,6 +18,16 @@ namespace G_APIs.Models
 
         [Display(Name = "تاریخ")]
         public DateTime RegDate { get; set; }
+        public string PersianDate
+        {
+            get
+            {
+                if (RegDate is DateTime pdate)
+                    return new PersianDateTime(pdate).ToString("yyyy/MM/dd HH:mm:ss");
+
+                return string.Empty;
+            }
+        }
 
         [Display(Name = "مبلغ")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
