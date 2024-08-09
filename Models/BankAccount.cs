@@ -11,7 +11,7 @@ namespace G_APIs.Models
         public string BankName { get; set; }
 
 
-        [Display(Name = "شماره جسای")]
+        [Display(Name = "شماره حساب")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")] 
         public string Hesab { get; set; }
 
@@ -23,7 +23,7 @@ namespace G_APIs.Models
         [Display(Name = "شماره کارت")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         [ReadOnly(true)]
-        public string CardNumber { get; set; }
+        public string BankAccountNumber { get; set; }
 
         public bool ActiveCard { get; set; }
     }

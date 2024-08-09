@@ -228,7 +228,6 @@
     <Compile Include="Common\GoldUserInfoAttribute.cs" />
     <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Common\HtmlAttributesExtensions.cs" />
-    <Compile Include="Common\Common.cs" />
     <Compile Include="Common\DataTableExtention.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GoldAuthorizeAttribute.cs" />
@@ -1160,7 +1159,7 @@
     <Content Include="Views\Report\Report2.cshtml" />
     <Content Include="Views\Report\Report3.cshtml" />
     <Content Include="Views\Account\AddressInfo.cshtml" />
-    <Content Include="Views\Account\BankAccount.cshtml" />
+    <Content Include="Views\Fund\BankAccount.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
@@ -1181,6 +1180,9 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Store\GoldOnlinePrice.cshtml" />
     <Content Include="Views\Shared\_GoldAlert.cshtml" />
+    <Content Include="Views\Fund\GetBankAccounts.cshtml" />
+    <Content Include="Views\Fund\GetTransactions.cshtml" />
+    <Content Include="Views\Shared\_LayoutReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

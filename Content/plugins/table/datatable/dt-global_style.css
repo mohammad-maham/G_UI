@@ -193,3 +193,10 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 @media (max-width: 767px) {
   div.dataTables_wrapper div.dataTables_info {
     margin-bottom: 40px; } }
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f1f2f3 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}

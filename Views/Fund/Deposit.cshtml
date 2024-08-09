@@ -10,14 +10,13 @@
 })
 
 <div class="row gold-row">
-    @using (Html.Box( col: 6))
+    @using (Html.Box(col: 6))
     {
         <form form class="frmDeposit" id="frmDeposit" action="javascript:void(0);" novalidate>
 
             @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
 
 
-            @Html.EditorFor(x => x.RegDate, new { HtmlAttributes = new { @class = "rtl", id = "regDate", readony ="readonly"} })
             @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
             @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
 
@@ -37,7 +36,7 @@
                 {
                     ButtonType = GoldButtonTypes.cancel,
                     Name = "btnCancel",
-                    Text = "واریز",
+                    Text = "برگشت",
 
                 })
             </div>
@@ -48,25 +47,33 @@
     {
         @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }
+
+</div>
+<div class="row gold-row">
+    @using (Html.Box(title: "   لیست تراکنش ها    ", col: 12))
+    {
+
+        @Html.Action("GetTransactions", "Fund")
+    }
 </div>
 
 <script>
 
     $('#frmDeposit').ajaxForm({
 
-        validation: true,
         url: '/Fund/Deposit',
-        jwt: false,
+        validation: true,
+        jwt: true,
         blockui: true,
         mixin: true,
 
         success: function (response) {
 
             console.log(response)
-           
-        },
-       
-    });
+            location.reload();
+            $('#amount').val('');
 
+        },
+    });
 
 </script>

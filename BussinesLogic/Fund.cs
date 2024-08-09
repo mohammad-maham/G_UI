@@ -2,6 +2,7 @@
 using G_APIs.Models;
 using G_APIs.Services;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static G_APIs.Common.Enums;
@@ -13,48 +14,67 @@ namespace G_APIs.BussinesLogic
     {
         public WalletCurrency GetWallet(Wallet model)
         {
-            var res =  new GoldApi(GoldHost.Wallet, "/api/Fund/GetWallet", model).Post();
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWallet", model).Post();
             var w = JsonConvert.DeserializeObject<WalletCurrency>(res.Data);
 
             return w;
         }
 
-        public List<WalletCurrency>  GetWalletCurrency(Wallet model)
+        public List<WalletCurrency> GetWalletCurrency(Wallet model)
         {
-            var res =   new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency",model).Post();
-            
-            var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
-
-            return w;
-        }
-
-        public async Task<List<WalletCurrency>> GetWalletCurrencyAsync(Wallet model)
-        {
-            var res = await    new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", model).PostAsync();
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", model).Post();
 
             var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
 
             return w;
         }
 
-        public async Task<ApiResult> Deposit(WalletCurrency model)
+        public List<WalletCurrency> GetWalletCurrencyAsync(Wallet model)
         {
-            var res = await new GoldApi(GoldHost.Wallet, "/api/Fund/Deposit", model).PostAsync();
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", model).Post();
+
+            var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
+
+            return w;
+        }
+
+        public ApiResult Deposit(WalletCurrency model)
+        {
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/Deposit", model).Post();
             return res;
         }
 
-        public async Task<ApiResult> Windrow(WalletCurrency model)
+        public ApiResult Windrow(WalletCurrency model)
         {
-            var res = await new GoldApi(GoldHost.Wallet, "/api/Fund/Windrow", model).PostAsync();
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/Windrow", model).Post();
             return res;
         }
 
-        public async Task<ApiResult> Exchange(Xchenger model)
+        public IEnumerable<WalletBankAccount> GetBankAccounts(User userId)
         {
-            var res = await new GoldApi(GoldHost.Wallet, "/api/Fund/ExChange", model).PostAsync();
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetBankAccounts", userId).Post();
+            var res = JsonConvert.DeserializeObject<List<WalletBankAccount>>(t.Data);
+
             return res;
         }
 
+        public ApiResult AddBankAccount(WalletBankAccount model)
+        {
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/AddBankAccount", model).Post();
+            return res;
+        }
 
+        public ApiResult ToggleBankCard(WalletBankAccount model)
+        {
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/ToggleBankCard", model).Post();
+            return res;
+        }
+        public IEnumerable<Transaction> GetTransactions(Wallet model)
+        {
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetTransactions", model).Post();
+            var res = JsonConvert.DeserializeObject<List<Transaction>>(t.Data);
+
+            return res;
+        }
     }
 }
