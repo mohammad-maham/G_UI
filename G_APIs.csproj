@@ -361,7 +361,6 @@
     <Content Include="Content\assets\img\login-image.jpg" />
     <Content Include="Content\assets\img\login-image.png" />
     <Content Include="Content\assets\img\mindset.svg" />
-    <Content Include="Content\assets\img\money.jpg" />
     <Content Include="Content\assets\js\app.js" />
     <Content Include="Content\assets\js\apps\contact.js" />
     <Content Include="Content\assets\js\apps\custom-mailbox.js" />
@@ -1188,6 +1187,7 @@
     <Content Include="Views\Fund\GetBankAccounts.cshtml" />
     <Content Include="Views\Fund\GetTransactions.cshtml" />
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Textarea.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

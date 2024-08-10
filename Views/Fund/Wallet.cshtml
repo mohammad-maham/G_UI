@@ -18,17 +18,65 @@
         color: darkgoldenrod;
     }
 
+   .home-wallet .w-chart {
+        display: flex;
+    }
 
-    .currency-type1 {
+    .home-wallet .w-chart .w-chart-section {
+        width: 100%;
+        padding: 0 12px;
+    }
+
+    .home-wallet .widget.widget-one .w-chart .w-chart-section .w-detail {
+        position: absolute;
+        color: #fff;
+    }
+
+    .home-wallet .w-chart .w-chart-section .w-detail {
+        position: absolute;
+        color: #fff;
+    }
+
+    .home-wallet .w-chart .w-chart-section .w-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .home-wallet .w-chart .w-chart-section .w-stats {
+        color: #f8538d;
+        font-size: 20px;
+        letter-spacing: 1px;
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+
+    .home-wallet .currency-type1 {
         width: 100%;
         background: url(../../Content/assets/img/currency-type1.png);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        padding: 2px;
+        overflow: hidden;
     }
 
-    .currency-type2 {
+    .home-wallet .currency-type2 {
         background: url(../../Content/assets/img/currency-type2.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        padding: 2px;
+    }
+
+    .home-wallet  .invoice-box [class*="info-detail-"]:not(.info-sub) {
+        display: block !important;
+        padding:5px;
+    }
+    .home-wallet  .invoice-box .acc-total-info {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
     }
 </style>
 
@@ -36,11 +84,109 @@
 
     var spark2 = {
         chart: {
-            id: 'total-users',
+            id: 'unique-visits',
             group: 'sparks1',
             type: 'line',
-            width:200,
-            height: 40,
+            height: 80,
+            //width:440,
+            sparkline: {
+                enabled: true
+            },
+            dropShadow: {
+                enabled: true,
+                top: 1,
+                left: 1,
+                blur: 2,
+                color: '#e2a03f',
+                opacity: 0.7,
+            }
+        },
+        series: [{
+            data: [21, 9, 36, 12, 44, 25, 59, 41, 66, 25].reverse()
+        }],
+        stroke: {
+            curve: 'smooth',
+            width: 2,
+        },
+        markers: {
+            size: 0
+        },
+        grid: {
+            padding: {
+                top: 35,
+                bottom: 0,
+                left: 40
+            }
+        },
+        colors: ['#e2a03f'],
+        tooltip: {
+            x: {
+                show: false
+            },
+            y: {
+                title: {
+                    formatter: function formatter(val) {
+                        return '';
+                    }
+                }
+            }
+        },
+        responsive: [{
+            breakpoint: 1351,
+            options: {
+                chart: {
+                    height: 95,
+                },
+                grid: {
+                    padding: {
+                        top: 35,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+            },
+        },
+        {
+            breakpoint: 1200,
+            options: {
+                chart: {
+                    height: 80,
+                },
+                grid: {
+                    padding: {
+                        top: 35,
+                        bottom: 0,
+                        left: 40
+                    }
+                },
+            },
+        },
+        {
+            breakpoint: 576,
+            options: {
+                chart: {
+                    height: 95,
+                },
+                grid: {
+                    padding: {
+                        top: 45,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+            },
+        }
+
+        ]
+    }
+
+    var spark1 = {
+        chart: {
+            id: 'total-users',
+            group: 'sparks2',
+            type: 'line',
+            height: 80,
+            //width: 440,
             sparkline: {
                 enabled: true
             },
@@ -152,26 +298,47 @@
 
                 @foreach (var w in Model)
                 {
-                    <div class="info-detail-1 mt-2 currency-type@(w.CurrencyId)">
+                    <div class="info-detail-1 ">
 
-                        <p class="cur-name"> <i class="fa fa-google-wallet"></i>  @(w.CurrencyName ?? "") </p>
+                        @*<p class="cur-name"> <i class="fa fa-google-wallet"></i>  @(w.CurrencyName ?? "") </p>
 
-                        <div class="w-chart-render-one">
-                            <div id="currency-type@(w.CurrencyId)"></div>
+                            <div class="w-chart-render-one">
+                                <div id="currency-type@(w.CurrencyId)"></div>
+                            </div>
+
+
+
+                            <p class="unit"> @w.Amount.ToString("N0") <span> @(w.Unit ?? "") </span>  </p>*@
+
+                        <div class="w-chart currency-type@(w.CurrencyId)">
+
+
+
+                            <div class="w-chart-section">
+                                <div class="w-detail">
+                                    <p class="w-title"> @(w.CurrencyName ?? "")</p>
+                                    <p class="w-stats">@w.Amount.ToString("N0") <span> @(w.Unit ?? "") </span></p>
+                                </div>
+                                <div class="w-chart-render-one">
+                                    <div id="currency-type@(w.CurrencyId)"></div>
+                                </div>
+
+                                <script>
+                                     d_1C_2@(w.CurrencyId) = new ApexCharts(document.querySelector("#currency-type@(w.CurrencyId)"), spark@(w.CurrencyId));
+                                     d_1C_2@(w.CurrencyId).render();
+                                </script>
+                            </div>
                         </div>
 
-                        <script>
-                            d_1C_2 = new ApexCharts(document.querySelector("#currency-type@(w.CurrencyId)"), spark2);
-                            d_1C_2.render();
-                        </script>
 
-                        <p class="unit"> @w.Amount.ToString("N0") <span> @(w.Unit ?? "") </span>  </p>
+
+
                     </div>
                 }
 
             </div>
-            @if (showButtons)
-            {
+            @*@if (showButtons)
+            {*@
                 <div class="inv-action">
                     @Html.Partial("_GoldButton", new GoldButton()
                        {
@@ -194,7 +361,7 @@
                        })
 
                 </div>
-            }
+            @* } *@
 
         </div>
     </div>
