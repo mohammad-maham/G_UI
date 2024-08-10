@@ -43,7 +43,7 @@
         </form>
     }
 
-    @using (Html.Box("وضعیت کیف پول", col: 6))
+    @using (Html.Box( col: 6))
     {
         @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }
@@ -52,7 +52,6 @@
 <div class="row gold-row">
     @using (Html.Box(title: "   لیست تراکنش ها    ", col: 12))
     {
-
         @Html.Action("GetTransactions", "Fund")
     }
 </div>
