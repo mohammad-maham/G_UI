@@ -22,19 +22,14 @@ namespace G_APIs.Models
 
         public DateTime RegDate { get; set; }
 
-        public string PersianDate
-        {
-            get
-            {
-                if (RegDate is DateTime pdate)
-                    return new PersianDateTime(pdate).ToString("yyyy/MM/dd HH:mm:ss");
-
-                return string.Empty;
-            }
-        }
         public short OrderId { get; set; }
 
         public string ValidationInfo { get; set; }
+
+
+        [Display(Name = "نام بانک")]
+        [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
+        public string Name { get; set; }
 
         [Display(Name = "نام بانک")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]

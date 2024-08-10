@@ -185,7 +185,8 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
                 var wallet = _fund.GetWallet(new Wallet { UserId = user.UserId });
-                model.BankAccountNumber = model.BankAccountNumber.Replace("-", "");
+                model.BankAccountNumber = model.BankAccountNumber.Replace("-", "").Replace("_","");
+
                 model.WalletId = wallet.Id;
 
                 var res = _fund.AddBankAccount(model);

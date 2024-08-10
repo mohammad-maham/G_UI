@@ -355,13 +355,13 @@
     <Content Include="Content\assets\img\de.png" />
     <Content Include="Content\assets\img\faq.svg" />
     <Content Include="Content\assets\img\favicon.ico" />
-    <Content Include="Content\assets\img\fr.png" />
     <Content Include="Content\assets\img\jp.png" />
     <Content Include="Content\assets\img\loader.gif" />
     <Content Include="Content\assets\img\login-image.jpeg" />
     <Content Include="Content\assets\img\login-image.jpg" />
     <Content Include="Content\assets\img\login-image.png" />
     <Content Include="Content\assets\img\mindset.svg" />
+    <Content Include="Content\assets\img\money.jpg" />
     <Content Include="Content\assets\js\app.js" />
     <Content Include="Content\assets\js\apps\contact.js" />
     <Content Include="Content\assets\js\apps\custom-mailbox.js" />
@@ -1142,6 +1142,8 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\_ViewImports.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -16,18 +16,18 @@
     @using (Html.Box(col: 5))
     {
         <div class="row d-block text-center">
-                <p class="h6 font-weight-bold">لطفا بانک مورد نظر را انتخاب کنید.</p>
-                <div id="avatars">
-                    <div class="avatar avatar-xl mt-1 mr-2">
-                        <img alt="avatar" src="~/Content/assets/img/bank/melat.png" class="rounded active" data-logo="melat.png" data-value="1" title="ملت">
-                    </div>
-                    <div class="avatar avatar-xl mt-1 mr-2" >
-                        <img alt="avatar" src="~/Content/assets/img//bank/saderat.png" class="rounded" data-logo="saderat.png" data-value="2" title="صادرات">
-                    </div>
-                    <div class="avatar avatar-xl mt-1 mr-2">
-                        <img alt="avatar" src="~/Content/assets/img//bank/melli.png" class="rounded" data-logo="melli.png" data-value="3" title="ملی">
-                    </div>
+            <p class="h6 font-weight-bold">لطفا بانک مورد نظر را انتخاب کنید.</p>
+            <div id="avatars">
+                <div class="avatar avatar-xl mt-1 mr-2">
+                    <img alt="avatar" src="~/Content/assets/img/bank/melat.png" class="rounded active" data-logo="melat.png" data-value="1" title="ملت">
                 </div>
+                <div class="avatar avatar-xl mt-1 mr-2">
+                    <img alt="avatar" src="~/Content/assets/img//bank/saderat.png" class="rounded" data-logo="saderat.png" data-value="2" title="صادرات">
+                </div>
+                <div class="avatar avatar-xl mt-1 mr-2">
+                    <img alt="avatar" src="~/Content/assets/img//bank/melli.png" class="rounded" data-logo="melli.png" data-value="3" title="ملی">
+                </div>
+            </div>
         </div>
 
         <form form class="bankForm" id="bankForm" action="javascript:void(0);" novalidate>
@@ -35,6 +35,7 @@
             <input type="hidden" value="1" id="bankId" name="BankId" />
             <input type="hidden" value="melat.png" id="logoPath" name="LogoPath" />
 
+            @Html.EditorFor(x => x.Name)
             @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber" } })
             @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number" } })
             @Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR" } })
@@ -62,7 +63,7 @@
     @using (Html.Box(title: "کارت های ذخیره شده", col: 7))
     {
 
-        @Html.Action("GetBankAccounts", "Fund");
+        @Html.Action("GetBankAccounts", "Fund")
     }
 </div>
 <script>
@@ -90,11 +91,15 @@
     $('#bankForm').ajaxForm({
         validation: true,
         url: '/Fund/AddBankAccount',
-        jwt: false,
+        jwt: true,
         blockui: true,
         mixin: true,
-        success: () => {
-            location.reload();
+        success: (res) => {
+
+            console.log(res)
+
+            if (res.result)
+                location.reload();
         }
     });
 

@@ -3,9 +3,9 @@
 @model  List<WalletCurrency>
 @{
     Layout = null;
-    var showButtons = ViewBag.ShowButtons ;
+    var showButtons = ViewBag.ShowButtons;
 }
-  
+
 <style>
     .home-wallet .widget-heading i {
         color: darkgoldenrod;
@@ -13,11 +13,126 @@
         vertical-align: middle;
         float: left;
     }
+
     .home-wallet .inv-detail i {
         color: darkgoldenrod;
     }
 
+
+    .currency-type1 {
+        width: 100%;
+        background: url(../../Content/assets/img/currency-type1.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .currency-type2 {
+        background: url(../../Content/assets/img/currency-type2.png);
+    }
 </style>
+
+<script>
+
+    var spark2 = {
+        chart: {
+            id: 'total-users',
+            group: 'sparks1',
+            type: 'line',
+            width:200,
+            height: 40,
+            sparkline: {
+                enabled: true
+            },
+            dropShadow: {
+                enabled: true,
+                top: 3,
+                left: 1,
+                blur: 3,
+                color: '#009688',
+                opacity: 0.7,
+            }
+        },
+        series: [{
+            data: [10, 19, 30, 47, 32, 44, 34, 55, 41, 69].reverse()
+        }],
+        stroke: {
+            curve: 'smooth',
+            width: 2,
+        },
+        markers: {
+            size: 0
+        },
+        grid: {
+            padding: {
+                top: 35,
+                bottom: 0,
+                left: 40
+            }
+        },
+        colors: ['#009688'],
+        tooltip: {
+            x: {
+                show: false
+            },
+            y: {
+                title: {
+                    formatter: function formatter(val) {
+                        return '';
+                    }
+                }
+            }
+        },
+        responsive: [{
+            breakpoint: 1351,
+            options: {
+                chart: {
+                    height: 95,
+                },
+                grid: {
+                    padding: {
+                        top: 35,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+            },
+        },
+        {
+            breakpoint: 1200,
+            options: {
+                chart: {
+                    height: 80,
+                },
+                grid: {
+                    padding: {
+                        top: 35,
+                        bottom: 0,
+                        left: 40
+                    }
+                },
+            },
+        },
+        {
+            breakpoint: 576,
+            options: {
+                chart: {
+                    height: 95,
+                },
+                grid: {
+                    padding: {
+                        top: 35,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
+            },
+        }
+        ]
+    }
+
+
+</script>
 
 <div class="home-wallet widget-account-invoice-one">
 
@@ -37,8 +152,19 @@
 
                 @foreach (var w in Model)
                 {
-                    <div class="info-detail-1">
+                    <div class="info-detail-1 mt-2 currency-type@(w.CurrencyId)">
+
                         <p class="cur-name"> <i class="fa fa-google-wallet"></i>  @(w.CurrencyName ?? "") </p>
+
+                        <div class="w-chart-render-one">
+                            <div id="currency-type@(w.CurrencyId)"></div>
+                        </div>
+
+                        <script>
+                            d_1C_2 = new ApexCharts(document.querySelector("#currency-type@(w.CurrencyId)"), spark2);
+                            d_1C_2.render();
+                        </script>
+
                         <p class="unit"> @w.Amount.ToString("N0") <span> @(w.Unit ?? "") </span>  </p>
                     </div>
                 }
@@ -74,3 +200,4 @@
     </div>
 
 </div>
+
