@@ -354,6 +354,8 @@
     <Content Include="Content\assets\img\bg.png" />
     <Content Include="Content\assets\img\ca.png" />
     <Content Include="Content\assets\img\contact-us-map-pin.svg" />
+    <Content Include="Content\assets\img\currency-type1.png" />
+    <Content Include="Content\assets\img\currency-type2.png" />
     <Content Include="Content\assets\img\de.png" />
     <Content Include="Content\assets\img\faq.svg" />
     <Content Include="Content\assets\img\favicon.ico" />
