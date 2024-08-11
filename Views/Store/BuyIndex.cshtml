@@ -82,8 +82,8 @@
             url: '/Store/SubmitBuy',
             jwt: true,
             blockui: true,
-            mixin: false,
-            target:".transaction-result",
+            mixin: true,
+            target: ".transaction-result",
             success: function (data) {
                 $("input[name='@nameof(Model.Weight)']").val('');
                 disableBuy();

@@ -1,5 +1,7 @@
 ﻿using G_APIs.BussinesLogic.Interface;
+using G_APIs.Common;
 using G_APIs.Models;
+using G_APIs.Services;
 using System;
 using System.Web.Mvc;
 
@@ -10,7 +12,6 @@ namespace G_APIs.Controllers
         private readonly IStore _store;
         private readonly IFund _wallet;
         private readonly ISession _session;
-
         public StoreController(IStore store, ISession session, IFund wallet)
         {
             _store = store;
@@ -80,6 +81,8 @@ namespace G_APIs.Controllers
                 {
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
+
+                AlertMessaging.AddToUserQueue(new MessageContext(response.Message, type: MessageType.Success));
                 double transactionId = !string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0;
                 return View("OrderResult", transactionId);
             }
@@ -151,8 +154,10 @@ namespace G_APIs.Controllers
                 {
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
+
+                AlertMessaging.AddToUserQueue(new MessageContext(response.Message, type: MessageType.Success));
                 double transactionId = !string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0;
-                return View("OrderResult", transactionId);
+                return Json(new { result = true, message = response.Message, data = View("OrderResult", transactionId) });
             }
             catch (Exception ex)
             {

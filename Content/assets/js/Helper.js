@@ -47,45 +47,42 @@
                                 xhr.setRequestHeader('Authorization', auth);
                         },
                         success: (response) => {
-                            if (settings.mixin && !settings.target) {
-                                if (response.message != undefined && response.message != null && response.message != "") {
-                                    if (response.result) {
-                                        toast({
-                                            type: 'success',
-                                            title: response.message,
-                                        })
+                            debugger;
+                            if (response) {
+                                if (settings.mixin) {
+                                    if (response.message) {
+                                        if (response.result) {
+                                            toast({
+                                                type: 'success',
+                                                title: response.message,
+                                            })
+                                        }
+                                        else {
+                                            toast({
+                                                type: 'error',
+                                                title: response.message,
+                                            })
+                                        }
                                     }
-                                    else {
-                                        toast({
-                                            type: 'error',
-                                            title: response.message,
-                                        })
-                                    }
-                                } else {
-                                    GetRedirectToUrl("/Account/Login");
+                                }
+                                if (settings.target && response) {
+                                    $(settings.target).empty();
+                                    $(settings.target).append(response);
                                 }
                             } else {
-                                if (response) {
-                                    if (settings.target) {
-                                        $(settings.target).empty();
-                                        $(settings.target).append(response);
-                                    }
-                                } else {
-                                    GetRedirectToUrl("/Account/Login");
-                                }
+                                GetRedirectToUrl("/Account/Login");
                             }
                             settings.success(response);
                         },
                         error: (xhr, status, error) => {
-                            if (settings.mixin)
+                            if (settings.mixin) {
                                 toast({
                                     type: 'error',
                                     title: 'بروز خطا لطفا دقایقی بعد تلاش کنید.',
                                     padding: '1em',
-                                })
-
+                                });
+                            }
                             console.error('Form submission failed:', error);
-
                             settings.error(xhr, status, error);
                         },
                         complete: () => {

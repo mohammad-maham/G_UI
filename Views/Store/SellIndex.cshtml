@@ -82,7 +82,7 @@
             url: '/Store/SubmitSell',
             jwt: true,
             blockui: true,
-            mixin: false,
+            mixin: true,
             target: ".transaction-result",
             success: function (data) {
                 $("input[name='@nameof(Model.Weight)']").val('');
