@@ -1,6 +1,6 @@
 ﻿@model G_APIs.Models.User
 @{
-    Layout = "_LayoutSign";
+    Layout = "~/Views/Shared/_LayoutSign.cshtml";
 }
 
 <div class="form-content">
@@ -30,7 +30,7 @@
 
             <div id="captcha-field" class="field-wrapper input mb-2 clearfix">
 
-                <img id="img-captcha" src="@Model.Captcha" />
+                 <img src="~/Content/Captcha/@(Model.Captcha)" />
                 <input id="captcha" name="captcha" type="text" class="form-control" placeholder="متن تصویر" autocomplete="off" required>
 
                 <div class="invalid-feedback">
@@ -82,7 +82,7 @@
     </form>
     <div id="registed" class="hide">
         <h6 class="h6 font-weight-bold">ثبت نام  با موفقیت انجام شد <br />لطفا به صفحه ورود مراجعه نمایید. </h6>
-        <a class="btn btn-success   col-md-5 btn-block" asp-controller="Account" asp-action="Login"> ورود   </a>
+        <a class="btn btn-success   col-md-5 btn-block" href="@Url.Action("Login","Account")" > ورود   </a>
     </div>
     @* <p class="terms-conditions">©  تمامی حقوق محفوظ است.</p> *@
 
