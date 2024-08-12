@@ -155,24 +155,16 @@ namespace G_APIs.Controllers
         {
             try
             {
-                var res = await _account.SetPassword(model);
-
-                if (res != null)
+                model.NationalCode = model.ForgotUsername;
+                ApiResult result = await _account.SetPassword(model);
+                if (result != null)
                 {
-
-                    if (res.StatusCode != 200)
-                        return Json(new { result = false, message = res.Message });
-
-                    if (res.StatusCode == 200)
-                        return Json(new { result = true, message = res.Message });
-
+                    return Json(new { result = result.StatusCode = 200, message = result.Message });
                 }
-
-                return Json(new { result = false, message = "بروز خطا لطفا دوباره تلاش کنید." });
+                return Json(new { result = false, message = "بروز خطا، لطفا دوباره تلاش کنید." });
             }
             catch (Exception ex)
             {
-
                 return Json(new { result = false, message = ex.Message });
             }
 
@@ -279,16 +271,23 @@ namespace G_APIs.Controllers
         [HttpPost]
         public async Task<ActionResult> ForgotPassword(User user)
         {
-            if (user != null && !string.IsNullOrEmpty(user.ForgotUsername))
+            try
             {
-                user.Username = user.ForgotUsername;
-                ApiResult result = await _account.ForgotPassword(user);
-                if (result != null)
+                if (user != null && !string.IsNullOrEmpty(user.ForgotUsername))
                 {
-                    return Json(new { result = result.StatusCode == 200, message = result.Message });
+                    user.Username = user.ForgotUsername;
+                    ApiResult result = await _account.ForgotPassword(user);
+                    if (result != null)
+                    {
+                        return Json(new { result = result.StatusCode == 200, message = result.Message });
+                    }
                 }
+                return Json(new { result = false, message = "بروز خطا، لطفا دوباره تلاش کنید." });
             }
-            return Json(new { result = false, message = "بروز خطا، لطفا دوباره تلاش کنید." });
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message });
+            }
         }
     }
 }

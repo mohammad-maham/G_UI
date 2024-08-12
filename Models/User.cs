@@ -11,6 +11,7 @@ namespace G_APIs.Models
 
         [Required, Display(Name = "نام کاربری/کد ملی")]
         public string ForgotUsername { get; set; }
+        public string NewPassword { get; set; }
 
         [Display(Name = "نام کاربری")]
         //[Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
