@@ -31,6 +31,8 @@ namespace G_APIs.Models
 
         [Display(Name = "مبلغ")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "لطفا رقم وارد کنید")]
+        [Range(10000, double.MaxValue,ErrorMessage="حداقل مبلغ 100000 ریال میباشد.")]
         public double Amount { get; set; }
 
         public string WcAddress { get; set; }
@@ -47,6 +49,7 @@ namespace G_APIs.Models
 
         public long WalletCurrencyId { get; set; }
 
+        public string BankCard { get; set; }
 
     }
 }

@@ -36,9 +36,9 @@
             <input type="hidden" value="melat.png" id="logoPath" name="LogoPath" />
 
             @Html.EditorFor(x => x.Name)
-            @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber" } })
-            @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number" } })
-            @Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR" } })
+            @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber", required="required" } })
+            @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number", required = "required" } })
+            @Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR", required = "required" } })
 
             <div class="col-auto field-wrapper command-panel mt-4">
                 @Html.Partial("_GoldButton", new GoldButton()
@@ -71,8 +71,8 @@
     $(function () {
 
         GetBankAccounts();
-
-        $('#bankAccountNumber').inputmask("9999-9999-9999-9999");
+       
+        $('input[name="BankAccountNumber"]').inputmask("9999-9999-9999-9999");
 
         $('.avatar img').click(function () {
             $('.avatar img').removeClass('active');
@@ -97,9 +97,12 @@
         success: (res) => {
 
             console.log(res)
+            if (res.result) {
+                setTimeout(() => {
+                    location.reload();
+                }, 2000)
 
-            if (res.result)
-                location.reload();
+            }
         }
     });
 

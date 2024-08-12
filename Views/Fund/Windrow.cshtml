@@ -16,7 +16,6 @@
 
             @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
 
-
             @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
             @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
 
@@ -69,7 +68,7 @@
 
             if (res.result) {
                 location.reload();
-                $('#amount').val('');
+                $('input[name="Amount"]').val('');
             }
         },
 
