@@ -1,7 +1,6 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
 using static G_APIs.Common.Enums;
 
@@ -60,6 +59,12 @@ namespace G_APIs.BussinesLogic
         {
             var res = await new GoldApi(GoldHost.Accounting, "/api/User/GetUserInfo", model, authorization: token).PostAsync();
 
+            return res;
+        }
+
+        public async Task<ApiResult> ForgotPassword(User model)
+        {
+            ApiResult res = await new GoldApi(GoldHost.Accounting, "/api/User/ForgotPassword", model).PostAsync();
             return res;
         }
     }

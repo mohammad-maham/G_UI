@@ -24,12 +24,12 @@ public static partial class HtmlHelperExtensions
             if (concatKeys.Contains(item.Key))
             {
                 defaultHtmlAttributes[item.Key] = (defaultHtmlAttributes[item.Key] != null)
-                    ? string.Format("{0} {1}", defaultHtmlAttributes[item.Key], item.Value)
-                    : item.Value;
+                    ? string.Format("{0} {1}", defaultHtmlAttributes[item.Key].ToString().ToLower(), item.Value.ToString().ToLower())
+                    : item.Value.ToString().ToLower();
             }
             else
             {
-                defaultHtmlAttributes[item.Key] = item.Value;
+                defaultHtmlAttributes[item.Key] = item.Value.ToString().ToLower();
             }
         }
 

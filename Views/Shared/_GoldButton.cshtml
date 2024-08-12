@@ -9,7 +9,7 @@
     }
 
     var cancelButtonText = " انصراف / بازگشت";
-    if (!string.IsNullOrEmpty(Model.Text) && Model.ButtonType!= GoldButtonTypes.cancel)
+    if (!string.IsNullOrEmpty(Model.Text) && Model.ButtonType != GoldButtonTypes.cancel)
     {
         cancelButtonText = Model.Text;
     }
@@ -19,19 +19,25 @@
 {
     if (Model.ButtonType != GoldButtonTypes.cancel)
     {
-        <button id="@Model.Id" name="@Model.Name" class="@Model.Class col-md-3 float-right" type="@Model.ButtonType" @isReadOnly @isDisabled onclick="@Model.OnClick">
+        <button id="@Model.Id" name="@Model.Name" class="@Model.Class" type="@Model.ButtonType" @isReadOnly @isDisabled onclick="@Model.OnClick">
             @if (!string.IsNullOrEmpty(Model.Icon))
             {
                 <i class="@Model.Icon"></i>
             }
-            @Model.Text
+            @if (Model.ButtonShape == GoldButtonShape.rectangle)
+            {
+                @Model.Text
+            }
         </button>
     }
     else
     {
         <button id="@Model.Id" name="@Model.Name" class="@Model.Class btn-danger col-md-4 float-right" type="button" @isReadOnly @isDisabled onclick="javascript:window.location='/'">
             <i class="fa fa-undo fa-2x"></i>
-            @cancelButtonText
+            @if (Model.ButtonShape == GoldButtonShape.rectangle)
+            {
+                @cancelButtonText
+            }
         </button>
     }
 }
@@ -42,6 +48,9 @@ else
         {
             <i class="@Model.Icon"></i>
         }
-        @Model.Text
+        @if (Model.ButtonShape == GoldButtonShape.rectangle)
+        {
+            @Model.Text
+        }
     </a>
 }

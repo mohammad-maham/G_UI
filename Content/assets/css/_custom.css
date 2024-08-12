@@ -60,7 +60,7 @@ input[type="number"] {
     /*    font-weight: 400 !important;*/
     font-size: 16px !important;
     /*    color: #888ea8;*/
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 .navbar-item .fa {
@@ -75,4 +75,35 @@ input[type="number"] {
     justify-content: flex-start;
     align-items: center;
     column-gap: 10px;
+}
+
+.btn-circular {
+    width: calc(1.5em + 0.75rem + 2px);
+    height: calc(1.5em + 0.75rem + 2px);
+    padding-right: 0;
+    padding-left: 0;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+    .btn-circular.btn-sm {
+        width: calc(1.5em + 0.5rem + 2px);
+        height: calc(1.5em + 0.5rem + 2px);
+    }
+
+    .btn-circular.btn-lg {
+        width: calc(1.5em + 1rem + 2px);
+        height: calc(1.5em + 1rem + 2px);
+    }
+
+    .btn-circular.btn-xl {
+        width: calc(1.5em + 1.5rem + 2px);
+        height: calc(1.5em + 1.5rem + 2px);
+    }
+
+.centered {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
 }

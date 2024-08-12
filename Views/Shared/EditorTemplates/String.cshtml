@@ -17,7 +17,7 @@
             errorMessage = requiredAttribute.ErrorMessage;
         }
     }
-    var defaultHtmlAttributesObject = new { type = "text", @class = "form-control", required };
+    var defaultHtmlAttributesObject = new { type = "text", @class = "form-control" };
     var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
     var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
     displayName = displayName ?? htmlAttributes["DisplayName"].ToString();

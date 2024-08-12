@@ -155,7 +155,6 @@ namespace G_APIs.Controllers
         {
             try
             {
-                model.Username = model.NationalCode;
                 var res = await _account.SetPassword(model);
 
                 if (res != null)
@@ -275,6 +274,21 @@ namespace G_APIs.Controllers
         public ActionResult ForgotPassword()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ForgotPassword(User user)
+        {
+            if (user != null && !string.IsNullOrEmpty(user.ForgotUsername))
+            {
+                user.Username = user.ForgotUsername;
+                ApiResult result = await _account.ForgotPassword(user);
+                if (result != null)
+                {
+                    return Json(new { result = result.StatusCode == 200, message = result.Message });
+                }
+            }
+            return Json(new { result = false, message = "بروز خطا، لطفا دوباره تلاش کنید." });
         }
     }
 }

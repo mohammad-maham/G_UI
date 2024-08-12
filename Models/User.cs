@@ -9,9 +9,11 @@ namespace G_APIs.Models
         public long? Id { get; set; }
         public long? UserId { get; set; }
 
+        [Required, Display(Name = "نام کاربری/کد ملی")]
+        public string ForgotUsername { get; set; }
 
         [Display(Name = "نام کاربری")]
-        [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
+        //[Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string Username { get; set; }
         [Display(Name = "رمز عبور")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
@@ -28,8 +30,7 @@ namespace G_APIs.Models
         [Display(Name = "موبایل")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string Mobile { get; set; }
-        [Display(Name = "کد ملی")]
-        [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
+        [Display(Name = "کد ملی"), Required(ErrorMessage = "وارد کردن این فیلد الزامیست")]
         public string NationalCode { get; set; }
         public string Captcha { get; set; }
         public long? OTP { get; set; }
