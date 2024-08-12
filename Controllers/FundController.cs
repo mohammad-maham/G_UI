@@ -87,7 +87,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletBankAccount> { new WalletBankAccount { Shaba = "بروز خطا در دریافت اطلاعات" } });
 
-                var res = _fund.GetBankAccounts(user).OrderBy(x => x.Id).ToList();
+                var res = _fund.GetBankAccounts(new Wallet { UserId = user.Id }).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -185,7 +185,7 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
                 var wallet = _fund.GetWallet(new Wallet { UserId = user.Id });
-                model.BankAccountNumber = model.BankAccountNumber.Replace("-", "").Replace("_","");
+                model.BankAccountNumber = model.BankAccountNumber.Replace("-", "").Replace("_", "");
 
                 model.WalletId = wallet.Id;
 
