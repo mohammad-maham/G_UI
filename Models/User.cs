@@ -14,6 +14,9 @@ namespace G_APIs.Models
         [Display(Name = "رمز عبور")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string Password { get; set; }
+        [Display(Name = "تکرار رمز عبور")]
+        [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
+        public string PasswordRepeat { get; set; }
         [Display(Name = "نام")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string @Name { get; set; }

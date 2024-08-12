@@ -156,11 +156,14 @@ namespace G_APIs.Controllers
             try
             {
                 model.NationalCode = model.ForgotUsername;
+                if (model.Password != model.PasswordRepeat)
+                    return Json(new { result = false, message = "رمز عبور با تکرار آن مطابقت ندارد" });
+
                 ApiResult result = await _account.SetPassword(model);
+
                 if (result != null)
-                {
                     return Json(new { result = result.StatusCode = 200, message = result.Message });
-                }
+
                 return Json(new { result = false, message = "بروز خطا، لطفا دوباره تلاش کنید." });
             }
             catch (Exception ex)
