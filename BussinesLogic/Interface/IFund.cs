@@ -13,7 +13,7 @@ namespace G_APIs.BussinesLogic.Interface
         List<WalletCurrency> GetWalletCurrency(Wallet model);
         ApiResult  Windrow(WalletCurrency model);
         ApiResult  Deposit(WalletCurrency model);
-        IEnumerable<WalletBankAccount> GetBankAccounts(User userId);
+        IEnumerable<WalletBankAccount> GetBankAccounts(Wallet model);
         ApiResult AddBankAccount(WalletBankAccount model);
         ApiResult ToggleBankCard(WalletBankAccount model);
         IEnumerable<Transaction> GetTransactions(Wallet model);

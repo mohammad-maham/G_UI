@@ -50,9 +50,9 @@ namespace G_APIs.BussinesLogic
             return res;
         }
 
-        public IEnumerable<WalletBankAccount> GetBankAccounts(User userId)
+        public IEnumerable<WalletBankAccount> GetBankAccounts(Wallet model)
         {
-            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetBankAccounts", userId).Post();
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetBankAccounts", model).Post();
             var res = JsonConvert.DeserializeObject<List<WalletBankAccount>>(t.Data);
 
             return res;
