@@ -8,13 +8,9 @@ namespace G_APIs.Models
     {
         public long? Id { get; set; }
         public long? UserId { get; set; }
-
         [Required, Display(Name = "نام کاربری/کد ملی")]
         public string ForgotUsername { get; set; }
-        public string NewPassword { get; set; }
-
         [Display(Name = "نام کاربری")]
-        //[Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
         public string Username { get; set; }
         [Display(Name = "رمز عبور")]
         [Required(ErrorMessage = "وارد کردن این فیلد الزامیست  ")]
