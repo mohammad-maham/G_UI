@@ -18,7 +18,7 @@
         this.each(function () {
             var form = $(this);
             form.on('submit', function (e) {
-                if (settings.validation && this.checkValidity() === false) {
+                if (settings.validation && ValidateForm(this) === false) {
                     e.preventDefault();
                     e.stopPropagation();
                     this.classList.add('was-validated');
@@ -171,3 +171,49 @@ function GetCookie(name) {
 function GetRedirectToUrl(url) {
     window.location = url;
 }
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+
+function ValidateForm(form) {
+    debugger
+    let isValid = true;
+    $('.invalid-feedback', form).remove();
+
+    Array.from(form.elements).forEach(element => {
+
+
+        if (!element.checkValidity()) {
+
+            isValid = false;
+            let errorMessage = element.dataset.valRequired || "وارد کردن این فیلد الزامیست";
+
+            if (element.validity.valueMissing) {
+                errorMessage = element.dataset.valRequired || "وارد کردن این فیلد الزامیست";
+            } else if (element.validity.typeMismatch && element.type === 'email') {
+                errorMessage = element.dataset.valEmail || "لطفا ایمیل معتبر وارد کنید.";
+            } else if (element.validity.rangeUnderflow || element.validity.rangeOverflow) {
+                errorMessage = element.dataset.valRange || "مفدار وارد شده خارج از محدوده مورد نظر است";
+            } else if (element.validity.patternMismatch) {
+                errorMessage = element.dataset.valPattern || "مقدار وارد شده معتبر نیست";
+            }
+
+            $(element).parent('.form-group').append('<div class="invalid-feedback">' + errorMessage +'</div>')
+
+        }
+
+        // Check if the element is an email input and validate it
+        if (element.type === 'email' && !isValidEmail(element.value)) {
+            isValid = false;
+            const errorMessage = element.dataset.valEmail || "Please enter a valid email address.";
+            $(element).parent('.form-group').append('<div class="invalid-feedback">' + errorMessage + '</div>')
+        }
+    });
+
+    return isValid;
+
+}
+

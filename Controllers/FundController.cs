@@ -3,6 +3,7 @@ using G_APIs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 namespace G_APIs.Controllers
 {
@@ -43,7 +44,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var res = _fund.GetWalletCurrency(model);
+                var res = _fund.GetWalletCurrency(model).OrderBy(x => x.CurrencyId).ToList();
 
                 ViewBag.ShowButtons = model.ShowButtons;
                 return View(res);
@@ -68,7 +69,9 @@ namespace G_APIs.Controllers
                 var res = _fund.GetWalletCurrency(new Wallet { UserId = user.Id })
                     .FirstOrDefault(x => x.CurrencyId == 1);
 
-                res.Amount = 0;
+                ViewBag.BankCards = _fund.GetBankAccounts(new Wallet { UserId = user.Id }).OrderBy(x => x.Id).ToList();
+
+                res.Amount = 100000;
                 return View(res);
             }
             catch (Exception)
@@ -124,6 +127,14 @@ namespace G_APIs.Controllers
         {
             try
             {
+
+                var er = ValidationHelper.Validate(ModelState);
+                if (!string.IsNullOrEmpty(er))
+                    return Json(new { result = false, message = er });
+
+                if (String.IsNullOrEmpty(model.BankCard))
+                    return Json(new { result = false, message = "بروز خطا : لطفا شماره کارت را وارد نمایید." });
+
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
@@ -179,6 +190,10 @@ namespace G_APIs.Controllers
         {
             try
             {
+                var er = ValidationHelper.Validate(ModelState);
+                if (!string.IsNullOrEmpty(er))
+                    return Json(new { result = false, message = er });
+
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
