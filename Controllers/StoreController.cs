@@ -55,14 +55,14 @@ namespace G_APIs.Controllers
                         GoldCalcType = CalcTypes.buy,
                         GoldWeight = buyVM.Weight
                     }, token);
-                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.UserId });
+                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.Id });
 
                     // Binding
                     buyVM.Carat = 750;
                     buyVM.GoldType = 2;
                     buyVM.SourceAmount = buyPrice;
                     buyVM.WalleId = walletCurrency.Id;
-                    buyVM.UserId = userInfo.UserId.Value;
+                    buyVM.UserId = userInfo.Id.Value;
                     buyVM.DestinationAmount = buyVM.Weight;
                     buyVM.CurrentCalculatedPrice = buyPrice;
                     buyVM.SourceWalletCurrency = 1;
@@ -128,14 +128,14 @@ namespace G_APIs.Controllers
                         GoldCalcType = CalcTypes.sell,
                         GoldWeight = sellVM.Weight
                     }, token);
-                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.UserId });
+                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.Id });
 
                     // Binding
                     sellVM.Carat = 750;
                     sellVM.GoldType = 2;
                     sellVM.SourceAmount = sellVM.Weight;
                     sellVM.WalleId = walletCurrency.Id;
-                    sellVM.UserId = userInfo.UserId.Value;
+                    sellVM.UserId = userInfo.Id.Value;
                     sellVM.DestinationAmount = sellPrice;
                     sellVM.CurrentCalculatedPrice = sellPrice;
                     sellVM.SourceWalletCurrency = 2;

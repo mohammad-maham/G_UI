@@ -38,7 +38,7 @@ namespace G_APIs.Controllers
             try
             {
                 var user = _session.Get<User>("UserInfo");
-                model.UserId = user.UserId;
+                model.UserId = user.Id;
 
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
@@ -65,7 +65,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new WalletCurrency());
 
-                var res = _fund.GetWalletCurrency(new Wallet { UserId = user.UserId })
+                var res = _fund.GetWalletCurrency(new Wallet { UserId = user.Id })
                     .FirstOrDefault(x => x.CurrencyId == 1);
 
                 res.Amount = 0;
@@ -107,7 +107,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<Transaction>());
 
-                var res = _fund.GetTransactions(new Wallet { UserId = user.UserId }).OrderBy(x => x.Id).ToList();
+                var res = _fund.GetTransactions(new Wallet { UserId = user.Id }).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -129,7 +129,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
-                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.UserId })
+                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.Id })
                     .Where(x => x.CurrencyId == 1).FirstOrDefault();
 
                 if (wc == null)
@@ -184,7 +184,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
-                var wallet = _fund.GetWallet(new Wallet { UserId = user.UserId });
+                var wallet = _fund.GetWallet(new Wallet { UserId = user.Id });
                 model.BankAccountNumber = model.BankAccountNumber.Replace("-", "").Replace("_","");
 
                 model.WalletId = wallet.Id;
@@ -249,7 +249,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
-                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.UserId })
+                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.Id })
                   .Where(x => x.CurrencyId == 1).FirstOrDefault();
 
                 if (wc == null)
