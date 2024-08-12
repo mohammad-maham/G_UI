@@ -38,7 +38,7 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult UserProfile(User model)
         {
-            return View(new User() {Name= "sayid"});
+            return View(new User() { Name = "sayid" });
         }
 
         [GoldAuthorize]
@@ -270,9 +270,11 @@ namespace G_APIs.Controllers
                     message = ex.Message
                 });
             }
+        }
 
+        public ActionResult ForgotPassword()
+        {
+            return View();
         }
     }
-
-
 }
