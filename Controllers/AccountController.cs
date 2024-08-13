@@ -42,10 +42,10 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public async Task<ActionResult> AddressInfo(User model)
+        public ActionResult  AddressInfo(User model)
         {
             var token = Request.Cookies["auth"].ToString();
-            var res = await _account.GetUserInfo(model, token);
+            var res =  _account.GetUserInfo(model, token);
             var user = new User();
 
             if (res != null && res.StatusCode == 200 && res.Data != null)
@@ -61,7 +61,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(User model)
+        public  ActionResult  Login(User model)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace G_APIs.Controllers
                 if (captcha != null && model.Captcha != null && model.Captcha != captcha)
                     return Json(new { result = false, message = "متن تصویر اشتباه است." });
 
-                var res = await _account.Login(model);
+                var res =   _account.Login(model);
 
                 if (res != null)
                 {
@@ -106,7 +106,7 @@ namespace G_APIs.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> SignUp(User model)
+        public  ActionResult  SignUp(User model)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace G_APIs.Controllers
 
                 model.Mobile = model.Mobile.StartsWith("0") ? model.Mobile.Remove(0, 1) : model.Mobile;
 
-                var res = await _account.SignUp(model);
+                var res =   _account.SignUp(model);
 
                 if (res != null)
                 {
@@ -151,7 +151,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SetPassword(User model)
+        public  ActionResult  SetPassword(User model)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace G_APIs.Controllers
                 if (model.Password != model.PasswordRepeat)
                     return Json(new { result = false, message = "رمز عبور با تکرار آن مطابقت ندارد" });
 
-                ApiResult result = await _account.SetPassword(model);
+                ApiResult result =   _account.SetPassword(model);
 
                 if (result != null)
                     return Json(new { result = result.StatusCode = 200, message = result.Message });
@@ -187,7 +187,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
-        public async Task<ActionResult> CompleteProfile(User model)
+        public ActionResult  CompleteProfile(User model)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
 
-                var res = await _account.CompleteProfile(model, token);
+                var res =  _account.CompleteProfile(model, token);
 
                 if (res != null)
                 {
@@ -228,7 +228,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
-        public async Task<ActionResult> SubmitContact(User model)
+        public ActionResult  SubmitContact(User model)
         {
             try
             {
@@ -240,7 +240,7 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
 
-                var res = await _account.SubmitContact(model, token);
+                var res =  _account.SubmitContact(model, token);
 
                 if (res != null)
                 {
@@ -272,14 +272,14 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ForgotPassword(User user)
+        public ActionResult  ForgotPassword(User user)
         {
             try
             {
                 if (user != null && !string.IsNullOrEmpty(user.ForgotUsername))
                 {
                     user.Username = user.ForgotUsername;
-                    ApiResult result = await _account.ForgotPassword(user);
+                    ApiResult result =  _account.ForgotPassword(user);
                     if (result != null)
                     {
                         return Json(new { result = result.StatusCode == 200, message = result.Message });
