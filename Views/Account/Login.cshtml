@@ -30,7 +30,7 @@
 
             <div id="captcha-field" class="field-wrapper input mb-2 clearfix">
 
-                <img src="~/Content/Captcha/@(Model.Captcha)" />
+                <img id="img-captcha" src="~/Content/Captcha/@(Model.Captcha)" onclick="GetCaptcha()" />
                 <input id="captcha" name="captcha" type="text" class="form-control" placeholder="متن تصویر" autocomplete="off" required>
 
                 <div class="invalid-feedback">
@@ -77,11 +77,10 @@
 
             }
         },
-        // error: function (xhr, status, error) {
-        //     $('#loginResult').html(response.message).show();
-        //     // $('#loginResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').removeClass('hide');
-        //     console.error('Form submission failed:', error);
-        // }
+          error: function (xhr, status, error) {
+              $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();
+              console.error('Form submission failed:', error);
+          }
     });
 
 </script>
