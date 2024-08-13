@@ -101,7 +101,7 @@
             <h2>قیمت واحد طلا</h2>
         </div>
         <div id="desc">
-            <h5 class="price-preview"> @Model.Price.ToString("N0") <b>ریال</b></h5>
+            <h5 class="price-preview"> @Model.Price.ToString("N0") </h5> <b>ریال</b>
         </div>
     </div>
 </div>
@@ -121,7 +121,7 @@
                 },
                 success: function (data) {
                     if ($.isNumeric(data)) {
-                        var preVal = inpPrice.val();
+                        var preVal = inpPrice.html();
                         var formattedData = Number(data).toLocaleString('en');
                         inpPrice.html(formattedData);
                         $("input[name='CurrentOnlinePrice'][type=hidden]").val(data);
