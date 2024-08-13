@@ -157,7 +157,7 @@ namespace G_APIs.Controllers
 
                 AlertMessaging.AddToUserQueue(new MessageContext(response.Message, type: MessageType.Success));
                 double transactionId = !string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0;
-                return Json(new { result = true, message = response.Message, data = View("OrderResult", transactionId) });
+                return View("OrderResult", transactionId);
             }
             catch (Exception ex)
             {

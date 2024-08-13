@@ -86,6 +86,11 @@
             mixin: true,
             target: ".transaction-result",
             success: function (data) {
+                if (data) {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                }
                 $("input[name='@nameof(Model.Weight)']").val('');
                 disableBuy();
                 //window.clearTimeout(dowhile);
