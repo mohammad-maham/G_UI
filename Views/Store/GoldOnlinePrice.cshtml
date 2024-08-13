@@ -5,33 +5,133 @@
     int calcType = Model.CalcTypes == CalcTypes.buy ? 1 : 2;
 }
 
-@Html.Editor("CurrentOnlinePrice", new { HtmlAttributes = new { DisplayName = "قیمت واحد", @Value = Model.Price.ToString("N0"), InputGroup = "ریال" } })
+<style>
+    #mainContainer {
+        width: 100%;
+        height: 10.750em;
+        margin: 0 0 10px 0;
+        box-sizing: border-box;
+        display: flex;
+        background: white;
+        border-radius: 0.5em;
+        box-shadow: 12px 12px 15px -11.9px #0000004d, inset 0px 0px 2px 0px #0000004d;
+        transition: 0.8s;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: stretch;
+        align-content: center;
+        flex-wrap: nowrap;
+    }
+
+        #mainContainer:hover {
+            transform: scale(1.0);
+            transition: 0.6s;
+        }
+
+    .aside {
+        border-top-left-radius: 1.5em;
+        border-bottom-left-radius: 1.5em;
+        border-top-right-radius: 0.1em;
+        border-bottom-right-radius: 0.1em;
+        display: inline-block;
+        filter: drop-shadow(5px 5px 15px #ff7b00);
+    }
+
+    .cardview {
+        position: relative;
+        width: 17em;
+        height: 12.2em;
+        top: -12px;
+        left: -5px;
+        border-top-left-radius: 1.5em;
+        border-bottom-left-radius: 1.5em;
+        border-top-right-radius: 0.1em;
+        border-bottom-right-radius: 0.1em;
+        background: linear-gradient(120deg, #ffb700, #ff8800, #ff7b00);
+        clip-path: polygon(0 0, 100% 0%, 71% 100%, 0% 100%);
+    }
+
+    #card-content {
+        width: 500px;
+        height: inherit;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: flex-start;
+        align-items: flex-start;
+        justify-content: space-around;
+        padding: 10px 20px;
+    }
+
+    #header > h2 {
+        color: #bb8332;
+        font-weight: bold;
+    }
+
+    #desc {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+        #desc > h5 {
+            font-weight: bold;
+        }
+
+    .logo img {
+        position: relative;
+        border-radius: 5px;
+        max-width: 100%;
+        margin: 40px;
+        height: 130px;
+        justify-content: center;
+    }
+</style>
+
+@Html.Hidden("CurrentOnlinePrice", Model.Price)
+
+<div id="mainContainer">
+    <div class="aside">
+        <div class='cardview'>
+            <div class="logo"><img src="~/Content/assets/img/gold-treasure.png" /></div>
+        </div>
+    </div>
+    <div id="card-content">
+        <div id="header">
+            <h2>قیمت واحد طلا</h2>
+        </div>
+        <div id="desc">
+            <h5 class="price-preview"> @Model.Price.ToString("N0") <b>ریال</b></h5>
+        </div>
+    </div>
+</div>
 
 <script>
     var dowhile;
     $(function () {
         var interval = 3000;
-        var inpPrice = $("input[name='CurrentOnlinePrice']");
+        var inpPrice = $(".price-preview");
         function getOnlinePrice() {
             $.ajax({
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
                 data: {
                     weight: 1.0,
-                    calcType: @calcType
+                    calcType: '@calcType',
                 },
                 success: function (data) {
                     if ($.isNumeric(data)) {
                         var preVal = inpPrice.val();
                         var formattedData = Number(data).toLocaleString('en');
-                        inpPrice.val(formattedData);
+                        inpPrice.html(formattedData);
+                        $("input[name='CurrentOnlinePrice'][type=hidden]").val(data);
                         if (preVal <= formattedData) {
-                            inpPrice.css("background-color", "#25b61738");
+                            $("#mainContainer").css("background-color", "#8dbf424d");
                         } else if (preVal > formattedData) {
-                            inpPrice.css("background-color", "#b6171738");
+                            $("#mainContainer").css("background-color", "#e7515a1f");
                         }
                         setTimeout(function () {
-                            inpPrice.css("background-color", "");
+                            $("#mainContainer").css("background-color", "white");
                         }, 1000);
                         if (dowhile) {
                             dowhile = setTimeout(getOnlinePrice, interval);
