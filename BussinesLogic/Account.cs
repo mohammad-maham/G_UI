@@ -14,57 +14,57 @@ namespace G_APIs.BussinesLogic
         {
         }
 
-        public async Task<ApiResult> Login(User model)
+        public ApiResult Login(User model)
         {
 
-            var res = await new GoldApi(GoldHost.Accounting, "/api/User/SignIn", model).PostAsync();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SignIn", model).Post();
 
             //var user = JsonConvert.DeserializeObject<User>(res.Message!);
 
             return res;
         }
 
-        public async Task<ApiResult> SignUp(User model)
+        public ApiResult SignUp(User model)
         {
 
-            var res = await new GoldApi(GoldHost.Accounting, "/api/User/SignUp", model).PostAsync();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SignUp", model).Post();
 
             //var user = JsonConvert.DeserializeObject<User>(res.Data);
 
             return res;
         }
 
-        public async Task<ApiResult> SetPassword(User model)
+        public ApiResult SetPassword(User model)
         {
-            var res = await new GoldApi(GoldHost.Accounting, "/api/User/SetPassword", model).PostAsync();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SetPassword", model).Post();
 
             return res;
         }
 
-        public async Task<ApiResult> CompleteProfile(User model, string token)
+        public ApiResult CompleteProfile(User model, string token)
         {
-            var res = await new GoldApi(GoldHost.Accounting, "/api/User/CompleteProfile", model, authorization: token).PostAsync();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/CompleteProfile", model, authorization: token).Post();
 
             return res;
         }
 
-        public async Task<ApiResult> SubmitContact(User model, string token)
+        public ApiResult SubmitContact(User model, string token)
         {
-            var res = await new GoldApi(GoldHost.Accounting, "/api/User/SubmitContact", model, authorization: token).PostAsync();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SubmitContact", model, authorization: token).Post();
 
             return res;
         }
 
-        public async Task<ApiResult> GetUserInfo(User model, string token)
+        public ApiResult GetUserInfo(User model, string token)
         {
-            var res = await new GoldApi(GoldHost.Accounting, "/api/User/GetUserInfo", model, authorization: token).PostAsync();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/GetUserInfo", model, authorization: token).Post();
 
             return res;
         }
 
-        public async Task<ApiResult> ForgotPassword(User model)
+        public ApiResult ForgotPassword(User model)
         {
-            ApiResult res = await new GoldApi(GoldHost.Accounting, "/api/User/ForgotPassword", model).PostAsync();
+            ApiResult res =  new GoldApi(GoldHost.Accounting, "/api/User/ForgotPassword", model).Post();
             return res;
         }
     }

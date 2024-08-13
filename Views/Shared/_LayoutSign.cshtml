@@ -47,5 +47,30 @@
         </div>
     </div>
 
+    <script>
+
+        function GetCaptcha() {
+
+            $.ajax({
+                url: '/Account/GetCaptcha',
+                method: "GET",
+                success: function (res) {
+
+                    if (res != undefined || res != null) {
+                        let src = "/Content/Captcha/" + res;
+                        $('#img-captcha').attr("src", src)
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();
+                }
+            });
+        }
+
+        $(function () {
+            setInterval(GetCaptcha, 60000);
+        })
+
+    </script>
 </body>
 </html>

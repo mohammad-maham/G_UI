@@ -6,12 +6,12 @@ namespace G_APIs.BussinesLogic.Interface
 
     public interface IAccount
     {
-        Task<ApiResult> Login(User model);
-        Task<ApiResult> SetPassword(User model);
-        Task<ApiResult> SignUp(User model);
-        Task<ApiResult> CompleteProfile(User model, string token);
-        Task<ApiResult> SubmitContact(User model, string token);
-        Task<ApiResult> GetUserInfo(User model, string token);
-        Task<ApiResult> ForgotPassword(User model);
+        ApiResult  Login(User model);
+        ApiResult  SetPassword(User model);
+        ApiResult  SignUp(User model);
+        ApiResult  CompleteProfile(User model, string token);
+        ApiResult  SubmitContact(User model, string token);
+        ApiResult  GetUserInfo(User model, string token);
+        ApiResult  ForgotPassword(User model);
     }
 }
