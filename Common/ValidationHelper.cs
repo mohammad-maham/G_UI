@@ -17,7 +17,6 @@ public static class ValidationHelper
                     return value.Errors.First().ErrorMessage;
         }
 
-
         return "";
     }
 }

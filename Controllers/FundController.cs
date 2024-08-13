@@ -256,6 +256,10 @@ namespace G_APIs.Controllers
         {
             try
             {
+                var er = ValidationHelper.Validate(ModelState);
+                if (!string.IsNullOrEmpty(er))
+                    return Json(new { result = false, message = er });
+
                 if (model.Amount <= 0)
                     return Json(new { result = false, message = " لطفا مبلغ درخواستی را وارد نمایید." });
 
