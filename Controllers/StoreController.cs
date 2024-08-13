@@ -195,5 +195,10 @@ namespace G_APIs.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult RepositoryManagementIndex()
+        {
+            return View();
+        }
     }
 }
