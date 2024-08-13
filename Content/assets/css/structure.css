@@ -190,7 +190,7 @@ code {
 }
 
 .row.statbox.widget.box.box-shadow.form-header {
-    height: 65px;
+    height: 75px;
     padding: 0;
     overflow: hidden;
     margin: 0px 15px 15px;
@@ -205,13 +205,13 @@ code {
 
     .row.statbox.widget.box.box-shadow.form-header > .form-icon {
         display: flex;
-        background-color: #FDC500;
+        background-color: #f1f2f3;
         flex-direction: row;
         flex-wrap: nowrap;
         align-content: center;
         justify-content: center;
         align-items: center;
-        padding: 15px;
+        padding: 20px;
         margin-left: 10px;
         color: #00000087;
     }

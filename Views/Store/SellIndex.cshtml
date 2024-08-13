@@ -4,7 +4,7 @@
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
-    Icon = Html.Raw("<svg viewBox=\"0 0 24 24\" width=\"42\" height=\"42\" class=\"main-grid-item-icon\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.50\">\r\n  <circle cx=\"9\" cy=\"21\" r=\"1\" />\r\n  <circle cx=\"20\" cy=\"21\" r=\"1\" />\r\n  <path d=\"M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6\"/>\r\n</svg>\r\n"),
+    Icon = Html.Raw("<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"55\" height=\"55\" viewBox=\"0 0 512 512\" id=\"shopping-cart\"><g><path fill=\"#FF6699\" stroke=\"#231f20\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"15\" d=\"M502.52,120.67,419.29,309.19H189.16L126.58,96.74H487A17,17,0,0,1,502.52,120.67Z\"></path><path fill=\"none\" stroke=\"#231f20\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"15\" d=\"M126.63,96.77s0-37-30.79-37h-40\"></path><circle cx=\"419.08\" cy=\"445.67\" r=\"30.07\" fill=\"#FF6699\" stroke=\"#231f20\" stroke-miterlimit=\"10\" stroke-width=\"15\"></circle><circle cx=\"184.41\" cy=\"445.67\" r=\"30.07\" fill=\"#FF6699\" stroke=\"#231f20\" stroke-miterlimit=\"10\" stroke-width=\"15\"></circle><circle cx=\"32.3\" cy=\"59.82\" r=\"23.56\" fill=\"#FF6699\" stroke=\"#231f20\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"15\"></circle><path fill=\"none\" stroke=\"#231f20\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"15\" d=\"M463.82,375.89a14.95,14.95,0,0,1-14.95,15H153.29l13.15-29.9,22.76-51.76h31.12l-22.76,51.76H448.87A15,15,0,0,1,463.82,375.89Z\"></path><line x1=\"419.08\" x2=\"364.79\" y1=\"445.67\" y2=\"391.39\" fill=\"none\" stroke=\"#231f20\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"15\"></line><line x1=\"184.41\" x2=\"240.28\" y1=\"445.67\" y2=\"391.39\" fill=\"none\" stroke=\"#231f20\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"15\"></line></g></svg>"),
     Title = "فروش طلا",
     Description = "صفحه فروش، مشاهده آنی قیمت طلا و مشاهده آنلاین اطلاعات کیف پول"
 })
@@ -15,6 +15,7 @@
         <div class="widget-content widget-content-area">
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
                 @Html.Action("GoldOnlinePrice", new { isBuy = false })
+                <hr />
                 <div class="col-auto">
                     <label for="Weight">وزن (گرم)</label>
                     <div class="mb-3">
