@@ -3,6 +3,12 @@ using System.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Web.Services.Description;
+using System.Linq.Expressions;
+using System.Linq;
+using System.Text;
+using System.Web.UI.WebControls;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 public static class HtmlExtensions
 {
@@ -51,5 +57,56 @@ public static class HtmlExtensions
         {
             _writer.Write("</div>");
         }
+    }
+
+
+    public static MvcHtmlString GridFor<T>(this HtmlHelper htmlHelper, List<T> list, params Expression<Func<T, object>>[] columnSelectors)
+    {
+        if (list == null || !list.Any())
+        {
+            return MvcHtmlString.Create("<p>No data available</p>");
+        }
+
+        var sb = new StringBuilder();
+        sb.Append("<table class=\"datatable table table-hover non-hover table-striped\" style=\"width:100%\">");
+        sb.Append("<thead><tr class=\"gra\">");
+        foreach (var selector in columnSelectors)
+        {
+            var memberExpression = GetMemberExpression(selector);
+            var displayName = memberExpression.Member.GetCustomAttribute<DisplayAttribute>()?.Name ?? memberExpression.Member.Name;
+            sb.AppendFormat("<th>{0}</th>", displayName);
+
+        }
+        sb.Append("</tr></thead>");
+
+        // Generate table rows
+        sb.Append("<tbody>");
+        foreach (var item in list)
+        {
+            sb.Append("<tr>");
+            foreach (var selector in columnSelectors)
+            {
+                var value = selector.Compile()(item);
+                sb.AppendFormat("<td>{0}</td>", value);
+            }
+            sb.Append("</tr>");
+        }
+        sb.Append("</tbody>");
+
+        sb.Append("</table>");
+        return MvcHtmlString.Create(sb.ToString());
+    }
+
+    private static MemberExpression GetMemberExpression<T>(Expression<Func<T, object>> expression)
+    {
+        if (expression.Body is MemberExpression memberExpression)
+        {
+            return memberExpression;
+        }
+        else if (expression.Body is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression unaryMemberExpression)
+        {
+            return unaryMemberExpression;
+        }
+        throw new ArgumentException("Expression is not a member access", nameof(expression));
     }
 }
