@@ -1200,6 +1200,9 @@
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Fund\DepositReport.cshtml" />
     <Content Include="Views\Fund\WindrowReport.cshtml" />
+    <Content Include="Views\Store\RepositoryStatusIndex.cshtml" />
+    <Content Include="Views\Store\RepositoryUpdateIndex.cshtml" />
+    <Content Include="Views\Store\RepositoryReportIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

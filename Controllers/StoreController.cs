@@ -196,9 +196,21 @@ namespace G_APIs.Controllers
             }
         }
 
-        public ActionResult RepositoryManagementIndex()
+        #region GoldRepositoryManagement
+        public ActionResult RepositoryStatusIndex()
         {
             return View();
         }
+
+        public ActionResult RepositoryUpdateIndex()
+        {
+            return View();
+        }
+
+        public ActionResult RepositoryReportIndex()
+        {
+            return View();
+        }
+        #endregion GoldRepositoryManagement
     }
 }

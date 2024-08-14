@@ -69,28 +69,13 @@
     }
 </div>
 
-<div class="modal fade" id="buyConfirm" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-m">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="myModalLabel"><b>تائیدیه خرید کاربر</b></h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>آیا از خرید خود اطمینان دارید؟</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">انصراف</button>
-                <button type="button" class="btn btn-success" onclick="performBuy()">تائید</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     $(function () {
+        $("input[name='@nameof(Model.Weight)']").TouchSpin({
+            prefix: 'گرم',
+            buttondown_class: "btn btn-classic btn-danger",
+            buttonup_class: "btn btn-classic btn-success"
+        });
         disableBuy();
         $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
             e.stopPropagation();
@@ -105,9 +90,15 @@
             target: ".transaction-result",
             success: function (data) {
                 if (data) {
+                    swal({
+                        title: 'خرید موفق',
+                        text: "عملیات خرید با موفقیت انجام یافت",
+                        type: 'success',
+                        padding: '2em'
+                    });
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 1500);
                 }
                 $("input[name='@nameof(Model.Weight)']").val('');
                 disableBuy();
@@ -117,11 +108,19 @@
         });
     });
     function confirmBuy() {
-        $('#buyConfirm').modal('show');
-    }
-    function performBuy() {
-        $('#buyConfirm').modal('hide');
-        $('#frmBuy').submit();
+        swal({
+            title: 'تائیدیه خرید کاربر',
+            text: "آیا از خرید خود اطمینان دارید؟",
+            type: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'انصراف',
+            confirmButtonText: 'تائید',
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                $('#frmBuy').submit();
+            }
+        });
     }
     function disableBuy() {
         $("#btnBuy").attr("disabled", "disabled");
