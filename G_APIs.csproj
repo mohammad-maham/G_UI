@@ -361,6 +361,7 @@
     <Content Include="Content\assets\img\de.png" />
     <Content Include="Content\assets\img\faq.svg" />
     <Content Include="Content\assets\img\favicon.ico" />
+    <Content Include="Content\assets\img\gold-treasure.png" />
     <Content Include="Content\assets\img\jp.png" />
     <Content Include="Content\assets\img\loader.gif" />
     <Content Include="Content\assets\img\login-image.jpeg" />
