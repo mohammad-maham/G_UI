@@ -5,7 +5,7 @@
 }
 
 
-@*<table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
+ <table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
         <thead class="">
             <tr>
                 <th>    </th>
@@ -29,17 +29,17 @@
                 </tr>
             }
         </tbody>
-    </table>*@
+    </table> 
 
-@Html.GridFor(Model,
+@*@Html.GridFor(Model,
     c => c.Id,
     c => c.PersianDate,
     c => c.WalletCurrencyId,
     c => c.TransactionModeId,
-    c => c.TransactionTypeId)
+    c => c.TransactionTypeId)*@
 
 
-@Html.Partial("_LayoutReport");
+@Html.Partial("_LayoutReport")
 
 
 

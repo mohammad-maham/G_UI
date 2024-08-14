@@ -30,7 +30,17 @@ namespace G_APIs.Models
         {
             get
             {
-                return new PersianDateTime(TransactionDate).ToString("yyyy/MM/dd HH:mm:ss");
+                try
+                {
+                    return new PersianDateTime(TransactionDate).ToString("yyyy/MM/dd HH:mm:ss");
+
+                }
+                catch (Exception)
+                {
+
+                    return DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+                }
             }
         }
         public string Info { get; set; }
