@@ -1664,11 +1664,3 @@ footer {
         text-align: center;
     }
 
-.rtl {
-    text-align: left;
-    direction: ltr;
-}
-
-.pointer {
-    cursor: pointer;
-}
