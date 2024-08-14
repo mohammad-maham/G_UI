@@ -96,13 +96,6 @@
             e.stopPropagation();
             return false;
         });
-    });
-    function confirmBuy() {
-        $('#buyConfirm').modal('show');
-    }
-    function performBuy() {
-        $('#buyConfirm').modal('hide');
-        $('#frmBuy').submit();
         $('#frmBuy').ajaxForm({
             validation: true,
             url: '/Store/SubmitBuy',
@@ -122,6 +115,13 @@
                 //dowhile = null;
             }
         });
+    });
+    function confirmBuy() {
+        $('#buyConfirm').modal('show');
+    }
+    function performBuy() {
+        $('#buyConfirm').modal('hide');
+        $('#frmBuy').submit();
     }
     function disableBuy() {
         $("#btnBuy").attr("disabled", "disabled");

@@ -69,6 +69,26 @@
     }
 </div>
 
+<div class="modal fade" id="sellConfirm" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="myModalLabel"><b>تائیدیه فروش کاربر</b></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>آیا از فروش خود اطمینان دارید؟</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">انصراف</button>
+                <button type="button" class="btn btn-success" onclick="performSell()">تائید</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(function () {
         disableSell();
@@ -76,8 +96,6 @@
             e.stopPropagation();
             return false;
         });
-    });
-    function performSell() {
         $('#frmBuy').ajaxForm({
             validation: true,
             url: '/Store/SubmitSell',
@@ -97,6 +115,13 @@
                 //dowhile = null;
             }
         });
+    });
+    function confirmSell() {
+        $('#sellConfirm').modal('show');
+    }
+    function performSell() {
+        $('#sellConfirm').modal('hide');
+        $('#frmSell').submit();
     }
     function disableSell() {
         $("#btnSell").attr("disabled", "disabled");
