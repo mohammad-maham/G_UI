@@ -7,6 +7,7 @@ namespace G_APIs.Models
     public class User
     {
         public long? Id { get; set; }
+        public long? UserId { get; set; }
         [Required, Display(Name = "نام کاربری/کد ملی")]
         public string ForgotUsername { get; set; }
         [Display(Name = "نام کاربری")]

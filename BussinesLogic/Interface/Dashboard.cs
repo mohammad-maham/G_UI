@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using G_APIs.Models;
 
 namespace G_APIs.BussinesLogic.Interface
 {
     public interface IDashboard
     {
+        Menu GetDashboard(User user);
     }
 }

@@ -1,18 +1,31 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System;
 using static G_APIs.Common.Enums;
 
 namespace G_APIs.BussinesLogic
 {
-
     public class Dashboard : IDashboard
     {
-        public Dashboard()
+        public Menu GetDashboard(User user)
         {
+            Menu menu = new Menu();
+            try
+            {
+                user.UserId = user.Id;
+                ApiResult response = new GoldApi(GoldHost.Accounting, "/api/Dashboard/GetDashboard", user).Post();
+                if (response != null && response.StatusCode == 200 && !string.IsNullOrEmpty(response.Data))
+                {
+                    menu = JsonConvert.DeserializeObject<Menu>(response.Data);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return menu;
         }
-
-       
     }
 }

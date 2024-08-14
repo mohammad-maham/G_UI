@@ -13,10 +13,12 @@ namespace G_APIs.Controllers
     public class HomeController : Controller
     {
         private readonly ISession _session;
+        private readonly IDashboard _dashboard;
 
-        public HomeController(ISession session)
+        public HomeController(ISession session, IDashboard dashboard)
         {
             _session = session;
+            _dashboard = dashboard;
         }
 
         [GoldUserInfo]
@@ -30,9 +32,7 @@ namespace G_APIs.Controllers
                 _session.Set("UserInfo", userInfo);
                 return (ActionResult)View(model);
             }
-
-            return RedirectToAction("Login","Account");
-
+            return RedirectToAction("Login", "Account");
         }
 
         [GoldAuthorize]
@@ -56,6 +56,8 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult Sidebar(Menu model)
         {
+            User user = _session.Get<User>("UserInfo");
+            model = _dashboard.GetDashboard(user);
             return View(model);
         }
 
