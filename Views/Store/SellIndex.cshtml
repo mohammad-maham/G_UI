@@ -13,7 +13,7 @@
     @using (Html.Box("باکس فروش", col: 6))
     {
         <div class="widget-content widget-content-area">
-            <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
+            <form form class="frmSell" id="frmSell" action="javascript:void(0);" novalidate>
                 @Html.Action("GoldOnlinePrice", new { isBuy = false })
                 <hr />
                 <div class="col-auto">
@@ -46,14 +46,14 @@
                 </div>
                 <div class="col-auto field-wrapper command-panel">
                     @Html.Partial("_GoldButton", new GoldButton()
-                    {
-                        ButtonType = GoldButtonTypes.submit,
-                        Name = "btnSell",
-                        Icon = "fa fa-shopping-basket fa-2x",
-                        Class = "btn btn-warning",
-                        Text = "فروش",
-                        OnClick = "performSell()"
-                    })
+               {
+                   ButtonType = GoldButtonTypes.button,
+                   Name = "btnSell",
+                   Icon = "fa fa-shopping-basket fa-2x",
+                   Class = "btn btn-warning",
+                   Text = "فروش",
+                   OnClick = "confirmSell()"
+               })
                     @Html.Partial("_GoldButton", new GoldButton()
                     {
                         ButtonType = GoldButtonTypes.cancel,
@@ -96,7 +96,7 @@
             e.stopPropagation();
             return false;
         });
-        $('#frmBuy').ajaxForm({
+        $('#frmSell').ajaxForm({
             validation: true,
             url: '/Store/SubmitSell',
             jwt: true,
