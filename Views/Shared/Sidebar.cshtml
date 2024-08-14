@@ -21,9 +21,9 @@
             <a href="@Url.Action("Index","Home")" class="nav-link"> Gold </a>
         </li>
     </ul>
-    @foreach (ParentMenuVM parentMenu in Model.ParentMenus)
-    {
-        <ul class="list-unstyled menu-categories" id="accordionExample">
+    <ul class="list-unstyled menu-categories" id="accordionExample">
+        @foreach (ParentMenuVM parentMenu in Model.ParentMenus)
+        {
             <li class="menu">
                 <a href="#@parentMenu.MenuName" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                     <div class="">
@@ -56,8 +56,8 @@
                     }
                 </ul>
             </li>
-        </ul>
-    }
+        }
+    </ul>
     @* <ul class="list-unstyled menu-categories" id="accordionExample">
         <li class="menu">
                      <a href="#dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
