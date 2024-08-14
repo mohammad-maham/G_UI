@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace G_APIs.Models
 {
@@ -9,16 +11,21 @@ namespace G_APIs.Models
 
         public long WalletId { get; set; }
 
+
+        [Display(Name = " نوع ارز  ")]
         public long WalletCurrencyId { get; set; }
 
+        [Display(Name = " مدل تراکنش   ")]
         public short TransactionTypeId { get; set; }
 
+        [Display(Name = " نوع تراکنش  ")]
         public short TransactionModeId { get; set; }
 
         public short? Status { get; set; }
 
         public DateTime TransactionDate { get; set; }
 
+        [Display(Name = " تاریح    ")]
         public string PersianDate
         {
             get
@@ -31,6 +38,7 @@ namespace G_APIs.Models
         public string OrderId { get; set; }
 
         public string TrackingCode { get; set; }
+        [Display(Name = " مبلغ    ")]
         public decimal Amount { get; set; }
 
     }
