@@ -57,5 +57,7 @@ namespace G_APIs.Models
         public string FatherName { get; set; }
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }
+
+        public double    OnlinePrice { get; set; }
     }
 }

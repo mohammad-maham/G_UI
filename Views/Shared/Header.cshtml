@@ -3,11 +3,32 @@
     Layout = null;
     var profAvatar = $"https://ui-avatars.com/api/?name={Model.Username ?? "SaeedZavvar"}";
 }
+
+<style>
+    .badge.price-preview {
+        font-size: 15px;
+    }
+</style>
+
 <header class="header navbar navbar-expand-sm expand-header">
     <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
     <ul class="navbar-item flex-row ml-auto">
 
+        @*<li class="nav-item align-self-center search-animated">
+                <button type="button" class="btn btn-dark mt-3 mb-3 ml-2 ">
+                    قیمت آنلاین طلا : <span class="badge badge-success  price-preview">@Model.OnlinePrice.ToString("N0")</span>
+                </button>
+            </li>*@
+
+
+        <li class="nav-item align-self-center search-animated">
+            <span class="badge badge-success price-preview m-3">
+                قیمت واحد طلا
+                <span class=" m-1">   @Model.OnlinePrice.ToString("N0") </span>
+                ریال
+            </span>
+        </li>
         <li class="nav-item align-self-center search-animated">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <form class="form-inline search-full form-inline search" role="search">
@@ -54,3 +75,43 @@
         </li>
     </ul>
 </header>
+
+
+<script>
+    var dowhile;
+    $(function () {
+        var interval = 5000;
+        var inpPrice = $(".price-preview >  span");
+        function getOnlinePrice() {
+            $.ajax({
+                type: 'POST',
+                url: '/Store/GetOnlinePrice',
+                data: {
+                    weight: 1.0,
+                    calcType: 1,
+                },
+                success: function (data) {
+                    if ($.isNumeric(data)) {
+                        var preVal = inpPrice.html();
+                        var formattedData = Number(data).toLocaleString('en');
+                        inpPrice.html(formattedData);
+                        if (preVal <= formattedData) {
+                            inpPrice.parent().css("background-color", "#e7515a");
+                        } else if (preVal > formattedData) {
+                            inpPrice.parent().css("background-color", "#e7515a1f");
+                        }
+                        if (dowhile) {
+                            dowhile = setTimeout(getOnlinePrice, interval);
+                        }
+                    } else {
+                        window.location = "/Account/Login";
+                    }
+                },
+                error: function (data) {
+                    window.clearTimeout(dowhile);
+                }
+            });
+        }
+        dowhile = setTimeout(getOnlinePrice, interval);
+    });
+</script>

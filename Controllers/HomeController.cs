@@ -1,3 +1,4 @@
+using G_APIs.BussinesLogic;
 using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
@@ -14,16 +15,18 @@ namespace G_APIs.Controllers
     {
         private readonly ISession _session;
         private readonly IDashboard _dashboard;
+        private readonly IStore _store;
 
-        public HomeController(ISession session, IDashboard dashboard)
+        public HomeController(ISession session, IDashboard dashboard, IStore store)
         {
             _session = session;
             _dashboard = dashboard;
+            _store = store;
         }
 
         [GoldUserInfo]
         [GoldAuthorize]
-        public ActionResult Index(Dashboard model)
+        public ActionResult Index(Models.Dashboard model)
         {
             string userInfo = Request.Headers["UserInfo"];
 
@@ -69,6 +72,16 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult Header(User model)
         {
+
+            string token = Request.Cookies["gldauth"].Value;
+            User userInfo = _session.Get<User>("UserInfo");
+            double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
+            {
+                GoldCalcType = CalcTypes.buy,
+                GoldWeight = 1
+            }, token);
+
+            model.OnlinePrice = buyPrice;
             return View(model);
         }
 

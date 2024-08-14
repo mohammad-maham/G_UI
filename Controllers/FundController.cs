@@ -1,10 +1,12 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
+using Microsoft.Owin.Security.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using static G_APIs.Common.Enums;
 namespace G_APIs.Controllers
 {
 
@@ -100,8 +102,19 @@ namespace G_APIs.Controllers
             }
         }
 
+         [GoldAuthorize]
+         public ActionResult WindrowReport()
+         {
+            return View();
+         }              
+
+        public ActionResult DepositReport()
+        {
+            return View();
+        }
+
         [GoldAuthorize]
-        public ActionResult GetTransactions()
+        public ActionResult GetTransactions(Transaction tr)
         {
             try
             {
@@ -110,7 +123,8 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<Transaction>());
 
-                var res = _fund.GetTransactions(new Wallet { UserId = user.Id }).OrderBy(x => x.Id).ToList();
+                var res = _fund.GetTransactions(new Wallet { UserId = user.Id })
+                    .Where(x=>x.TransactionTypeId==tr.TransactionTypeId).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -119,7 +133,6 @@ namespace G_APIs.Controllers
                 throw;
             }
         }
-
 
         [HttpPost]
         [GoldAuthorize]
