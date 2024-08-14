@@ -57,7 +57,12 @@ namespace G_APIs.Controllers
         public ActionResult Sidebar(Menu model)
         {
             User user = _session.Get<User>("UserInfo");
-            model = _dashboard.GetDashboard(user);
+
+            if (user != null)
+                model = _dashboard.GetDashboard(user);
+            else
+                AlertMessaging.AddToUserQueue(new MessageContext("??????? ????? ???? ???", type: MessageType.Warning));
+
             return View(model);
         }
 

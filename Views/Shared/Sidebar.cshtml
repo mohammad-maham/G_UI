@@ -35,9 +35,9 @@
                     </div>
                 </a>
                 <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="@parentMenu.MenuName" data-parent="#accordionExample">
-                    @foreach (SubMenuVm subMenu in Model.SubMenus)
+                    @foreach (SubMenuVm subMenu in Model.SubMenus.Where(x => x.ParentMenuId == parentMenu.MenuId).ToList())
                     {
-                        <li>
+                        <li class="@subMenu.ActionId">
                             @{
                                 string controller = subMenu.ActionPath.Split('/')[0];
                                 string action = subMenu.ActionPath.Split('/')[1];
@@ -49,7 +49,7 @@
                                 Name = subMenu.ActionName,
                                 Icon = "",
                                 Class = "",
-                                Text = subMenu.ActionName,
+                                Text = subMenu.ActionTitle,
                                 Href = Url.Action(action, controller)
                             })
                         </li>
