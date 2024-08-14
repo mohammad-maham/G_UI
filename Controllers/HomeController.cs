@@ -61,7 +61,7 @@ namespace G_APIs.Controllers
             if (user != null)
                 model = _dashboard.GetDashboard(user);
             else
-                AlertMessaging.AddToUserQueue(new MessageContext("??????? ????? ???? ???", type: MessageType.Warning));
+                AlertMessaging.AddToUserQueue(new MessageContext("اطلاعات کاربر یافت نشد", type: MessageType.Warning));
 
             return View(model);
         }
