@@ -18,7 +18,7 @@ namespace G_APIs.Controllers
             _session = session;
             _wallet = wallet;
         }
-
+        #region GoldShopping
         [HttpGet]
         [GoldAuthorize]
         public ActionResult BuyIndex()
@@ -164,7 +164,8 @@ namespace G_APIs.Controllers
                 throw ex;
             }
         }
-
+        #endregion GoldShopping
+        #region GoldOnlinePrices
         public ActionResult GoldOnlinePrice(bool isBuy = true)
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -195,7 +196,7 @@ namespace G_APIs.Controllers
                 throw ex;
             }
         }
-
+        #endregion GoldOnlinePrices
         #region GoldRepositoryManagement
         public ActionResult RepositoryStatusIndex()
         {
