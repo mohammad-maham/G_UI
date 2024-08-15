@@ -2,6 +2,7 @@
 using G_APIs.Models;
 using G_APIs.Services;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace G_APIs.Controllers
@@ -197,14 +198,46 @@ namespace G_APIs.Controllers
         }
         #endregion GoldOnlinePrices
         #region GoldRepositoryManagement
-        public ActionResult RepositoryStatusIndex()
+        public ActionResult RepositoryManagementIndex()
         {
-            return View();
-        }
+            string token = Request.Cookies["gldauth"].Value;
+            GoldTypesVM goldTypes = new GoldTypesVM();
+            List<SelectListItem> lstGoldTypesSelect = new List<SelectListItem>();
+            List<SelectListItem> lstGoldCaratsSelect = new List<SelectListItem>();
+            GoldRepositoryStatusVM goldRepositoryStatus = new GoldRepositoryStatusVM();
+            GoldRepositoryManagementVM managementVM = new GoldRepositoryManagementVM();
 
-        public ActionResult RepositoryUpdateIndex()
-        {
-            return View();
+            if (!string.IsNullOrEmpty(token))
+            {
+                goldRepositoryStatus = _store.GetGoldRepositoryStatus(token);
+                goldTypes = _store.GetGoldTypes(token);
+                if (goldTypes != null)
+                {
+                    if (goldTypes.GoldTypes.Count > 0)
+                    {
+                        foreach (GoldType goldType in goldTypes.GoldTypes)
+                        {
+                            lstGoldTypesSelect.Add(new SelectListItem() { Text = goldType.Name, Value = goldType.Id.ToString() });
+                        }
+
+                        managementVM.GoldTypes = lstGoldTypesSelect;
+                    }
+                    if (goldTypes.GoldCarats.Count > 0)
+                    {
+                        foreach (GoldCarat goldCarat in goldTypes.GoldCarats)
+                        {
+                            lstGoldCaratsSelect.Add(new SelectListItem() { Text = goldCarat.Name, Value = goldCarat.Value.ToString() });
+                        }
+
+                        managementVM.GoldCarats = lstGoldCaratsSelect;
+                    }
+                }
+            }
+            foreach (var item in goldRepositoryStatus.GoldRepositoryVM)
+                item.MaintenanceType = item.GoldMaintenanceType == 10 ? "مالکیتی" : "وکالتی/امانتی";
+
+            managementVM.GoldRepositoryStatus = goldRepositoryStatus;
+            return View(managementVM);
         }
 
         public ActionResult RepositoryReportIndex()

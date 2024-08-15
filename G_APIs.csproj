@@ -244,6 +244,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GoldRepositoryManagementVM.cs" />
+    <Compile Include="Models\GoldRepositoryStatusVM.cs" />
+    <Compile Include="Models\GoldTypesVM.cs" />
     <Compile Include="Models\MessageContext.cs" />
     <Compile Include="Models\ApiResult.cs" />
     <Compile Include="Models\BankAccount.cs" />
@@ -1200,8 +1203,7 @@
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Fund\DepositReport.cshtml" />
     <Content Include="Views\Fund\WindrowReport.cshtml" />
-    <Content Include="Views\Store\RepositoryStatusIndex.cshtml" />
-    <Content Include="Views\Store\RepositoryUpdateIndex.cshtml" />
+    <Content Include="Views\Store\RepositoryManagementIndex.cshtml" />
     <Content Include="Views\Store\RepositoryReportIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
