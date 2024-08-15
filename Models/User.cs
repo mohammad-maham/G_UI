@@ -33,6 +33,7 @@ namespace G_APIs.Models
         [Display(Name = "کد ملی"), Required(ErrorMessage = "وارد کردن این فیلد الزامیست")]
         public string NationalCode { get; set; }
         public string Captcha { get; set; }
+        [Display(Name = "کد تائید"), Required(ErrorMessage = "وارد کردن این فیلد الزامیست")]
         public long? OTP { get; set; }
         public string Role { get; set; }
         [Display(Name = "نام خانوادگی")]
@@ -58,6 +59,6 @@ namespace G_APIs.Models
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }
 
-        public double    OnlinePrice { get; set; }
+        public double OnlinePrice { get; set; }
     }
 }
