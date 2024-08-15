@@ -27,5 +27,24 @@ namespace G_APIs.BussinesLogic
             }
             return menu;
         }
+
+        public User GetUserInfo(User user, string token)
+        {
+            User userResponse = new User();
+            try
+            {
+                user.UserId = user.Id;
+                ApiResult response = new GoldApi(GoldHost.Accounting, "/api/User/GetUserInfo", user, authorization: token).Post();
+                if (response != null && response.StatusCode == 200 && !string.IsNullOrEmpty(response.Data))
+                {
+                    userResponse = JsonConvert.DeserializeObject<User>(response.Data);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return userResponse;
+        }
     }
 }

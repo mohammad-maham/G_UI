@@ -1,13 +1,7 @@
-using G_APIs.BussinesLogic;
 using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
-using static G_APIs.Common.Enums;
 
 namespace G_APIs.Controllers
 {
@@ -33,7 +27,7 @@ namespace G_APIs.Controllers
             if (!string.IsNullOrEmpty(userInfo))
             {
                 _session.Set("UserInfo", userInfo);
-                return (ActionResult)View(model);
+                return View(model);
             }
             return RedirectToAction("Login", "Account");
         }
@@ -62,9 +56,13 @@ namespace G_APIs.Controllers
             User user = _session.Get<User>("UserInfo");
 
             if (user != null)
+            {
                 model = _dashboard.GetDashboard(user);
+            }
             else
+            {
                 AlertMessaging.AddToUserQueue(new MessageContext("اطلاعات کاربر یافت نشد", type: MessageType.Warning));
+            }
 
             return View(model);
         }
@@ -72,16 +70,19 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult Header(User model)
         {
-
             string token = Request.Cookies["gldauth"].Value;
-            User userInfo = _session.Get<User>("UserInfo");
-            double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
+            User user = _session.Get<User>("UserInfo");
+            if (user != null)
             {
-                GoldCalcType = CalcTypes.buy,
-                GoldWeight = 1
-            }, token);
+                double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
+                {
+                    GoldCalcType = CalcTypes.buy,
+                    GoldWeight = 1
+                }, token);
 
-            model.OnlinePrice = buyPrice;
+                model = _dashboard.GetUserInfo(user, token);
+                model.OnlinePrice = buyPrice;
+            }
             return View(model);
         }
 

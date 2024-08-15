@@ -216,7 +216,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BussinesLogic\Dashboard.cs" />
     <Compile Include="BussinesLogic\Fund.cs" />
-    <Compile Include="BussinesLogic\Interface\Dashboard.cs" />
+    <Compile Include="BussinesLogic\Interface\IDashboard.cs" />
     <Compile Include="BussinesLogic\Interface\IFund.cs" />
     <Compile Include="BussinesLogic\Interface\IReports.cs" />
     <Compile Include="BussinesLogic\Interface\IStore.cs" />

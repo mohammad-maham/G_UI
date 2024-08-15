@@ -1,13 +1,22 @@
 ﻿@model G_APIs.Models.User
 @{
     Layout = null;
-    var profAvatar = $"https://ui-avatars.com/api/?name={Model.Username ?? "SaeedZavvar"}";
+    string username = Model.Username ?? (Model.FirstName + " " + Model.LastName);
+    var profAvatar = $"https://ui-avatars.com/api/?name={username}";
 }
 
 <style>
     .badge.price-preview {
         font-size: 15px;
     }
+
+    .dropdown-item.logout > a {
+        color: orangered;
+    }
+
+        .dropdown-item.logout > a > span {
+            color: orangered !important;
+        }
 </style>
 
 <header class="header navbar navbar-expand-sm expand-header">
@@ -47,7 +56,7 @@
                     <div class="media mx-auto">
                         <img src="@profAvatar" class="img-fluid mr-2" alt="avatar">
                         <div class="media-body">
-                            <h5>   @(Model.Username ?? Model.NationalCode)  </h5>
+                            <h5>@username</h5>
                             <p>@Model.Role</p>
                         </div>
                     </div>
@@ -65,10 +74,10 @@
                         <span>پیام ها</span>
                     </a>
                 </div>
-                <div class="dropdown-item">
-                    <a href="@Url.Action("Logout","Account") ">
+                <div class="dropdown-item logout">
+                    <a href="@Url.Action("Logout","Account")">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        <span>  خروج</span>
+                        <span>خروج</span>
                     </a>
                 </div>
             </div>
