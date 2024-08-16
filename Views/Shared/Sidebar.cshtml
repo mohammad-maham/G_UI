@@ -8,7 +8,8 @@
     #accordionExample li.menu {
         border-bottom: 0.5px solid #dbdbdb !important;
     }
-    #accordionExample ul.submenu li{
+
+    #accordionExample ul.submenu li {
         border-bottom: 0.5px dashed #dbdbdb !important;
     }
 </style>
@@ -25,40 +26,43 @@
         </li>
     </ul>
     <ul class="list-unstyled menu-categories" id="accordionExample">
-        @foreach (ParentMenuVM parentMenu in Model.ParentMenus)
+        @if (Model != null && Model.ParentMenus != null && Model.ParentMenus.Count > 0)
         {
-            <li class="menu">
-                <a href="#@parentMenu.MenuName" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
-                    <div class="">
-                        @Html.Raw(parentMenu.MenuIcon)
-                        <span>@parentMenu.MenuTitle</span>
-                    </div>
-                    <div>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="@parentMenu.MenuName" data-parent="#accordionExample">
-                    @foreach (SubMenuVm subMenu in Model.SubMenus.Where(x => x.ParentMenuId == parentMenu.MenuId).ToList())
-                    {
-                        <li class="@subMenu.ActionId">
-                            @{
-                                string controller = subMenu.ActionPath.Split('/')[0];
-                                string action = subMenu.ActionPath.Split('/')[1];
-                            }
-                            @Html.Partial("_GoldButton", new GoldButton()
-                            {
-                                ButtonType = GoldButtonTypes.button,
-                                Schema = GoldButtonSchemas.link,
-                                Name = subMenu.ActionName,
-                                Icon = "",
-                                Class = "",
-                                Text = subMenu.ActionTitle,
-                                Href = Url.Action(action, controller)
-                            })
-                        </li>
-                    }
-                </ul>
-            </li>
+            foreach (ParentMenuVM parentMenu in Model.ParentMenus)
+            {
+                <li class="menu">
+                    <a href="#@parentMenu.MenuName" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <div class="">
+                            @Html.Raw(parentMenu.MenuIcon)
+                            <span>@parentMenu.MenuTitle</span>
+                        </div>
+                        <div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="@parentMenu.MenuName" data-parent="#accordionExample">
+                        @foreach (SubMenuVm subMenu in Model.SubMenus.Where(x => x.ParentMenuId == parentMenu.MenuId).ToList())
+                        {
+                            <li class="@subMenu.ActionId">
+                                @{
+                                    string controller = subMenu.ActionPath.Split('/')[0];
+                                    string action = subMenu.ActionPath.Split('/')[1];
+                                }
+                                @Html.Partial("_GoldButton", new GoldButton()
+                           {
+                               ButtonType = GoldButtonTypes.button,
+                               Schema = GoldButtonSchemas.link,
+                               Name = subMenu.ActionName,
+                               Icon = "",
+                               Class = "",
+                               Text = subMenu.ActionTitle,
+                               Href = Url.Action(action, controller)
+                           })
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
         }
     </ul>
     @* <ul class="list-unstyled menu-categories" id="accordionExample">

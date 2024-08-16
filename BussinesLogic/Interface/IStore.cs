@@ -10,5 +10,6 @@ namespace G_APIs.BussinesLogic.Interface
         ApiResult PerformSell(OrderPerformVM sellVM, string token);
         GoldRepositoryStatusVM GetGoldRepositoryStatus(string token);
         GoldTypesVM GetGoldTypes(string token);
+        ApiResult ChargeRepository(GoldRepositoryManagementVM repositoryManagementVM, string token);
     }
 }

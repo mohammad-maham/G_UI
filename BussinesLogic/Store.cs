@@ -9,6 +9,21 @@ namespace G_APIs.BussinesLogic
 {
     public class Store : IStore
     {
+        public ApiResult ChargeRepository(GoldRepositoryManagementVM repositoryManagementVM, string token)
+        {
+            string result = string.Empty;
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/ChargeStore", repositoryManagementVM, authorization: token).Post();
+
+                return response;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public GoldRepositoryStatusVM GetGoldRepositoryStatus(string token)
         {
             string result = string.Empty;

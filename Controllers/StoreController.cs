@@ -219,8 +219,6 @@ namespace G_APIs.Controllers
                         {
                             lstGoldTypesSelect.Add(new SelectListItem() { Text = goldType.Name, Value = goldType.Id.ToString() });
                         }
-
-                        managementVM.GoldTypes = lstGoldTypesSelect;
                     }
                     if (goldTypes.GoldCarats.Count > 0)
                     {
@@ -228,15 +226,32 @@ namespace G_APIs.Controllers
                         {
                             lstGoldCaratsSelect.Add(new SelectListItem() { Text = goldCarat.Name, Value = goldCarat.Value.ToString() });
                         }
-
-                        managementVM.GoldCarats = lstGoldCaratsSelect;
                     }
                 }
             }
             foreach (var item in goldRepositoryStatus.GoldRepositoryVM)
                 item.MaintenanceType = item.GoldMaintenanceType == 10 ? "مالکیتی" : "وکالتی/امانتی";
-
+            ViewBag.Carats = lstGoldCaratsSelect;
+            ViewBag.Types = lstGoldTypesSelect;
             managementVM.GoldRepositoryStatus = goldRepositoryStatus;
+            return View(managementVM);
+        }
+
+        [HttpPost]
+        public ActionResult SubmitRepositoryCharge(GoldRepositoryManagementVM managementVM)
+        {
+            string token = Request.Cookies["gldauth"].Value;
+
+            if (managementVM != null && !string.IsNullOrEmpty(token))
+            {
+                managementVM.Decharge = managementVM.SubmitType == 2 ? 1 : 0;
+                ApiResult response = _store.ChargeRepository(managementVM, token);
+                if (response.StatusCode != 200)
+                {
+                    return Json(new { result = false, message = response.Message });
+                }
+                AlertMessaging.AddToUserQueue(new MessageContext(response.Message, type: MessageType.Success));
+            }
             return View(managementVM);
         }
 

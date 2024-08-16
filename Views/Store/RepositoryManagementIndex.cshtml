@@ -95,38 +95,40 @@
                 <div class="tabs tab-content">
                     <div id="content_1" class="tabcontent">
                         <form form class="frmRepositoryCharge" id="frmRepositoryCharge" action="javascript:void(0);" novalidate>
+                            @Html.HiddenFor(x => x.SubmitType)
                             <div class="row">
                                 <div class="col-md-3 mt-3">
                                     <label for="GoldTypes">نوع طلا</label>
-                                    @Html.DropDownListFor(x => x.GoldTypes, Model.GoldTypes, new { @class = "select2" })
+                                    @Html.DropDownListFor(x => x.GoldType, (IEnumerable<SelectListItem>)ViewBag.Types, new { @class = "form-control select2" })
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <label for="GoldCarats">عیار</label>
-                                    @Html.DropDownListFor(x => x.GoldCarats, Model.GoldCarats, new { @class = "select2" })
+                                    @Html.DropDownListFor(x => x.Carat, (IEnumerable<SelectListItem>)ViewBag.Carats, new { @class = "form-control select2" })
                                 </div>
                                 @Html.EditorFor(x => x.Weight)
                             </div>
                             <div class="col-auto field-wrapper command-panel">
                                 @Html.Partial("_GoldButton", new GoldButton()
-                                {
-                                    ButtonType = GoldButtonTypes.button,
-                                    Name = "btnIncrease",
-                                    Icon = "fa fa-plus fa-1x",
-                                    Class = "btn btn-success",
-                                    Text = "افزایش طلا",
-                                    OnClick = ""
-                                })
+                           {
+                               ButtonType = GoldButtonTypes.button,
+                               Name = "btnIncrease",
+                               Icon = "fa fa-plus fa-1x",
+                               Class = "btn btn-success",
+                               Text = "افزایش طلا",
+                               OnClick = "confirm(1)"
+                           })
                                 @Html.Partial("_GoldButton", new GoldButton()
-                                {
-                                    ButtonType = GoldButtonTypes.button,
-                                    Name = "btnDecrease",
-                                    Icon = "fa fa-minus fa-1x",
-                                    Class = "btn btn-danger",
-                                    Text = "کاهش طلا",
-                                    OnClick = ""
-                                })
+                           {
+                               ButtonType = GoldButtonTypes.button,
+                               Name = "btnDecrease",
+                               Icon = "fa fa-minus fa-1x",
+                               Class = "btn btn-danger",
+                               Text = "کاهش طلا",
+                               OnClick = "confirm(2)"
+                           })
                             </div>
                         </form>
+                        <div class="transaction-result"></div>
                     </div>
                 </div>
             </div>
@@ -140,6 +142,22 @@
         buttondown_class: "btn btn-classic btn-danger",
         buttonup_class: "btn btn-classic btn-success"
     });
+    function confirm(submitType) {
+        $("input[name='@(nameof(Model.SubmitType))'][type=hidden]").val(submitType);
+        swal({
+            title: submitType == 1 ? 'تائیدیه افزایش گاوصندوق' : 'تائیدیه کاهش گاوصندوق',
+            text: "آیا از عملیات خود اطمینان دارید؟",
+            type: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'انصراف',
+            confirmButtonText: 'تائید',
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                $('#frmRepositoryCharge').submit();
+            }
+        });
+    }
     function disableInputs() {
         $("#btnIncrease, #btnDecrease").attr("disabled", "disabled");
         $("input[name='@nameof(Model.Weight)']").val('');
@@ -154,6 +172,28 @@
                 type: 'warning',
                 title: "مقدار وزن حداقل 1 و حداکثر 1000 گرم می باشد",
             });
+        }
+    });
+    $('#frmRepositoryCharge').ajaxForm({
+        validation: true,
+        url: '/Store/SubmitRepositoryCharge',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+        target: ".transaction-result",
+        success: function (data) {
+            if (data) {
+                swal({
+                    title: 'عملیات موفق',
+                    text: "عملیات با موفقیت انجام یافت",
+                    type: 'success',
+                    padding: '2em'
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
+            disableInputs();
         }
     });
     const series = [@(pieValues[0]), @(pieValues[1])];
