@@ -30,7 +30,7 @@
         <table id="rptfinancial" class="datatable table table-hover non-hover table-striped" style="width:100%">
             <thead class="">
                 <tr>
-                    <th>    </th>
+                    <th>   کد </th>
                     <th>  نوع تراکنش </th>
                     <th>  مبدا    </th>
                     <th>  مقصد    </th>
@@ -41,21 +41,55 @@
                 @foreach (var b in Model)
                 {
 
-                    var transType = "برداشت";
+                    var transType = "";
+
+                    var unitType1 = "";
+                    var unitType2 = "";
+
+                    var sourceAmount = "";
+                    var destAmount = "";
+
+
+                    if (b.TransactionTypeId == 3)
+                    {
+                        transType = "برداشت";
+                        unitType1 = "ریال";
+                        sourceAmount = b.SourceAmount.ToString("N0");
+                    }
                     if (b.TransactionTypeId == 4)
                     {
                         transType = "واریز";
+                        unitType1 = "ریال";
+                        sourceAmount = b.SourceAmount.ToString("N0");
+
                     }
                     if (b.TransactionTypeId == 5)
                     {
-                        transType = "تبدیل";
+                        if (b.SourceWalletCurrency == 1)
+                        {
+                            transType = "تبدیل پول به طلا";
+                            unitType1 = "ریال";
+                            unitType2 = "گرم";
+
+                            sourceAmount = b.SourceAmount.ToString("N0");
+                            destAmount = b.DestinationAmout.ToString("N0");
+                        }
+                        else
+                        {
+                            transType = "تبدیل طلا به پول";
+                            unitType1 = "گرم";
+                            unitType2 = "ریال";
+
+                            sourceAmount = b.SourceAmount.ToString("N0");
+                            destAmount = b.SourceAmount.ToString("N0");
+                        }
                     }
 
                     <tr class="gra  trans@(b.TransactionTypeId)">
                         <td>@b.Id</td>
                         <td>@(transType)</td>
-                        <td>@(b.SourceAmount.ToString("N0"))  @(b.SourceWalletCurrency == 1 ? "ریال" : "گرم") </td>
-                        <td>@(b.DestinationAmout.ToString("N0"))  </td>
+                        <td>@(sourceAmount)  @(unitType1) </td>
+                        <td>@(destAmount) @(unitType2) </td>
                         <td style="direction:ltr">@b.PersianDate </td>
                     </tr>
                 }
