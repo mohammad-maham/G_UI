@@ -56,7 +56,6 @@ namespace G_APIs.BussinesLogic
         {
             var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetBankAccounts", model).Post();
             var res = JsonConvert.DeserializeObject<List<WalletBankAccount>>(t.Data);
-
             return res;
         }
 
@@ -75,9 +74,21 @@ namespace G_APIs.BussinesLogic
         {
             var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetTransactions", model).Post();
             var res = JsonConvert.DeserializeObject<List<Transaction>>(t.Data);
-
             return res;
         }
 
+        public IEnumerable<FinancialVM> GetFinancialReport(Wallet model)
+        {
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
+            var res = JsonConvert.DeserializeObject<List<FinancialVM>>(t.Data);
+            return res;
+        }
+
+        public IEnumerable<Xchenger> GetExchanges(Wallet model)
+        {
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetExchanges", model).Post();
+            var res = JsonConvert.DeserializeObject<List<Xchenger>>(t.Data);
+            return res;
+        }
     }
 }

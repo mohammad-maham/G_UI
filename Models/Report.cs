@@ -1,6 +1,7 @@
-﻿namespace G_APIs.Models { 
-
-public class Report
+﻿namespace G_APIs.Models
 {
-}
+
+    public class Report
+    {
+    }
 }
