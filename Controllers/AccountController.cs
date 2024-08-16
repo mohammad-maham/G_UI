@@ -161,10 +161,11 @@ namespace G_APIs.Controllers
         {
             try
             {
-                model.NationalCode = model.ForgotUsername;
                 if (model.Password != model.PasswordRepeat)
                     return Json(new { result = false, message = "رمز عبور با تکرار آن مطابقت ندارد" });
 
+                if (!string.IsNullOrEmpty(model.ForgotUsername))
+                    model.NationalCode = model.ForgotUsername;
 
                 ApiResult result = _account.SetPassword(model);
 

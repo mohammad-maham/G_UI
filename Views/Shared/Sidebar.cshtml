@@ -30,6 +30,7 @@
         {
             foreach (ParentMenuVM parentMenu in Model.ParentMenus)
             {
+
                 <li class="menu">
                     <a href="#@parentMenu.MenuName" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                         <div class="">
@@ -45,19 +46,35 @@
                         {
                             <li class="@subMenu.ActionId">
                                 @{
-                                    string controller = subMenu.ActionPath.Split('/')[0];
-                                    string action = subMenu.ActionPath.Split('/')[1];
+                                    if (subMenu.ActionPath.IndexOf("/") >= 0)
+                                    {
+                                        string controller = subMenu.ActionPath.Split('/')[0];
+                                        string action = subMenu.ActionPath.Split('/')[1];
+                                        @Html.Partial("_GoldButton", new GoldButton()
+                                        {
+                                            ButtonType = GoldButtonTypes.button,
+                                            Schema = GoldButtonSchemas.link,
+                                            Name = subMenu.ActionName,
+                                            Icon = "",
+                                            Class = "",
+                                            Text = subMenu.ActionTitle,
+                                            Href = Url.Action(action, controller)
+                                        });
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_GoldButton", new GoldButton()
+                                        {
+                                            ButtonType = GoldButtonTypes.button,
+                                            Schema = GoldButtonSchemas.link,
+                                            Name = subMenu.ActionName,
+                                            Icon = "",
+                                            Class = "",
+                                            Text = subMenu.ActionTitle,
+                                            Href = subMenu.ActionPath
+                                        });
+                                    }
                                 }
-                                @Html.Partial("_GoldButton", new GoldButton()
-                           {
-                               ButtonType = GoldButtonTypes.button,
-                               Schema = GoldButtonSchemas.link,
-                               Name = subMenu.ActionName,
-                               Icon = "",
-                               Class = "",
-                               Text = subMenu.ActionTitle,
-                               Href = Url.Action(action, controller)
-                           })
                             </li>
                         }
                     </ul>
@@ -242,3 +259,24 @@
             </li>
         </ul> *@
 </nav>
+
+
+<script>
+
+    var TourWallet = function () {
+
+        let walletBox = $('.home-wallet').parent('.widget');
+
+        if (walletBox.length <= 0)
+            location.href = "/";
+
+        $('html, body').animate({
+            scrollTop: walletBox.offset().top
+        }, 1000, () => {
+            walletBox.effect('highlight', { color: '#f5c37c' }, 2000);
+        });
+
+
+    }
+
+</script>

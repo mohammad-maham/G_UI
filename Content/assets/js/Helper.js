@@ -26,8 +26,6 @@
                 else {
                     var _data = form.serialize()
 
-                    debugger;
-
                     if (!settings.miniloader && !settings.blockui)
                         ShowLoader();
 
@@ -47,7 +45,7 @@
                                 xhr.setRequestHeader('Authorization', auth);
                         },
                         success: (response) => {
-                            debugger;
+                      
                             if (response) {
                                 if (settings.mixin) {
                                     if (response.message) {
@@ -179,12 +177,11 @@ function isValidEmail(email) {
 
 
 function ValidateForm(form) {
-    debugger
+    
     let isValid = true;
     $('.invalid-feedback', form).remove();
 
     Array.from(form.elements).forEach(element => {
-
 
         if (!element.checkValidity()) {
 
@@ -205,7 +202,6 @@ function ValidateForm(form) {
 
         }
 
-        // Check if the element is an email input and validate it
         if (element.type === 'email' && !isValidEmail(element.value)) {
             isValid = false;
             const errorMessage = element.dataset.valEmail || "Please enter a valid email address.";

@@ -81,8 +81,17 @@ namespace G_APIs.Controllers
                 }, token);
 
                 model = _dashboard.GetUserInfo(user, token);
-                model.OnlinePrice = buyPrice;
+                model.BuyPrice = buyPrice;
+
+                double sellPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
+                {
+                    GoldCalcType = CalcTypes.sell,
+                    GoldWeight = 1
+                }, token);
+
+                model.SellPrice = sellPrice;
             }
+
             return View(model);
         }
 
