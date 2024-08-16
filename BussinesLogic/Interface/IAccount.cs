@@ -6,6 +6,7 @@ namespace G_APIs.BussinesLogic.Interface
 
     public interface IAccount
     {
+
         ApiResult  Login(User model);
         ApiResult  SetPassword(User model);
         ApiResult  SignUp(User model);

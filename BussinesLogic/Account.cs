@@ -14,6 +14,7 @@ namespace G_APIs.BussinesLogic
         {
         }
 
+
         public ApiResult Login(User model)
         {
 
@@ -24,6 +25,7 @@ namespace G_APIs.BussinesLogic
             return res;
         }
 
+
         public ApiResult SignUp(User model)
         {
 
@@ -33,6 +35,7 @@ namespace G_APIs.BussinesLogic
 
             return res;
         }
+
 
         public ApiResult SetPassword(User model)
         {
@@ -48,12 +51,14 @@ namespace G_APIs.BussinesLogic
             return res;
         }
 
+
         public ApiResult SubmitContact(User model, string token)
         {
             var res =  new GoldApi(GoldHost.Accounting, "/api/User/SubmitContact", model, authorization: token).Post();
 
             return res;
         }
+
 
         public ApiResult GetUserInfo(User model, string token)
         {

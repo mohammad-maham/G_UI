@@ -42,6 +42,7 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
+
         public ActionResult AddressInfo(User model)
         {
             var token = Request.Cookies["auth"].ToString();
@@ -61,6 +62,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
+
         public ActionResult Login(User model)
         {
             try
@@ -70,6 +72,7 @@ namespace G_APIs.Controllers
 
                 if (captcha != null && model.Captcha != null && model.Captcha != captcha)
                     return Json(new { result = false, message = "متن تصویر اشتباه است." });
+
 
                 var res = _account.Login(model);
 
@@ -106,6 +109,7 @@ namespace G_APIs.Controllers
 
 
         [HttpPost]
+
         public ActionResult SignUp(User model)
         {
             try
@@ -117,6 +121,7 @@ namespace G_APIs.Controllers
 
 
                 model.Mobile = model.Mobile.StartsWith("0") ? model.Mobile.Remove(0, 1) : model.Mobile;
+
 
                 var res = _account.SignUp(model);
 
@@ -151,6 +156,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
+
         public ActionResult SetPassword(User model)
         {
             try
@@ -158,6 +164,7 @@ namespace G_APIs.Controllers
                 model.NationalCode = model.ForgotUsername;
                 if (model.Password != model.PasswordRepeat)
                     return Json(new { result = false, message = "رمز عبور با تکرار آن مطابقت ندارد" });
+
 
                 ApiResult result = _account.SetPassword(model);
 
@@ -189,6 +196,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
+
         public ActionResult CompleteProfile(User model)
         {
             try
@@ -200,6 +208,7 @@ namespace G_APIs.Controllers
                     //return Unauthorized("Missing or invalid Authorization header.");
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
+
 
                 var res = _account.CompleteProfile(model, token);
 
@@ -230,6 +239,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
+
         public ActionResult SubmitContact(User model)
         {
             try
@@ -241,6 +251,7 @@ namespace G_APIs.Controllers
                     //return Unauthorized("Missing or invalid Authorization header.");
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
+
 
                 var res = _account.SubmitContact(model, token);
 
@@ -274,6 +285,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
+
         public ActionResult ForgotPassword(User user)
         {
             try
@@ -281,6 +293,7 @@ namespace G_APIs.Controllers
                 if (user != null && !string.IsNullOrEmpty(user.ForgotUsername))
                 {
                     user.Username = user.ForgotUsername;
+
                     ApiResult result = _account.ForgotPassword(user);
                     if (result != null)
                     {
