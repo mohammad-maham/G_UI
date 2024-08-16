@@ -10,17 +10,17 @@
     Description = "گزارش  معین مالی   "
 })
 
-
-
 <style>
     #rptfinancial .trans3 td {
-        background-color: lightcoral;
+        background-color: #e5a3a3;
     }
+
     #rptfinancial .trans4 td {
-        background-color: forestgreen;
+        background-color: #a7efa7;
     }
+
     #rptfinancial .trans5 td {
-        background-color: darkgoldenrod;
+        background-color: #e1b970;
     }
 </style>
 
@@ -32,21 +32,30 @@
                 <tr>
                     <th>    </th>
                     <th>  نوع تراکنش </th>
-                    <th> مبلغ مبدا    </th>
-                    <th> مبلغ مقصد    </th>
+                    <th>  مبدا    </th>
+                    <th>  مقصد    </th>
                     <th> تاریح  </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var b in Model)
                 {
+
+                    var transType = "برداشت";
+                    if (b.TransactionTypeId == 4)
+                    {
+                        transType = "واریز";
+                    }
+                    if (b.TransactionTypeId == 5)
+                    {
+                        transType = "تبدیل";
+                    }
+
                     <tr class="gra  trans@(b.TransactionTypeId)">
                         <td>@b.Id</td>
-                        <td>@(b.TransactionTypeId)</td>
-                        <td>@(b.SourceWalletCurrency)  </td>
-                        <td>@(b.DestinationWalletCurrency)  </td>
-                        <td>@(b.SourceAmount)  </td>
-                        <td>@(b.DestinationAmout)  </td>
+                        <td>@(transType)</td>
+                        <td>@(b.SourceAmount.ToString("N0"))  @(b.SourceWalletCurrency == 1 ? "ریال" : "گرم") </td>
+                        <td>@(b.DestinationAmout.ToString("N0"))  </td>
                         <td style="direction:ltr">@b.PersianDate </td>
                     </tr>
                 }
@@ -54,3 +63,5 @@
         </table>
     }
 </div>
+
+@Html.Partial("_LayoutReport")

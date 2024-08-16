@@ -18,6 +18,8 @@ namespace G_APIs.BussinesLogic.Interface
         ApiResult AddBankAccount(WalletBankAccount model);
         ApiResult ToggleBankCard(WalletBankAccount model);
         IEnumerable<Transaction> GetTransactions(Wallet model);
+        IEnumerable<FinancialVM> GetFinancialReport(Wallet model);
+        IEnumerable<Xchenger> GetExchanges(Wallet model);
 
     }
 }

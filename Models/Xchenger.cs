@@ -20,17 +20,24 @@ namespace G_APIs.Models
 
         public long DestinationWalletCurrency { get; set; }
 
-        public decimal DestinationAmount { get; set; }
+        public decimal DestinationAmout { get; set; }
 
         public DateTime XchengData { get; set; }
         public string PersianDate
         {
             get
             {
-                if (XchengData is DateTime pdate)
-                    return new PersianDateTime(pdate).ToString("yyyy/MM/dd HH:mm:ss");
+                try
+                {
+                    return new PersianDateTime(XchengData).ToString("yyyy/MM/dd HH:mm:ss");
 
-                return string.Empty;
+                }
+                catch (Exception)
+                {
+
+                    return DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+                }
             }
         }
     }

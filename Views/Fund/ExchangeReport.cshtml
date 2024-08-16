@@ -10,11 +10,12 @@
 })
 
 <style>
-    #rptExchange .gold-tr td{
-           background-color:darkgoldenrod;
+    #rptExchange .gold-tr td {
+        background-color: #e5a3a3;
     }
+
     #rptExchange .money-tr td {
-        background-color: darkgreen;
+        background-color: #a7efa7;
     }
 </style>
 
@@ -28,7 +29,7 @@
                     <th>  نوع تبدیل </th>
                     <th> مبلغ مبدا    </th>
                     <th> مبلغ مقصد    </th>
-                    <th> تاریح  </th>
+                    <th> تاریخ  </th>
                 </tr>
             </thead>
             <tbody>
@@ -37,8 +38,8 @@
                     <tr class="gra @(b.SourceWalletCurrency ==1? "money-tr" : "gold-tr")">
                         <td>@b.Id</td>
                         <td>@(b.SourceWalletCurrency ==1 ?"پول به طلا":"طلا به پول")  </td>
-                        <td>@(b.SourceAmount.ToString("N0")) - @(b.SourceWalletCurrency == 1 ? "ریال" : "گرم")  </td>
-                        <td>@(b.DestinationAmount.ToString("N0") )  - @(b.SourceWalletCurrency == 1 ? "ریال" : "گرم")</td>
+                        <td>@(b.SourceAmount.ToString("N0"))   @(b.SourceWalletCurrency == 1 ? "ریال" : "گرم")  </td>
+                        <td>@(b.DestinationAmout.ToString("N0") )   @(b.DestinationWalletCurrency == 1 ? "ریال" : "گرم")</td>
                         <td style="direction:ltr">@b.PersianDate </td>
                     </tr>
                 }
@@ -46,3 +47,5 @@
         </table>
     }
 </div>
+
+@Html.Partial("_LayoutReport")

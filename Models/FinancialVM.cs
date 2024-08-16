@@ -17,10 +17,17 @@ namespace G_APIs.Models
         {
             get
             {
-                if (TransactionDate is DateTime pdate)
-                    return new PersianDateTime(pdate).ToString("yyyy/MM/dd HH:mm:ss");
+                try
+                {
+                    return new PersianDateTime(TransactionDate).ToString("yyyy/MM/dd HH:mm:ss");
 
-                return string.Empty;
+                }
+                catch (Exception)
+                {
+
+                    return DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+                }
             }
         }
     }

@@ -117,13 +117,41 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult FinanceMinisterReport()
         {
-            return View();
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View(new List<FinancialVM>());
+
+                var res = _fund.GetFinancialReport(new Wallet { UserId = 100000081 });
+
+                return View(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [GoldAuthorize]
         public ActionResult ExchangeReport()
         {
-            return View();
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View(new List<Xchenger>());
+
+                var res = _fund.GetExchanges(new Wallet { UserId = user.Id });
+
+                 return View(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [GoldAuthorize]

@@ -23,7 +23,8 @@ namespace G_APIs.Common
             Deposit = 4,
             Windrow = 3,
             Sell = 1,
-            Buy = 2
+            Buy = 2,
+            Change = 5
         }
         public enum TransactionMode
         {
