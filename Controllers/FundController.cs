@@ -124,7 +124,8 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<FinancialVM>());
 
-                var res = _fund.GetFinancialReport(new Wallet { UserId = 100000081 });
+                var res = _fund.GetFinancialReport(new Wallet { UserId = 100000081 })
+                    .OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
