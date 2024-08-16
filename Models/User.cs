@@ -7,6 +7,7 @@ namespace G_APIs.Models
     public class User
     {
         public long? Id { get; set; }
+        public long? UserId { get; set; }
         [Required, Display(Name = "نام کاربری/کد ملی")]
         public string ForgotUsername { get; set; }
         [Display(Name = "نام کاربری")]
@@ -32,6 +33,7 @@ namespace G_APIs.Models
         [Display(Name = "کد ملی"), Required(ErrorMessage = "وارد کردن این فیلد الزامیست")]
         public string NationalCode { get; set; }
         public string Captcha { get; set; }
+        [Display(Name = "کد تائید"), Required(ErrorMessage = "وارد کردن این فیلد الزامیست")]
         public long? OTP { get; set; }
         public string Role { get; set; }
         [Display(Name = "نام خانوادگی")]
@@ -56,5 +58,7 @@ namespace G_APIs.Models
         public string FatherName { get; set; }
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }
+
+        public double OnlinePrice { get; set; }
     }
 }

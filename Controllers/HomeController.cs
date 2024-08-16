@@ -1,38 +1,35 @@
 using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
-using static G_APIs.Common.Enums;
 
 namespace G_APIs.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ISession _session;
+        private readonly IDashboard _dashboard;
+        private readonly IStore _store;
 
-        public HomeController(ISession session)
+        public HomeController(ISession session, IDashboard dashboard, IStore store)
         {
             _session = session;
+            _dashboard = dashboard;
+            _store = store;
         }
 
         [GoldUserInfo]
         [GoldAuthorize]
-        public ActionResult Index(Dashboard model)
+        public ActionResult Index(Models.Dashboard model)
         {
             string userInfo = Request.Headers["UserInfo"];
 
             if (!string.IsNullOrEmpty(userInfo))
             {
                 _session.Set("UserInfo", userInfo);
-                return (ActionResult)View(model);
+                return View(model);
             }
-
-            return RedirectToAction("Login","Account");
-
+            return RedirectToAction("Login", "Account");
         }
 
         [GoldAuthorize]
@@ -56,12 +53,36 @@ namespace G_APIs.Controllers
         [GoldAuthorize]
         public ActionResult Sidebar(Menu model)
         {
+            User user = _session.Get<User>("UserInfo");
+
+            if (user != null)
+            {
+                model = _dashboard.GetDashboard(user);
+            }
+            else
+            {
+                AlertMessaging.AddToUserQueue(new MessageContext("اطلاعات کاربر یافت نشد", type: MessageType.Warning));
+            }
+
             return View(model);
         }
 
         [GoldAuthorize]
         public ActionResult Header(User model)
         {
+            string token = Request.Cookies["gldauth"].Value;
+            User user = _session.Get<User>("UserInfo");
+            if (user != null)
+            {
+                double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
+                {
+                    GoldCalcType = CalcTypes.buy,
+                    GoldWeight = 1
+                }, token);
+
+                model = _dashboard.GetUserInfo(user, token);
+                model.OnlinePrice = buyPrice;
+            }
             return View(model);
         }
 

@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+
 <link href="~/Content/plugins/table/datatable/datatables.css" rel="stylesheet" type="text/css">
 <link href="~/Content/plugins/table/datatable/custom_dt_html5.css" rel="stylesheet" type="text/css">
 <link href="~/Content/plugins/table/datatable/dt-global_style.css" rel="stylesheet" type="text/css">
@@ -12,10 +13,32 @@
 <script src="~/Content/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
 <script src="~/Content/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
 
+<style>
+    .dataTables_wrapper {
+        border: 1px solid #a77010;
+        padding-block: 10px;
+        border-radius: 5px;
+    }
+
+    .dataTables_length {
+        float: left;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+    .table > tbody > tr > td {
+        border: none;
+        color: #888ea8;
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: #000;
+    }
+</style>
 
 <script>
     $('.datatable').DataTable({
-        dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
+        dom: '<"row"<"col-md-12"<"col-md-12"B><"col-md-12"lf> <"row"> ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>>>',
         buttons: {
             buttons: [
                 { extend: 'copy', className: 'btn' },
@@ -33,7 +56,8 @@
             "sEmptyTable": "داده ای موجود نیست",
         },
         "stripeClasses": [],
-        "lengthMenu": [7, 10, 20, 50],
-        "pageLength": 20,
+        "lengthChange": true,
+        'lengthMenu': [[10, 25, 50, 100, 1000], [10, 25, 50, 100, 'همه']],
+        "pageLength": 10,
     });
 </script>

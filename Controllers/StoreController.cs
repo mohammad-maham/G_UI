@@ -1,8 +1,8 @@
 ﻿using G_APIs.BussinesLogic.Interface;
-using G_APIs.Common;
 using G_APIs.Models;
 using G_APIs.Services;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace G_APIs.Controllers
@@ -18,7 +18,7 @@ namespace G_APIs.Controllers
             _session = session;
             _wallet = wallet;
         }
-
+        #region GoldShopping
         [HttpGet]
         [GoldAuthorize]
         public ActionResult BuyIndex()
@@ -157,14 +157,15 @@ namespace G_APIs.Controllers
 
                 AlertMessaging.AddToUserQueue(new MessageContext(response.Message, type: MessageType.Success));
                 double transactionId = !string.IsNullOrEmpty(response.Data) ? long.Parse(response.Data) : 0;
-                return Json(new { result = true, message = response.Message, data = View("OrderResult", transactionId) });
+                return View("OrderResult", transactionId);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
+        #endregion GoldShopping
+        #region GoldOnlinePrices
         public ActionResult GoldOnlinePrice(bool isBuy = true)
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -195,5 +196,69 @@ namespace G_APIs.Controllers
                 throw ex;
             }
         }
+        #endregion GoldOnlinePrices
+        #region GoldRepositoryManagement
+        public ActionResult RepositoryManagementIndex()
+        {
+            string token = Request.Cookies["gldauth"].Value;
+            GoldTypesVM goldTypes = new GoldTypesVM();
+            List<SelectListItem> lstGoldTypesSelect = new List<SelectListItem>();
+            List<SelectListItem> lstGoldCaratsSelect = new List<SelectListItem>();
+            GoldRepositoryStatusVM goldRepositoryStatus = new GoldRepositoryStatusVM();
+            GoldRepositoryManagementVM managementVM = new GoldRepositoryManagementVM();
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                goldRepositoryStatus = _store.GetGoldRepositoryStatus(token);
+                goldTypes = _store.GetGoldTypes(token);
+                if (goldTypes != null)
+                {
+                    if (goldTypes.GoldTypes.Count > 0)
+                    {
+                        foreach (GoldType goldType in goldTypes.GoldTypes)
+                        {
+                            lstGoldTypesSelect.Add(new SelectListItem() { Text = goldType.Name, Value = goldType.Id.ToString() });
+                        }
+                    }
+                    if (goldTypes.GoldCarats.Count > 0)
+                    {
+                        foreach (GoldCarat goldCarat in goldTypes.GoldCarats)
+                        {
+                            lstGoldCaratsSelect.Add(new SelectListItem() { Text = goldCarat.Name, Value = goldCarat.Value.ToString() });
+                        }
+                    }
+                }
+            }
+            foreach (var item in goldRepositoryStatus.GoldRepositoryVM)
+                item.MaintenanceType = item.GoldMaintenanceType == 10 ? "مالکیتی" : "وکالتی/امانتی";
+            ViewBag.Carats = lstGoldCaratsSelect;
+            ViewBag.Types = lstGoldTypesSelect;
+            managementVM.GoldRepositoryStatus = goldRepositoryStatus;
+            return View(managementVM);
+        }
+
+        [HttpPost]
+        public ActionResult SubmitRepositoryCharge(GoldRepositoryManagementVM managementVM)
+        {
+            string token = Request.Cookies["gldauth"].Value;
+
+            if (managementVM != null && !string.IsNullOrEmpty(token))
+            {
+                managementVM.Decharge = managementVM.SubmitType == 2 ? 1 : 0;
+                ApiResult response = _store.ChargeRepository(managementVM, token);
+                if (response.StatusCode != 200)
+                {
+                    return Json(new { result = false, message = response.Message });
+                }
+                AlertMessaging.AddToUserQueue(new MessageContext(response.Message, type: MessageType.Success));
+            }
+            return View(managementVM);
+        }
+
+        public ActionResult RepositoryReportIndex()
+        {
+            return View();
+        }
+        #endregion GoldRepositoryManagement
     }
 }

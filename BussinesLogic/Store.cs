@@ -1,6 +1,7 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
+using Newtonsoft.Json;
 using System;
 using static G_APIs.Common.Enums;
 
@@ -8,6 +9,65 @@ namespace G_APIs.BussinesLogic
 {
     public class Store : IStore
     {
+        public ApiResult ChargeRepository(GoldRepositoryManagementVM repositoryManagementVM, string token)
+        {
+            string result = string.Empty;
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/ChargeStore", repositoryManagementVM, authorization: token).Post();
+
+                return response;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public GoldRepositoryStatusVM GetGoldRepositoryStatus(string token)
+        {
+            string result = string.Empty;
+            GoldRepositoryStatusVM repositoryStatusVM = new GoldRepositoryStatusVM();
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/GetGoldRepositoryStatistics", new { }, authorization: token).Post();
+
+                if (response != null && !string.IsNullOrEmpty(response.Data))
+                {
+                    result = response.Data;
+                    repositoryStatusVM = JsonConvert.DeserializeObject<GoldRepositoryStatusVM>(result);
+                }
+
+                return repositoryStatusVM;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public GoldTypesVM GetGoldTypes(string token)
+        {
+            string result = string.Empty;
+            GoldTypesVM goldTypesVM = new GoldTypesVM();
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/GetGoldTypes", new { }, authorization: token).Post();
+
+                if (response != null && !string.IsNullOrEmpty(response.Data))
+                {
+                    result = response.Data;
+                    goldTypesVM = JsonConvert.DeserializeObject<GoldTypesVM>(result);
+                }
+
+                return goldTypesVM;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public double GetOnlineBuyPrice(PriceCalcVM priceCalc, string token)
         {
             try

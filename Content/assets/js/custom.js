@@ -135,7 +135,7 @@ function GetIEVersion() {
 
 $(function () {
 
-    $("select").select2({
+    $(".select2").select2({
         placeholder: "لطفا انتخاب کنید ...",
         theme: "bootstrap",
         allowClear: true,

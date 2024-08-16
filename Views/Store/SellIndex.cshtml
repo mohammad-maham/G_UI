@@ -13,7 +13,7 @@
     @using (Html.Box("باکس فروش", col: 6))
     {
         <div class="widget-content widget-content-area">
-            <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
+            <form form class="frmSell" id="frmSell" action="javascript:void(0);" novalidate>
                 @Html.Action("GoldOnlinePrice", new { isBuy = false })
                 <hr />
                 <div class="col-auto">
@@ -46,14 +46,14 @@
                 </div>
                 <div class="col-auto field-wrapper command-panel">
                     @Html.Partial("_GoldButton", new GoldButton()
-                    {
-                        ButtonType = GoldButtonTypes.submit,
-                        Name = "btnSell",
-                        Icon = "fa fa-shopping-basket fa-2x",
-                        Class = "btn btn-warning",
-                        Text = "فروش",
-                        OnClick = "performSell()"
-                    })
+               {
+                   ButtonType = GoldButtonTypes.button,
+                   Name = "btnSell",
+                   Icon = "fa fa-shopping-basket fa-2x",
+                   Class = "btn btn-warning",
+                   Text = "فروش",
+                   OnClick = "confirmSell()"
+               })
                     @Html.Partial("_GoldButton", new GoldButton()
                     {
                         ButtonType = GoldButtonTypes.cancel,
@@ -71,14 +71,17 @@
 
 <script>
     $(function () {
+        $("input[name='@nameof(Model.Weight)']").TouchSpin({
+            prefix: 'گرم',
+            buttondown_class: "btn btn-classic btn-danger",
+            buttonup_class: "btn btn-classic btn-success"
+        });
         disableSell();
         $("input[name='@nameof(Model.CurrentCalculatedPrice)'],input[name='@nameof(Model.CurrentOnlinePrice)']").keydown(function (e) {
             e.stopPropagation();
             return false;
         });
-    });
-    function performSell() {
-        $('#frmBuy').ajaxForm({
+        $('#frmSell').ajaxForm({
             validation: true,
             url: '/Store/SubmitSell',
             jwt: true,
@@ -86,10 +89,36 @@
             mixin: true,
             target: ".transaction-result",
             success: function (data) {
+                if (data) {
+                    swal({
+                        title: 'فروش موفق',
+                        text: "عملیات فروش با موفقیت انجام یافت",
+                        type: 'success',
+                        padding: '2em'
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
                 $("input[name='@nameof(Model.Weight)']").val('');
                 disableSell();
                 //window.clearTimeout(dowhile);
                 //dowhile = null;
+            }
+        });
+    });
+    function confirmSell() {
+        swal({
+            title: 'تائیدیه فروش کاربر',
+            text: "آیا از فروش خود اطمینان دارید؟",
+            type: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'انصراف',
+            confirmButtonText: 'تائید',
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                $('#frmSell').submit();
             }
         });
     }
@@ -100,7 +129,7 @@
     $("input[name='@nameof(Model.Weight)']").bind('change', function (e) {
         var inpCurrentCalculatedPrice = $("input[name='@nameof(Model.CurrentCalculatedPrice)']");
         var value = $(this).val();
-        if (value > 0) {
+        if (value > 0 && value <= 1000) {
             $.ajax({
                 type: 'POST',
                 url: '/Store/GetOnlinePrice',
@@ -128,7 +157,11 @@
                 }
             });
         } else {
-            disableBuy();
+            disableSell();
+            toast({
+                type: 'warning',
+                title: "مقدار وزن حداقل 1 و حداکثر 1000 گرم می باشد",
+            });
         }
     });
 </script>

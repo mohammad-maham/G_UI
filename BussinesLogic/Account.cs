@@ -14,57 +14,62 @@ namespace G_APIs.BussinesLogic
         {
         }
 
-        public  ApiResult Login(User model)
+
+        public ApiResult Login(User model)
         {
 
-            var res =   new GoldApi(GoldHost.Accounting, "/api/User/SignIn", model).Post();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SignIn", model).Post();
 
             //var user = JsonConvert.DeserializeObject<User>(res.Message!);
 
             return res;
         }
 
-        public  ApiResult SignUp(User model)
+
+        public ApiResult SignUp(User model)
         {
 
-            var res =   new GoldApi(GoldHost.Accounting, "/api/User/SignUp", model).Post();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SignUp", model).Post();
 
             //var user = JsonConvert.DeserializeObject<User>(res.Data);
 
             return res;
         }
 
-        public  ApiResult SetPassword(User model)
+
+        public ApiResult SetPassword(User model)
         {
-            var res =   new GoldApi(GoldHost.Accounting, "/api/User/SetPassword", model).Post();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SetPassword", model).Post();
 
             return res;
         }
 
-        public  ApiResult CompleteProfile(User model, string token)
+        public ApiResult CompleteProfile(User model, string token)
         {
-            var res =   new GoldApi(GoldHost.Accounting, "/api/User/CompleteProfile", model, authorization: token).Post();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/CompleteProfile", model, authorization: token).Post();
 
             return res;
         }
 
-        public  ApiResult SubmitContact(User model, string token)
+
+        public ApiResult SubmitContact(User model, string token)
         {
-            var res =   new GoldApi(GoldHost.Accounting, "/api/User/SubmitContact", model, authorization: token).Post();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/SubmitContact", model, authorization: token).Post();
 
             return res;
         }
 
-        public  ApiResult GetUserInfo(User model, string token)
+
+        public ApiResult GetUserInfo(User model, string token)
         {
-            var res =   new GoldApi(GoldHost.Accounting, "/api/User/GetUserInfo", model, authorization: token).Post();
+            var res =  new GoldApi(GoldHost.Accounting, "/api/User/GetUserInfo", model, authorization: token).Post();
 
             return res;
         }
 
-        public  ApiResult ForgotPassword(User model)
+        public ApiResult ForgotPassword(User model)
         {
-            ApiResult res =   new GoldApi(GoldHost.Accounting, "/api/User/ForgotPassword", model).Post();
+            ApiResult res =  new GoldApi(GoldHost.Accounting, "/api/User/ForgotPassword", model).Post();
             return res;
         }
     }

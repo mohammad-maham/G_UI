@@ -216,7 +216,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BussinesLogic\Dashboard.cs" />
     <Compile Include="BussinesLogic\Fund.cs" />
-    <Compile Include="BussinesLogic\Interface\Dashboard.cs" />
+    <Compile Include="BussinesLogic\Interface\IDashboard.cs" />
     <Compile Include="BussinesLogic\Interface\IFund.cs" />
     <Compile Include="BussinesLogic\Interface\IReports.cs" />
     <Compile Include="BussinesLogic\Interface\IStore.cs" />
@@ -234,6 +234,7 @@
     <Compile Include="Common\DataTableExtention.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GoldAuthorizeAttribute.cs" />
+    <Compile Include="Common\Util.cs" />
     <Compile Include="Common\ValidationHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FundController.cs" />
@@ -243,6 +244,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GoldRepositoryManagementVM.cs" />
+    <Compile Include="Models\GoldRepositoryStatusVM.cs" />
+    <Compile Include="Models\GoldTypesVM.cs" />
     <Compile Include="Models\MessageContext.cs" />
     <Compile Include="Models\ApiResult.cs" />
     <Compile Include="Models\BankAccount.cs" />
@@ -1196,6 +1200,11 @@
     <Content Include="Views\Shared\EditorTemplates\Textarea.cshtml" />
     <Content Include="Views\Shared\_UI.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Fund\DepositReport.cshtml" />
+    <Content Include="Views\Fund\WindrowReport.cshtml" />
+    <Content Include="Views\Store\RepositoryManagementIndex.cshtml" />
+    <Content Include="Views\Store\RepositoryReportIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
