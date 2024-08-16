@@ -49,7 +49,7 @@ namespace G_APIs.Models
 
         public string TrackingCode { get; set; }
         [Display(Name = " مبلغ    ")]
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
 
     }
 }

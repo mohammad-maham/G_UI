@@ -59,6 +59,7 @@ namespace G_APIs.Models
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }
 
-        public double OnlinePrice { get; set; }
+        public double BuyPrice { get; set; }
+        public double SellPrice { get; set; }
     }
 }

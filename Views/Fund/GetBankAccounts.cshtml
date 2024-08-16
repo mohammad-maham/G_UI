@@ -10,39 +10,38 @@
     }
 </style>
 
-
-        <table id="rtpBankAccounts" class="datatable table table-hover non-hover" style="width:100%">
-            <thead>
-                <tr>
-                    <th>بانک</th>
-                    <th>نام  </th>
-                    <th>شماه کارت</th>
-                    <th>عملیات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var b in Model)
-                {
-                    <tr class="table-success">
-                        <td><img src="~/Content/assets/img/bank/@b.LogoPath" /> </td>
-                        <td>@b.Name </td>
-                        <td>@b.BankAccountNumber </td>
-                        <td>
-                            <a id="" href='@Url.Action("ToggleBankCard")?id=@b.Id' title="">
-                                @if (b.Status == 1)
-                                {
-                                    <div class="td-content"><span class="badge outline-badge-danger">غیر فعال کردن</span></div>
-                                }
-                                @if (b.Status == 0)
-                                {
-                                    <div class="td-content"><span class="badge outline-badge-success">  فعال کردن</span></div>
-                                }
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<table id="rtpBankAccounts" class=" table table-hover non-hover" style="width:100%">
+    <thead>
+        <tr>
+            <th>بانک</th>
+            <th>نام  </th>
+            <th>شماه کارت</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr class="table-success">
+                <td><img src="~/Content/assets/img/bank/@b.LogoPath" /> </td>
+                <td>@b.Name </td>
+                <td>@b.BankAccountNumber </td>
+                <td>
+                    <a id="" href='@Url.Action("ToggleBankCard")?id=@b.Id' title="">
+                        @if (b.Status == 1)
+                        {
+                            <div class="td-content"><span class="badge outline-badge-danger">غیر فعال کردن</span></div>
+                        }
+                        @if (b.Status == 0)
+                        {
+                            <div class="td-content"><span class="badge outline-badge-success">  فعال کردن</span></div>
+                        }
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @Html.Partial("_LayoutReport")
 

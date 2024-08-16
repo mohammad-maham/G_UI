@@ -244,6 +244,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FinancialVM.cs" />
     <Compile Include="Models\GoldRepositoryManagementVM.cs" />
     <Compile Include="Models\GoldRepositoryStatusVM.cs" />
     <Compile Include="Models\GoldTypesVM.cs" />
@@ -1169,9 +1170,6 @@
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Fund\Wallet.cshtml" />
-    <Content Include="Views\Report\Report1.cshtml" />
-    <Content Include="Views\Report\Report2.cshtml" />
-    <Content Include="Views\Report\Report3.cshtml" />
     <Content Include="Views\Account\AddressInfo.cshtml" />
     <Content Include="Views\Fund\BankAccount.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -1205,6 +1203,8 @@
     <Content Include="Views\Fund\WindrowReport.cshtml" />
     <Content Include="Views\Store\RepositoryManagementIndex.cshtml" />
     <Content Include="Views\Store\RepositoryReportIndex.cshtml" />
+    <Content Include="Views\Fund\ExchangeReport.cshtml" />
+    <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

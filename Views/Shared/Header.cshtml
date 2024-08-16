@@ -8,6 +8,14 @@
 <style>
     .badge.price-preview {
         font-size: 15px;
+        cursor:pointer;
+    }
+
+    #buyPrice {
+        box-shadow: 0 0 5px #8dbf42;
+    }
+    #sellPrice {
+        box-shadow: 0 0 5px #e7515a;
     }
 
     .dropdown-item.logout > a {
@@ -24,29 +32,35 @@
 
     <ul class="navbar-item flex-row ml-auto">
 
-        @*<li class="nav-item align-self-center search-animated">
-                <button type="button" class="btn btn-dark mt-3 mb-3 ml-2 ">
-                    قیمت آنلاین طلا : <span class="badge badge-success  price-preview">@Model.OnlinePrice.ToString("N0")</span>
-                </button>
-            </li>*@
-
-
         <li class="nav-item align-self-center search-animated">
-            <span class="badge badge-success price-preview m-3">
-                قیمت واحد طلا
-                <span class=" m-1">   @Model.OnlinePrice.ToString("N0") </span>
-                ریال
-            </span>
-        </li>
-        <li class="nav-item align-self-center search-animated">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <form class="form-inline search-full form-inline search" role="search">
-                <div class="search-bar">
-                    <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="جستجو...">
-                </div>
-            </form>
+            <a href="@Url.Action("SellIndex","Store")">
+                <span class="badge badge-danger price-preview m-3" id="sellPrice">
+                    قیمت فروش طلا
+                    <span class=" m-1 sell">   @Model.SellPrice.ToString("N0") </span>
+                    ریال
+                </span>
+            </a>
+            <a href="@Url.Action("BuyIndex","Store")">
+                <span class="badge badge-success price-preview m-3" id="buyPrice">
+                    قیمت خرید طلا
+                    <span class=" m-1 buy">   @Model.BuyPrice.ToString("N0") </span>
+                    ریال
+                </span>
+            </a>
         </li>
 
+        <li class="nav-item dropdown notification-dropdown mt-1">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="badge badge-success"></span>
+            </a>
+
+        </li>
+        <li class="nav-item dropdown message-dropdown mt-1">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span class="badge badge-primary">3</span>
+            </a>
+
+        </li>
         <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
@@ -75,52 +89,84 @@
                     </a>
                 </div>
                 <div class="dropdown-item logout">
-                    <a href="@Url.Action("Logout","Account")">
+                    <a href="javascript:void(0);" onclick="Logout()">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
                         <span>خروج</span>
                     </a>
                 </div>
             </div>
         </li>
+
+
     </ul>
 </header>
 
 
 <script>
-    var dowhile;
-    $(function () {
-        var interval = 5000;
-        var inpPrice = $(".price-preview >  span");
-        function getOnlinePrice() {
-            $.ajax({
-                type: 'POST',
-                url: '/Store/GetOnlinePrice',
-                data: {
-                    weight: 1.0,
-                    calcType: 1,
-                },
-                success: function (data) {
-                    if ($.isNumeric(data)) {
-                        var preVal = inpPrice.html();
-                        var formattedData = Number(data).toLocaleString('en');
-                        inpPrice.html(formattedData);
-                        if (preVal <= formattedData) {
-                            inpPrice.parent().css("background-color", "#e7515a");
-                        } else if (preVal > formattedData) {
-                            inpPrice.parent().css("background-color", "#e7515a1f");
-                        }
-                        if (dowhile) {
-                            dowhile = setTimeout(getOnlinePrice, interval);
-                        }
-                    } else {
-                        window.location = "/Account/Login";
-                    }
-                },
-                error: function (data) {
-                    window.clearTimeout(dowhile);
-                }
-            });
-        }
-        dowhile = setTimeout(getOnlinePrice, interval);
+
+    $(document).ready(function () {
+
+        setInterval(() => {
+            getOnlinePrice(true);
+        }, 25000);
+
+        setInterval(() => {
+            getOnlinePrice(false);
+        }, 30000);
     });
+
+    function getOnlinePrice(buy) {
+
+        let inpBuy = $('#buyPrice');
+        let inpSell = $('#sellPrice');
+
+        $.ajax({
+            type: 'POST',
+            url: '/Store/GetOnlinePrice',
+            data: {
+                weight: 1.0,
+                calcType: 1,
+            },
+            success: function (data) {
+           
+                if ($.isNumeric(data)) {
+
+                    var formattedData = Number(data).toLocaleString('en');
+                    if (buy === true) {
+
+                        inpBuy.fadeOut(500, () => {
+                            inpBuy.show();
+                            inpBuy.find('.buy').html(formattedData);
+                        })
+
+                    }
+                    else {
+                        inpSell.fadeOut(500, () => {
+                            inpSell.show();
+                            inpSell.find('.sell').html(formattedData);
+                        })
+                    }
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    }
+
+    var Logout=function() {
+        swal({
+            title: 'تائیدیه  خروج  ',
+            text: "آیا میخواهید خارج شوید؟",
+            type: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'انصراف',
+            confirmButtonText: 'تائید',
+            padding: '2em'
+        }).then(function (result) {
+            if (result.value) {
+                location.href = "@Url.Action("Logout","Account")";
+            }
+        });
+    }
 </script>

@@ -108,7 +108,20 @@ namespace G_APIs.Controllers
             return View();
          }              
 
+         [GoldAuthorize]
         public ActionResult DepositReport()
+        {
+            return View();
+        }
+
+        [GoldAuthorize]
+        public ActionResult FinanceMinisterReport()
+        {
+            return View();
+        }
+
+        [GoldAuthorize]
+        public ActionResult ExchangeReport()
         {
             return View();
         }
