@@ -1,24 +1,15 @@
-﻿using Autofac.Core.Activators;
-using G_APIs.Models;
+﻿using G_APIs.Models;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Threading.Tasks;
 using static G_APIs.Common.Enums;
 
 namespace G_APIs.Services
 {
-
     public class GoldApi
     {
-
-        public GoldApi()
-        {
-        }
-
         private string ApiPath { get; set; }
         public GoldHost Host { get; set; }
         public string Authorization { get; set; }
@@ -26,41 +17,27 @@ namespace G_APIs.Services
         public Method _Method { get; set; }
         public object Data { get; set; }
 
-
-        //private readonly IConfiguration _config;
-
-
-        //public GoldApi(IConfiguration config)
-        //{
-        //    _config = config;
-
-        //}
-
         public GoldApi(GoldHost host, string action, object data, Method method = Method.Post, string authorization = null)
         {
-            if (host == GoldHost.Accounting)
+            switch (host)
             {
-                ApiPath = ConfigurationManager.AppSettings["Accounting"];
-            }
-
-            if (host == GoldHost.IPG)
-            {
-                ApiPath = ConfigurationManager.AppSettings["IPG"];
-            }
-
-            if (host == GoldHost.Store)
-            {
-                ApiPath = ConfigurationManager.AppSettings["Store"];
-            }
-
-            if (host == GoldHost.Wallet)
-            {
-                ApiPath = ConfigurationManager.AppSettings["Wallet"];
-            }
-
-            if (host == GoldHost.Gateway)
-            {
-                ApiPath = ConfigurationManager.AppSettings["Gateway"];
+                case GoldHost.Accounting:
+                    ApiPath = ConfigurationManager.AppSettings["Accounting"];
+                    break;
+                case GoldHost.IPG:
+                    ApiPath = ConfigurationManager.AppSettings["IPG"];
+                    break;
+                case GoldHost.Store:
+                    ApiPath = ConfigurationManager.AppSettings["Store"];
+                    break;
+                case GoldHost.Wallet:
+                    ApiPath = ConfigurationManager.AppSettings["Wallet"];
+                    break;
+                case GoldHost.Gateway:
+                    ApiPath = ConfigurationManager.AppSettings["Gateway"];
+                    break;
+                default:
+                    break;
             }
 
             Action = action;
@@ -73,7 +50,6 @@ namespace G_APIs.Services
         {
             try
             {
-                //var json = JsonConvert.SerializeObject(this.Data);
                 RestClient client = new RestClient(ApiPath + Action);
                 RestRequest request = new RestRequest
                 {
@@ -88,9 +64,6 @@ namespace G_APIs.Services
 
                 request.AddHeader("content-type", "application/json");
                 request.AddHeader("cache-control", "no-cache");
-
-                //request.AddParameter("username", "1382532326");
-                //request.AddParameter("password", "admin");
 
                 request.AddJsonBody(Data);
 
@@ -119,7 +92,6 @@ namespace G_APIs.Services
         {
             try
             {
-                //var json = JsonConvert.SerializeObject(this.Data);
                 RestClient client = new RestClient(ApiPath + Action);
                 RestRequest request = new RestRequest
                 {
@@ -133,10 +105,7 @@ namespace G_APIs.Services
                 }
 
                 request.AddHeader("content-type", "application/json");
-                request.AddHeader("cache-control", "no-cache");
-
-                //request.AddParameter("username", "1382532326");
-                //request.AddParameter("password", "admin");
+                request.AddHeader("accept-charset", "utf-8");
 
                 request.AddJsonBody(Data);
 
@@ -162,5 +131,3 @@ namespace G_APIs.Services
         }
     }
 }
-
-

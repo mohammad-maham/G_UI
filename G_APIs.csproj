@@ -1208,6 +1208,7 @@
     <Content Include="Views\Store\RepositoryReportIndex.cshtml" />
     <Content Include="Views\Fund\ExchangeReport.cshtml" />
     <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
+    <Content Include="Views\Store\SubmitRepositoryCharge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

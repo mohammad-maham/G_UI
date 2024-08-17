@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace G_APIs.Models
 {
@@ -19,6 +17,6 @@ namespace G_APIs.Models
         public short GoldType { get; set; }
         public long RegUserId { get; set; }
         public int Decharge { get; set; } = 0;
-
+        public short Status { get; set; } = 1;
     }
 }

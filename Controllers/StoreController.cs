@@ -241,10 +241,13 @@ namespace G_APIs.Controllers
         public ActionResult SubmitRepositoryCharge(GoldRepositoryManagementVM managementVM)
         {
             string token = Request.Cookies["gldauth"].Value;
+            User userInfo = _session.Get<User>("UserInfo");
 
             if (managementVM != null && !string.IsNullOrEmpty(token))
             {
                 managementVM.Decharge = managementVM.SubmitType == 2 ? 1 : 0;
+                managementVM.RegUserId = userInfo.Id.Value;
+
                 ApiResult response = _store.ChargeRepository(managementVM, token);
                 if (response.StatusCode != 200)
                 {

@@ -2,7 +2,8 @@
 @using G_APIs.Models
 @model GoldRepositoryManagementVM
 @{
-    double[] pieValues = Model.GoldRepositoryStatus.GoldRepositoryVM.Select(x => x.Weight).ToArray();
+    double ownerPieValue = Model.GoldRepositoryStatus.GoldRepositoryVM.Where(x => x.GoldMaintenanceType == 10)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double bondedPieValue = Model.GoldRepositoryStatus.GoldRepositoryVM.Where(x => x.GoldMaintenanceType == 11)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
 }
 
 @Html.Partial("_FormTitle", new FormTitle()
@@ -55,7 +56,7 @@
                 <div class="tabs tab-content">
                     <div id="content_1" class="tabcontent">
                         <div class="row">
-                            @foreach (GoldRepositoryVM goldRepository in Model.GoldRepositoryStatus.GoldRepositoryVM)
+                            @foreach (GoldRepositoryVM goldRepository in Model.GoldRepositoryStatus.GoldRepositoryVM.OrderBy(x => x.GoldMaintenanceType).ToList())
                             {
                                 string date = goldRepository.LastUpdatePersianDate.Split(' ')[0];
                                 string time = goldRepository.LastUpdatePersianDate.Split(' ')[1];
@@ -107,6 +108,7 @@
                                 </div>
                                 @Html.EditorFor(x => x.Weight)
                             </div>
+                            <div class="transaction-result"></div>
                             <div class="col-auto field-wrapper command-panel">
                                 @Html.Partial("_GoldButton", new GoldButton()
                            {
@@ -128,7 +130,6 @@
                            })
                             </div>
                         </form>
-                        <div class="transaction-result"></div>
                     </div>
                 </div>
             </div>
@@ -196,7 +197,7 @@
             disableInputs();
         }
     });
-    const series = [@(pieValues[0]), @(pieValues[1])];
+    const series = [@ownerPieValue, @bondedPieValue];
     const labels = ['طلای گاوصندوق مالکیتی', 'طلای گاوصندوق وکالتی'];
 
     var options = {

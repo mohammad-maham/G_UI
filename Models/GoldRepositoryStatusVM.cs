@@ -3,12 +3,14 @@ using System.Collections.Generic;
 
 namespace G_APIs.Models
 {
+    [Serializable]
     public class GoldRepositoryStatusVM
     {
         public List<GoldRepositoryVM> GoldRepositoryVM { get; set; }
         public double TotalWeight { get; set; } = 0.0;
     }
 
+    [Serializable]
     public class GoldRepositoryVM
     {
         public double Weight { get; set; }

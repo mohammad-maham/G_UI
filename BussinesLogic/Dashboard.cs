@@ -39,6 +39,7 @@ namespace G_APIs.BussinesLogic
                 {
                     userResponse = JsonConvert.DeserializeObject<User>(response.Data);
                 }
+                else { new Exception(response.Message); }
             }
             catch (Exception)
             {

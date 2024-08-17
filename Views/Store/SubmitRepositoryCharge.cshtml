@@ -1,0 +1,16 @@
+﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
+@model GoldRepositoryManagementVM
+@{
+    Layout = null;
+}
+
+@Html.Partial("_GoldAlert", new GoldAlert
+{
+    AlertContentTexts = new List<string> { $"عملیات با موفقیت انجام یافت" },
+    AlertTitleIcon = "fa fa-check-square-o fa-xl",
+    AlertTitleText = "عملیات موفق",
+    AlertType = GoldAlertTypes.Success,
+})
+
+@Html.Partial("_UI")

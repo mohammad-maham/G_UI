@@ -28,6 +28,7 @@ namespace G_APIs.Models
 
     public class UserRoleVM
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
     }
@@ -38,6 +39,7 @@ namespace G_APIs.Models
         public string MenuName { get; set; }
         public string MenuTitle { get; set; }
         public string MenuIcon { get; set; }
+        public long RoleId { get; set; }
     }
 
     public class SubMenuVm
@@ -48,5 +50,6 @@ namespace G_APIs.Models
         public string ActionTitle { get; set; }
         public int? ParentMenuId { get; set; }
         public string ActionIcon { get; set; }
+        public long RoleId { get; set; }
     }
 }
