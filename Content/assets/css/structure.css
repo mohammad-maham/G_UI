@@ -172,7 +172,7 @@ code {
         align-items: stretch;
         column-gap: 15px;
         row-gap: 15px;
-        margin: 0 -5px 0 10px !important;
+        margin: 0 -5px 0 5px !important;
     }
 }
 

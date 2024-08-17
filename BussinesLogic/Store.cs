@@ -3,6 +3,8 @@ using G_APIs.Models;
 using G_APIs.Services;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using static G_APIs.Common.Enums;
 
 namespace G_APIs.BussinesLogic
@@ -17,6 +19,27 @@ namespace G_APIs.BussinesLogic
                 ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/ChargeStore", repositoryManagementVM, authorization: token).Post();
 
                 return response;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<GoldRepositoryManagementReportVM> GetGoldRepositoryReports(GoldRepositoryManagementVM repositoryManagementVM, string token)
+        {
+            string result = string.Empty;
+            IEnumerable<GoldRepositoryManagementReportVM> reportVM = Enumerable.Empty<GoldRepositoryManagementReportVM>(); try
+            {
+                ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/GetGoldRepositoryReports", repositoryManagementVM, authorization: token).Post();
+
+                if (response != null && !string.IsNullOrEmpty(response.Data))
+                {
+                    result = response.Data;
+                    reportVM = JsonConvert.DeserializeObject<IEnumerable<GoldRepositoryManagementReportVM>>(result);
+                }
+
+                return reportVM;
             }
             catch (Exception)
             {

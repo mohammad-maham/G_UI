@@ -1,0 +1,50 @@
+﻿@using G_APIs.Models.ComponentModels
+@using G_APIs.Models
+@model IEnumerable<GoldRepositoryManagementReportVM>
+@{
+    Layout = null;
+}
+
+@using (Html.Box(title: "نتیجه گزارش", col: 12))
+{
+    <table id="rptGoldRepository" class="datatable table table-hover non-hover table-striped" style="width:100%">
+        <thead class="">
+            <tr>
+                <th>شناسه</th>
+                <th>وضعیت</th>
+                <th>نوع طلا</th>
+                <th>وزن</th>
+                <th>عیار</th>
+                <th>کاربر ثبت کننده</th>
+                <th>تاریخ ثبت</th>
+                <th>تاریخ بایگانی</th>
+                <th>نوع بایگانی</th>
+                <th>نوع صندوق</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (GoldRepositoryManagementReportVM item in Model)
+                {
+                    <tr>
+                        <td>@(item.Id)</td>
+                        <td>@(item.Status)</td>
+                        <td>@(item.GoldType)</td>
+                        <td>@(item.Weight)</td>
+                        <td>@(item.Carat)</td>
+                        <td>@(item.RegUser)</td>
+                        <td>@(item.RegDate)</td>
+                        <td>@(item.ArchiveDate)</td>
+                        <td>@(item.ArchiveOperation)</td>
+                        <td>@(item.GoldMaintenanceType)</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="10" class="text-center">داده یافت نشد</td></tr>
+            }
+        </tbody>
+    </table>
+}

@@ -248,6 +248,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FinancialVM.cs" />
+    <Compile Include="Models\GetUsersVM.cs" />
     <Compile Include="Models\GoldRepositoryManagementVM.cs" />
     <Compile Include="Models\GoldRepositoryStatusVM.cs" />
     <Compile Include="Models\GoldTypesVM.cs" />
@@ -257,7 +258,6 @@
     <Compile Include="Models\OnlinePriceVM.cs" />
     <Compile Include="Models\OrderVM.cs" />
     <Compile Include="Models\Chart.cs" />
-    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\ComponentModels\BaseModel.cs" />
     <Compile Include="Models\ComponentModels\FormTitle.cs" />
     <Compile Include="Models\ComponentModels\GoldAlert.cs" />
@@ -281,6 +281,7 @@
     <Compile Include="Services\UploadFile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Content\assets\css\apps\contacts.css" />
     <Content Include="Content\assets\css\apps\invoice.css" />
     <Content Include="Content\assets\css\apps\mailbox.css" />
@@ -1209,6 +1210,7 @@
     <Content Include="Views\Fund\ExchangeReport.cshtml" />
     <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
     <Content Include="Views\Store\SubmitRepositoryCharge.cshtml" />
+    <Content Include="Views\Store\RepositoryReportIndexData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

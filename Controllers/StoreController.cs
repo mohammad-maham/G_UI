@@ -3,6 +3,7 @@ using G_APIs.Models;
 using G_APIs.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace G_APIs.Controllers
@@ -12,12 +13,16 @@ namespace G_APIs.Controllers
         private readonly IStore _store;
         private readonly IFund _wallet;
         private readonly ISession _session;
-        public StoreController(IStore store, ISession session, IFund wallet)
+        private readonly IAccount _account;
+
+        public StoreController(IStore store, ISession session, IFund wallet, IAccount account)
         {
             _store = store;
             _session = session;
             _wallet = wallet;
+            _account = account;
         }
+
         #region GoldShopping
         [HttpGet]
         [GoldAuthorize]
@@ -260,7 +265,58 @@ namespace G_APIs.Controllers
 
         public ActionResult RepositoryReportIndex()
         {
-            return View();
+            string token = Request.Cookies["gldauth"].Value;
+
+            GoldTypesVM goldTypes = new GoldTypesVM();
+            List<GetUsersVM> users = new List<GetUsersVM>();
+            List<SelectListItem> lstGoldTypesSelect = new List<SelectListItem>();
+            List<SelectListItem> lstGoldCaratsSelect = new List<SelectListItem>();
+            List<SelectListItem> lstUsersSelect = new List<SelectListItem>();
+
+            goldTypes = _store.GetGoldTypes(token);
+            users = _account.GetUsers(token);
+
+            if (goldTypes != null)
+            {
+                if (goldTypes.GoldTypes.Count > 0)
+                {
+                    foreach (GoldType goldType in goldTypes.GoldTypes)
+                    {
+                        lstGoldTypesSelect.Add(new SelectListItem() { Text = goldType.Name, Value = goldType.Id.ToString() });
+                    }
+                }
+                if (goldTypes.GoldCarats.Count > 0)
+                {
+                    foreach (GoldCarat goldCarat in goldTypes.GoldCarats)
+                    {
+                        lstGoldCaratsSelect.Add(new SelectListItem() { Text = goldCarat.Name, Value = goldCarat.Value.ToString() });
+                    }
+                }
+            }
+            if (users != null && users.Count > 0)
+            {
+                foreach (GetUsersVM user in users)
+                {
+                    lstUsersSelect.Add(new SelectListItem() { Text = user.Username, Value = user.UserId.Value.ToString() });
+                }
+            }
+
+            ViewBag.Carats = lstGoldCaratsSelect;
+            ViewBag.Types = lstGoldTypesSelect;
+            ViewBag.Users = lstUsersSelect;
+            return View(new GoldRepositoryManagementVM());
+        }
+
+        public ActionResult RepositoryReportIndexData(GoldRepositoryManagementVM managementVM)
+        {
+            string token = Request.Cookies["gldauth"].Value;
+
+            IEnumerable<GoldRepositoryManagementReportVM> reportVM = Enumerable.Empty<GoldRepositoryManagementReportVM>();
+            if (managementVM != null && !string.IsNullOrEmpty(managementVM.FromDate) && !string.IsNullOrEmpty(managementVM.ToDate))
+            {
+                reportVM = _store.GetGoldRepositoryReports(managementVM, token);
+            }
+            return View(reportVM);
         }
         #endregion GoldRepositoryManagement
     }

@@ -1,4 +1,5 @@
 ﻿using G_APIs.Models;
+using System.Collections.Generic;
 
 namespace G_APIs.BussinesLogic.Interface
 {
@@ -11,5 +12,6 @@ namespace G_APIs.BussinesLogic.Interface
         GoldRepositoryStatusVM GetGoldRepositoryStatus(string token);
         GoldTypesVM GetGoldTypes(string token);
         ApiResult ChargeRepository(GoldRepositoryManagementVM repositoryManagementVM, string token);
+        IEnumerable<GoldRepositoryManagementReportVM> GetGoldRepositoryReports(GoldRepositoryManagementVM repositoryManagementVM, string token);
     }
 }

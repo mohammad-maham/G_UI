@@ -134,7 +134,6 @@ function GetIEVersion() {
 }
 
 $(function () {
-
     $(".select2").select2({
         placeholder: "لطفا انتخاب کنید ...",
         theme: "bootstrap",
@@ -143,4 +142,13 @@ $(function () {
         dir: "rtl",
         //dropdownAutoWidth: true,
     });
-})
+    /*$("input.date").datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'fa-ir',
+        todayBtn: true,
+        clearBtn: true,
+        format: 'yyyy/mm/dd'
+    });
+    $("input.date").datepicker("setDate", new Date());*/
+});

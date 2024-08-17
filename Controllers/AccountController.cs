@@ -188,7 +188,8 @@ namespace G_APIs.Controllers
             _session.Set("Captcha", strCaptcha);
 
             var savePath = Server.MapPath("~") + @"\Content\Captcha\" + strCaptcha + ".png";
-            new Captcha().CreateCaptch(strCaptcha).Save(savePath, System.Drawing.Imaging.ImageFormat.Png);
+            new Captcha().CreateCaptch(strCaptcha);
+            //.Save(savePath, System.Drawing.Imaging.ImageFormat.Png);
 
             return strCaptcha + ".png";
         }
