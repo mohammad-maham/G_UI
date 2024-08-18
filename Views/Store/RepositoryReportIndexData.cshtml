@@ -10,6 +10,7 @@
     <table id="rptGoldRepository" class="datatable table table-hover non-hover table-striped" style="width:100%">
         <thead class="">
             <tr>
+                <th>#</th>
                 <th>شناسه</th>
                 <th>وضعیت</th>
                 <th>نوع طلا</th>
@@ -18,16 +19,18 @@
                 <th>کاربر ثبت کننده</th>
                 <th>تاریخ ثبت</th>
                 <th>تاریخ بایگانی</th>
-                <th>نوع بایگانی</th>
+                <th>عملیات بایگانی</th>
                 <th>نوع صندوق</th>
             </tr>
         </thead>
         <tbody>
             @if (Model != null && Model.Count() > 0)
             {
+                int index = 0;
                 foreach (GoldRepositoryManagementReportVM item in Model)
                 {
                     <tr>
+                        <td>@(++index)</td>
                         <td>@(item.Id)</td>
                         <td>@(item.Status)</td>
                         <td>@(item.GoldType)</td>
@@ -43,7 +46,7 @@
             }
             else
             {
-                <tr><td colspan="10" class="text-center">داده یافت نشد</td></tr>
+                <tr><td class="table-no-data text-center" colspan="11">داده یافت نشد</td></tr>
             }
         </tbody>
     </table>

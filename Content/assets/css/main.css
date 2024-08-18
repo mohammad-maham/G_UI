@@ -1584,11 +1584,14 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
   letter-spacing: 1px; }
 
 .table > thead > tr > th {
-  color: #1b55e2;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase; }
+    /*  color: #1b55e2;
+  font-weight: 700;*/
+    color: #343a40 !important;
+    font-weight: 600 !important;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
 .table > tbody > tr > td .usr-img-frame {
   background-color: #ebedf2;

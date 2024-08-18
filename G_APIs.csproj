@@ -870,6 +870,8 @@
     <Content Include="Content\plugins\input-mask\phone-codes\phone-nl.min.js" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-ru.min.js" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone.min.js" />
+    <Content Include="Content\plugins\jalali-datepicker\jalalidatepicker.min.css" />
+    <Content Include="Content\plugins\jalali-datepicker\jalalidatepicker.min.js" />
     <Content Include="Content\plugins\jquery-step\custom-jquery.steps.js" />
     <Content Include="Content\plugins\jquery-step\jquery.steps.css" />
     <Content Include="Content\plugins\jquery-step\jquery.steps.min.js" />

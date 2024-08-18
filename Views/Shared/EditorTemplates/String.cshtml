@@ -20,6 +20,10 @@
     var defaultHtmlAttributesObject = new { type = "text", @class = "form-control" };
     var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
     var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
+    if (htmlAttributes != null && htmlAttributes.ContainsKey("type") && htmlAttributes["type"].ToString() == "gold-date")
+    {
+        htmlAttributes.Add("data-jdp", "");
+    }
     displayName = displayName ?? htmlAttributes["DisplayName"].ToString();
 }
 

@@ -133,6 +133,19 @@ input[type="number"] {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
 }
-.table > thead > tr > th{
-    font-size:16px !important;
+
+.table > thead > tr > th {
+    font-size: 16px !important;
+}
+
+.select2-container--bootstrap .select2-selection {
+    font-weight: 600 !important;
+}
+
+.form-control {
+    font-weight: 600 !important;
+}
+
+.table-no-data {
+    background-color: #ffd4d4ad !important;
 }
