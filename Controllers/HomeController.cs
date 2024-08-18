@@ -80,7 +80,7 @@ namespace G_APIs.Controllers
                     GoldWeight = 1
                 }, token);
 
-                model = _dashboard.GetUserInfo(user, token);
+                model = _dashboard.GetUserInfo(user, token) ?? new User();
                 model.BuyPrice = buyPrice;
 
                 double sellPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
