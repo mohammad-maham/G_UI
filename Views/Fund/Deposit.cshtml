@@ -2,8 +2,8 @@
 @using G_APIs.Models.ComponentModels
 @model  WalletCurrency
 
-@{ 
-    var bankCards = ViewBag.BankCards as List<WalletBankAccount>;
+@{
+    var bankCards = ViewBag.BankCards != null ? ViewBag.BankCards as List<WalletBankAccount> : null;
     var i = 0;
 }
 
@@ -14,67 +14,76 @@
     Description = "واریز پول از طریق درگاه آنلاین "
 })
 
-<div class="row gold-row">
-    @using (Html.Box(col: 6))
+@if (bankCards == null)
+{
+    using (Html.Box(col: 12))
     {
-        <form form class="frmDeposit" id="frmDeposit" action="javascript:void(0);" novalidate>
-          
-            <div class="col-auto mt-3">
-                <div class="form-group">
-                    <label for="Amount">لطفا بانک مورد نظر را انتخاب کنید.</label>
-                    <select name="BankCard" class="select2" required>
-                        @foreach (var card in bankCards)
-                        {
-                            <option @(i <= 0 ? "selected=\"selected\"" : "")
-                                    value="@card.BankAccountNumber">
-                                @card.BankAccountNumber
-                            </option>
-                            @(i++)
+        <h5 class="danger">جهت واریز پول ابتدا باید کارت بانکی اضافه نمایید</h5>
+        <a href="@Url.Action("BankAccount")">افزودن کارت بانکی</a>
+    }
+}
+else
+{
+    <div class="row gold-row">
+        @using (Html.Box(col: 6))
+        {
+            <form form class="frmDeposit" id="frmDeposit" action="javascript:void(0);" novalidate>
 
-                        }
-                    </select>
-                    <div class="invalid-feedback">
-                        وارد کردن این فیلد الزامیست
+                <div class="col-auto mt-3">
+                    <div class="form-group">
+                        <label for="Amount">لطفا بانک مورد نظر را انتخاب کنید.</label>
+                        <select name="BankCard" class="select2" required>
+                            @foreach (var card in bankCards)
+                            {
+                                <option @(i <= 0 ? "selected=\"selected\"" : "")
+                                        value="@card.BankAccountNumber">
+                                    @card.BankAccountNumber
+                                </option>
+                                @(i++)
+
+                            }
+                        </select>
+                        <div class="invalid-feedback">
+                            وارد کردن این فیلد الزامیست
+                        </div>
                     </div>
                 </div>
-            </div>
-            @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
+                @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
 
-            @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
-            @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
+                @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
+                @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
 
-            <hr />
+                <hr />
 
-            <div class="col-auto field-wrapper command-panel">
-                @Html.Partial("_GoldButton", new GoldButton()
-                {
-                    ButtonType = GoldButtonTypes.submit,
-                    Name = "btnDeposit",
-                    Icon = "fa fa-shopping-basket fa-2x",
-                    Class = "btn btn-success",
-                    Text = "واریز",
-                    //OnClick = "Deposit()"
-                })
-                @Html.Partial("_GoldButton", new GoldButton()
-                {
-                    ButtonType = GoldButtonTypes.cancel,
-                    Name = "btnCancel",
-                    Text = "برگشت",
+                <div class="col-auto field-wrapper command-panel">
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.submit,
+                        Name = "btnDeposit",
+                        Icon = "fa fa-shopping-basket fa-2x",
+                        Class = "btn btn-success",
+                        Text = "واریز",
+                        //OnClick = "Deposit()"
+                    })
+                    @Html.Partial("_GoldButton", new GoldButton()
+                    {
+                        ButtonType = GoldButtonTypes.cancel,
+                        Name = "btnCancel",
+                        Text = "برگشت",
 
-                })
-            </div>
-        </form>
-    }
+                    })
+                </div>
+            </form>
+        }
 
-    @using (Html.Box( col: 6))
-    {
-        @Html.Action("Wallet", "Fund", new { ShowButtons = false })
-    }
+        @using (Html.Box(col: 6))
+        {
+            @Html.Action("Wallet", "Fund", new { ShowButtons = false })
+        }
 
-</div>
+    </div>
 
-
-<script>
+    <script>
 
     $('#frmDeposit').ajaxForm({
 
@@ -92,7 +101,7 @@
                 setTimeout(() => {
                     location.reload();
                 },2000)
-                
+
             }
         },
     });
@@ -104,8 +113,10 @@
             alert("لطفا مبلغ مورد نظر را وارد نمایید.")
             return;
         }
-        
+
         window.location.href = "http://194.60.231.81:7124/Home/Deposit?walletId="+ @Model.WalletId + "&amount=" + amount
     }*@
 
-</script>
+    </script>
+}
+
