@@ -1,8 +1,10 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -314,6 +316,8 @@ namespace G_APIs.Controllers
             IEnumerable<GoldRepositoryManagementReportVM> reportVM = Enumerable.Empty<GoldRepositoryManagementReportVM>();
             if (managementVM != null && !string.IsNullOrEmpty(managementVM.FromDate) && !string.IsNullOrEmpty(managementVM.ToDate))
             {
+                managementVM.FromDate = DateTime.Parse(managementVM.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
+                managementVM.ToDate = DateTime.Parse(managementVM.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
                 reportVM = _store.GetGoldRepositoryReport(managementVM, token);
             }
             return View(reportVM);

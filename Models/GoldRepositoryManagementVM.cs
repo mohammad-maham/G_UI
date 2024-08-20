@@ -12,7 +12,7 @@ namespace G_APIs.Models
         public int Weight { get; set; }
 
         [Display(Name = "عیار")]
-        public short Carat { get; set; }
+        public int Carat { get; set; }
 
         [Display(Name = "نوع طلا")]
         public short GoldType { get; set; }
@@ -24,21 +24,22 @@ namespace G_APIs.Models
         [Display(Name = "تا تاریخ")]
         public string ToDate { get; set; }
         [Display(Name = "کاربر")]
-        public string Username { get; set; }
+        public long UserId { get; set; }
     }
 
     [Serializable]
     public class GoldRepositoryManagementReportVM
     {
-        public string Id { get; set; }
-        public string Status { get; set; }
         public string GoldType { get; set; }
-        public string Weight { get; set; }
-        public string Carat { get; set; }
-        public string RegUser { get; set; }
-        public string RegDate { get; set; }
-        public string ArchiveDate { get; set; }
-        public string ArchiveOperation { get; set; }
         public string GoldMaintenanceType { get; set; }
+        public int Carat { get; set; }
+        public long RegUserId { get; set; }
+        public double LastGoldValue { get; set; }
+        public double NewGoldValue { get; set; }
+        public string TransactionType { get; set; }
+        public double Weight { get; set; }
+        public string RegPersianDate { get; set; }
+        public string UserName { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace G_APIs.BussinesLogic
             string result = string.Empty;
             IEnumerable<GoldRepositoryManagementReportVM> reportVM = Enumerable.Empty<GoldRepositoryManagementReportVM>(); try
             {
-                ApiResult response = new GoldApi(GoldHost.Store, "/api/Shopping/GetGoldRepositoryReport", repositoryManagementVM, authorization: token).Post();
+                ApiResult response = new GoldApi(GoldHost.Store, "/api/Reports/GetGoldRepositoryReport", repositoryManagementVM, authorization: token).Post();
 
                 if (response != null && !string.IsNullOrEmpty(response.Data))
                 {
