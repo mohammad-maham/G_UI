@@ -1,8 +1,11 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
+using G_APIs.Services;
 using Microsoft.Owin.Security.Provider;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -82,6 +85,7 @@ namespace G_APIs.Controllers
             }
         }
 
+
         [GoldAuthorize]
         public ActionResult GetBankAccounts()
         {
@@ -102,13 +106,13 @@ namespace G_APIs.Controllers
             }
         }
 
-         [GoldAuthorize]
-         public ActionResult WindrowReport()
-         {
+        [GoldAuthorize]
+        public ActionResult WindrowReport()
+        {
             return View();
-         }              
+        }
 
-         [GoldAuthorize]
+        [GoldAuthorize]
         public ActionResult DepositReport()
         {
             return View();
@@ -147,7 +151,7 @@ namespace G_APIs.Controllers
 
                 var res = _fund.GetExchanges(new Wallet { UserId = user.Id });
 
-                 return View(res);
+                return View(res);
             }
             catch (Exception)
             {
@@ -166,7 +170,7 @@ namespace G_APIs.Controllers
                     return View(new List<Transaction>());
 
                 var res = _fund.GetTransactions(new Wallet { UserId = user.Id })
-                    .Where(x=>x.TransactionTypeId==tr.TransactionTypeId).OrderBy(x => x.Id).ToList();
+                    .Where(x => x.TransactionTypeId == tr.TransactionTypeId).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -178,7 +182,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
-        public ActionResult Deposit(WalletCurrency model)
+        public ActionResult Deposit(string amount, string description)
         {
             try
             {
@@ -187,28 +191,63 @@ namespace G_APIs.Controllers
                 if (!string.IsNullOrEmpty(er))
                     return Json(new { result = false, message = er });
 
-                if (String.IsNullOrEmpty(model.BankCard))
-                    return Json(new { result = false, message = "بروز خطا : لطفا شماره کارت را وارد نمایید." });
+                //if (String.IsNullOrEmpty(model.BankCard))
+                //    return Json(new { result = false, message = "بروز خطا : لطفا شماره کارت را وارد نمایید." });
 
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
-                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.Id })
-                    .Where(x => x.CurrencyId == 1).FirstOrDefault();
+                var model = new PaymentLinkRequest();
+                var factorHeader = new FactorHeader
+                {
+                    CustomerId = (long)user.Id,
+                    CustomerMobile = model.ClientMobile = user.Mobile,
+                    CutomerName = model.ClientMobile = user.Name,
+                    FactorTitle = model.Title = "واریز پول",
+                    CreateDate = DateTime.Now,
+                };
 
-                if (wc == null)
-                    return Json(new { result = false, message = "بروز خطا : کیف پول پیدا نشد." });
+                var factorItems = new List<FactorItem>
+                 {
+                    new FactorItem
+                    {
+                        ItemTitle="واریز پول",
+                        ItemUnitPrice=long.Parse(amount),
+                        ItemUnitType="ریال",
+                        ItemCount=1,
+                        ItemDiscount=0,
+                    }
+                 };
 
+                model.Price = factorItems.Sum(x => x.ItemUnitPrice * x.ItemCount);
+                model.ExpDate = DateTime.Now.AddMinutes(15);
+                model.OrderId = user.Id.ToString();
 
-                wc.Amount = model.Amount;
-                wc.WalletCurrencyId = 1;
+                var factorFooter = new FactorFooter
+                {
+                    FactorSumPrice = factorItems.Sum(x => x.ItemUnitPrice),
+                    SellerAddress = new List<string> { "تبریز ابوریحان" },
+                    SellerName = "  مهام ",
+                    SellerTelephone = new List<string> { "04135520000" },
+                    FactorVAT = 1
 
-                var res = _fund.Deposit(wc);
+                };
+                model.FactorData = new FactorDataModel
+                {
+                    Header = factorHeader,
+                    Items = factorItems,
+                    Footer = factorFooter
+
+                };
+
+                model.CallBackURL = ConfigurationManager.AppSettings["CallBackURL"];
+                //return  Json(JsonConvert.SerializeObject(model));
+                var res = _fund.Deposit(model);
 
                 if (res.StatusCode == 200)
-                    return Json(new { result = true, message = res.Message });
+                    return Json(new { result = true, message = res.Message, data = res.Data });
 
                 return Json(new { result = false, message = res.Message });
 

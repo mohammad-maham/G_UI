@@ -56,6 +56,7 @@ namespace G_APIs.Models
 
         public long WalletCurrencyId { get; set; }
 
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید.  ")]
         public string BankCard { get; set; }
 
     }

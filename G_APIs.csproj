@@ -252,6 +252,7 @@
     <Compile Include="Models\GoldRepositoryManagementVM.cs" />
     <Compile Include="Models\GoldRepositoryStatusVM.cs" />
     <Compile Include="Models\GoldTypesVM.cs" />
+    <Compile Include="Models\IPG.cs" />
     <Compile Include="Models\MessageContext.cs" />
     <Compile Include="Models\ApiResult.cs" />
     <Compile Include="Models\BankAccount.cs" />

@@ -15,7 +15,8 @@ namespace G_APIs.Common
             IPG,
             Store,
             Wallet,
-            Gateway
+            Gateway,
+            Bypass
         }
 
         public enum TransactionType

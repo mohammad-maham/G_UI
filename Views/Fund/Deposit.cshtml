@@ -49,7 +49,6 @@ else
                     </div>
                 </div>
                 @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
-
                 @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
                 @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
 
@@ -85,26 +84,19 @@ else
 
     <script>
 
-    $('#frmDeposit').ajaxForm({
+     $('#frmDeposit').ajaxForm({
 
-        url: '/Fund/Deposit',
-        validation: true,
-        jwt: true,
-        blockui: true,
-        mixin: true,
+         url: '/Fund/Deposit',
+         validation: true,
+         jwt: true,
+         blockui: true,
+         mixin: true,
 
-        success: function (res) {
-
-            console.log(res)
-
-            if (res.result) {
-                setTimeout(() => {
-                    location.reload();
-                },2000)
-
-            }
-        },
-    });
+         success: function (res) {
+              if(res.result)
+                  window.location.href = "http://localhost:5171/Pay/ShowBill?guid=" + res.data
+         },
+     });
 
     @*function Deposit() {
 
