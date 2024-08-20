@@ -314,7 +314,7 @@ namespace G_APIs.Controllers
             IEnumerable<GoldRepositoryManagementReportVM> reportVM = Enumerable.Empty<GoldRepositoryManagementReportVM>();
             if (managementVM != null && !string.IsNullOrEmpty(managementVM.FromDate) && !string.IsNullOrEmpty(managementVM.ToDate))
             {
-                reportVM = _store.GetGoldRepositoryReports(managementVM, token);
+                reportVM = _store.GetGoldRepositoryReport(managementVM, token);
             }
             return View(reportVM);
         }

@@ -12,6 +12,6 @@ namespace G_APIs.BussinesLogic.Interface
         GoldRepositoryStatusVM GetGoldRepositoryStatus(string token);
         GoldTypesVM GetGoldTypes(string token);
         ApiResult ChargeRepository(GoldRepositoryManagementVM repositoryManagementVM, string token);
-        IEnumerable<GoldRepositoryManagementReportVM> GetGoldRepositoryReports(GoldRepositoryManagementVM repositoryManagementVM, string token);
+        IEnumerable<GoldRepositoryManagementReportVM> GetGoldRepositoryReport(GoldRepositoryManagementVM repositoryManagementVM, string token);
     }
 }
