@@ -46,6 +46,14 @@ namespace G_APIs.Services
             _Method = method;
         }
 
+        public GoldApi(string url, object data, Method method = Method.Post, string authorization = null)
+        {
+
+            Action = url;
+            Authorization = authorization;
+            Data = data;
+            _Method = method;
+        }
         public async Task<ApiResult> PostAsync()
         {
             try

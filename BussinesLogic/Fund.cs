@@ -40,9 +40,9 @@ namespace G_APIs.BussinesLogic
             return w;
         }
 
-        public ApiResult Deposit(WalletCurrency model)
+        public ApiResult Deposit(PaymentLinkRequest model)
         {
-            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/Deposit", model).Post();
+            var res = new GoldApi("http://localhost:5171/Pay/AddPaymentData", model).Post();
             return res;
         }
 
