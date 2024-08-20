@@ -28,10 +28,10 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date" } })
+                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", required = true } })
                 </div>
                 <div class="col-md-3">
-                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date" } })
+                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", required = true } })
                 </div>
             </div>
             <div class="col-auto field-wrapper command-panel">

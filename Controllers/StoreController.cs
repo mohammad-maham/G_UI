@@ -318,7 +318,11 @@ namespace G_APIs.Controllers
             {
                 managementVM.FromDate = DateTime.Parse(managementVM.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
                 managementVM.ToDate = DateTime.Parse(managementVM.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
-                reportVM = _store.GetGoldRepositoryReport(managementVM, token);
+                reportVM = _store.GetGoldRepositoryReport(managementVM, token).OrderByDescending(x => x.TransactionId);
+            }
+            else
+            {
+                AlertMessaging.AddToUserQueue(new MessageContext("لطفا بازه تاریخ را مشخص نمائید", type: MessageType.Warning));
             }
             return View(reportVM);
         }

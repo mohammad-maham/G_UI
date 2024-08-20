@@ -11,16 +11,18 @@
         <thead class="">
             <tr>
                 <th>#</th>
+                <th>شناسه</th>
                 <th>کاربر ثبت کننده</th>
                 <th>نوع کاربری</th>
                 <th>نوع طلا</th>
-                <th>وزن</th>
                 <th>عیار</th>
                 <th>وزن جدید</th>
                 <th>وزن قبلی</th>
+                <th>مقدار موجودی</th>
                 <th>نوع تراکنش</th>
                 <th>نوع صندوق</th>
                 <th>تاریخ ویرایش/ثبت</th>
+                <th>تغییرات</th>
             </tr>
         </thead>
         <tbody>
@@ -31,22 +33,24 @@
                 {
                     <tr>
                         <td>@(++index)</td>
+                        <td>@(item.TransactionId)</td>
                         <td>@(item.UserName)</td>
                         <td>@(item.Role)</td>
                         <td>@(item.GoldType)</td>
-                        <td>@(item.Weight)</td>
                         <td>@(item.Carat)</td>
                         <td>@(item.NewGoldValue)</td>
                         <td>@(item.LastGoldValue)</td>
+                        <td>@(item.Weight)</td>
                         <td>@(item.TransactionType)</td>
                         <td>@(item.GoldMaintenanceType)</td>
                         <td>@(item.RegPersianDate)</td>
+                        <td>@(item.ArchiveOperation)</td>
                     </tr>
                 }
             }
             else
             {
-                <tr><td class="table-no-data text-center" colspan="11">داده یافت نشد</td></tr>
+                <tr><td class="table-no-data text-center" colspan="13">داده یافت نشد</td></tr>
             }
         </tbody>
     </table>

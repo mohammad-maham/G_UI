@@ -19,9 +19,9 @@ namespace G_APIs.Models
         public long RegUserId { get; set; }
         public int Decharge { get; set; } = 0;
         public short Status { get; set; } = 1;
-        [Display(Name = "از تاریخ")]
+        [Display(Name = "از تاریخ"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string FromDate { get; set; }
-        [Display(Name = "تا تاریخ")]
+        [Display(Name = "تا تاریخ"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string ToDate { get; set; }
         [Display(Name = "کاربر")]
         public long UserId { get; set; }
@@ -30,6 +30,7 @@ namespace G_APIs.Models
     [Serializable]
     public class GoldRepositoryManagementReportVM
     {
+        public long TransactionId { get; set; }
         public string GoldType { get; set; }
         public string GoldMaintenanceType { get; set; }
         public int Carat { get; set; }
@@ -41,5 +42,6 @@ namespace G_APIs.Models
         public string RegPersianDate { get; set; }
         public string UserName { get; set; }
         public string Role { get; set; }
+        public string ArchiveOperation { get; set; }
     }
 }
