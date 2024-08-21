@@ -1,9 +1,35 @@
-﻿@using G_APIs.Models.ComponentModels
-@using G_APIs.Models
+﻿@using G_APIs.Models
 @model IEnumerable<GoldRepositoryManagementReportVM>
 @{
     Layout = null;
 }
+
+<style>
+    i.fa.fa-arrow-circle-up {
+        color: #007f5f;
+        font-size: 1.5rem !important;
+    }
+
+    i.fa.fa-arrow-circle-down {
+        color: #bc4749;
+        font-size: 1.5rem !important;
+    }
+
+    td.last-value {
+        font-weight: 600;
+        color: #bc4749 !important;
+    }
+
+    td.new-value {
+        font-weight: 600;
+        color: #007f5f !important;
+    }
+
+    td.current-value {
+        font-weight: 600;
+        color: #ff7b00 !important;
+    }
+</style>
 
 @using (Html.Box(title: "نتیجه گزارش", col: 12))
 {
@@ -11,6 +37,7 @@
         <thead class="">
             <tr>
                 <th>#</th>
+                <th>خرید/فروش</th>
                 <th>شناسه</th>
                 <th>کاربر ثبت کننده</th>
                 <th>نوع کاربری</th>
@@ -18,11 +45,11 @@
                 <th>عیار</th>
                 <th>وزن جدید</th>
                 <th>وزن قبلی</th>
-                <th>مقدار موجودی</th>
+                <th>مقدار</th>
                 <th>نوع تراکنش</th>
                 <th>نوع صندوق</th>
                 <th>تاریخ ویرایش/ثبت</th>
-                <th>تغییرات</th>
+                <th>نوع عملیات</th>
             </tr>
         </thead>
         <tbody>
@@ -33,14 +60,15 @@
                 {
                     <tr>
                         <td>@(++index)</td>
+                        <td><i title="@(new[] { 2,3}.Contains(item.TransactionTypeId)?"خرید":"فروش")" class="fa @(new[] { 2,3}.Contains(item.TransactionTypeId)?"fa-arrow-circle-up":"fa-arrow-circle-down") primary" data-container="body" data-placement="top" data-html="true" data-original-title></i></td>
                         <td>@(item.TransactionId)</td>
                         <td>@(item.UserName)</td>
                         <td>@(item.Role)</td>
                         <td>@(item.GoldType)</td>
                         <td>@(item.Carat)</td>
-                        <td>@(item.NewGoldValue)</td>
-                        <td>@(item.LastGoldValue)</td>
-                        <td>@(item.Weight)</td>
+                        <td class="new-value">@(item.NewGoldValue)</td>
+                        <td class="last-value">@(item.LastGoldValue)</td>
+                        <td class="current-value">@(item.Weight)</td>
                         <td>@(item.TransactionType)</td>
                         <td>@(item.GoldMaintenanceType)</td>
                         <td>@(item.RegPersianDate)</td>
@@ -55,3 +83,10 @@
         </tbody>
     </table>
 }
+
+<script>
+    $('td i.primary').tooltip({
+        template: '<div class="tooltip tooltip-success" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',
+        title: "Primary"
+    });
+</script>

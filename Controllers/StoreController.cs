@@ -237,7 +237,7 @@ namespace G_APIs.Controllers
                 }
             }
             foreach (var item in goldRepositoryStatus.GoldRepositoryVM)
-                item.MaintenanceType = item.GoldMaintenanceType == 10 ? "مالکیتی" : "وکالتی/امانتی";
+                item.MaintenanceType = item.GoldMaintenanceType == 10 ? "مالکیتی" : "امانتی";
             ViewBag.Carats = lstGoldCaratsSelect;
             ViewBag.Types = lstGoldTypesSelect;
             managementVM.GoldRepositoryStatus = goldRepositoryStatus;

@@ -141,7 +141,9 @@
     $("input[name='@nameof(Model.Weight)']").TouchSpin({
         prefix: 'گرم',
         buttondown_class: "btn btn-classic btn-danger",
-        buttonup_class: "btn btn-classic btn-success"
+        buttonup_class: "btn btn-classic btn-success",
+        max: 1000,
+        min: 1
     });
     function confirm(submitType) {
         $("input[name='@(nameof(Model.SubmitType))'][type=hidden]").val(submitType);
