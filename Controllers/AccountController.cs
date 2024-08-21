@@ -308,5 +308,19 @@ namespace G_APIs.Controllers
                 return Json(new { result = false, message = ex.Message });
             }
         }
+
+        public ActionResult RedirectToErrorMiddleware(int error = 403)
+        {
+            PartialViewResult view = PartialView("");
+            switch (error)
+            {
+                case 403:
+                    view = PartialView("_AuthMiddleware");
+                    break;
+                default:
+                    break;
+            }
+            return view;
+        }
     }
 }

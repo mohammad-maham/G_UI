@@ -29,13 +29,15 @@ h1, h2, h3, h4, h5, h6 {
   outline: none; }
 
 ::-moz-selection {
-  /* Code for Firefox */
-  color: #1b55e2;
-  background: transparent; }
+    /* Code for Firefox */
+    color: #1b55e2;
+    background: #00000009;
+}
 
 ::selection {
-  color: #1b55e2;
-  background: transparent; }
+    color: #1b55e2;
+    background: #00000009;
+}
 
 p {
   margin-top: 0;

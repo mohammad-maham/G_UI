@@ -13,20 +13,13 @@
     Description = "مشاهده آن تایم وضعیت گاوصندوق و بروزرسانی آن"
 })
 
-
 <style>
-    .gold-card-img {
-        width: 15em;
+    .gold-weight {
+        font-size: 14pt;
     }
 
-    .gold-card {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
-        padding-top: 15px;
+    .infobox-3 {
+        width: 32% !important;
     }
 </style>
 
@@ -60,22 +53,39 @@
                             {
                                 string date = goldRepository.LastUpdatePersianDate.Split(' ')[0];
                                 string time = goldRepository.LastUpdatePersianDate.Split(' ')[1];
-                                <div class="col-md-6">
-                                    <div class="card component-card_9 gold-card">
-                                        <img src="~/Content/assets/img/gold-treasure.png" class="card-img-top gold-card-img" />
-                                        <div class="card-body">
-                                            <p class="meta-date">آخرین بروزرسانی صندوق: <b>@(time +"-"+date)</b></p>
-                                            <h5 class="card-title">صندوق <b>@goldRepository.MaintenanceType</b></h5>
-                                            <p class="card-text">
-                                                <ul>
-                                                    <li>وزن: <b>@goldRepository.Weight</b> گرم</li>
-                                                    <li>عیار: <b>@goldRepository.Carat</b></li>
-                                                    <li>آخرین کاربر ویرایش/ثبت کننده: <b>@goldRepository.LastUpdateUser</b></li>
-                                                    <li>نوع طلا: <b>@(goldRepository.GoldType==1?"طلای آب شده":"طلای آب شده با قابلیت حواله شدن")</b></li>
-                                                </ul>
-                                            </p>
-                                        </div>
+                                <div class="infobox-3">
+                                    <div class="info-icon">
+                                        @if (goldRepository.GoldMaintenanceType == 10)
+                                        {
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                                <line x1="12" x2="12" y1="22.08" y2="12" />
+                                            </svg>
+                                        }
+                                        else
+                                        {
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                                <polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+                                                <polyline points="7.5 19.79 7.5 14.6 3 12" />
+                                                <polyline points="21 12 16.5 14.6 16.5 19.79" />
+                                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                                <line x1="12" x2="12" y1="22.08" y2="12" />
+                                            </svg>
+                                        }
                                     </div>
+                                    <h5 class="info-heading">  صندوق <b style="font-weight: 600;font-size: 20pt;color: @(goldRepository.GoldMaintenanceType==10?"#fb8500":"#00b4d8")">@goldRepository.MaintenanceType</b></h5>
+                                    <span class="badge badge-danger"><b class="gold-weight">@goldRepository.Weight</b> گرم </span>
+                                    <p class="card-user_occupation" style="direction:ltr"><b>@(date +"  "+time)</b></p>
+                                    <hr />
+                                    <p class="info-text">
+                                        <ul>
+                                            <li>عیار: <b>@goldRepository.Carat</b></li>
+                                            <li>آخرین کاربر ویرایش/ثبت کننده: <b>@goldRepository.LastUpdateUser</b></li>
+                                            <li>نوع طلا: <b>@(goldRepository.GoldType==1?"طلا آب شده":"طلا آب شده-حواله شده")</b></li>
+                                        </ul>
+                                    </p>
                                 </div>
                             }
                         </div>
@@ -200,7 +210,7 @@
         }
     });
     const series = [@ownerPieValue, @bondedPieValue];
-    const labels = ['طلای گاوصندوق مالکیتی', 'طلای گاوصندوق وکالتی'];
+    const labels = ['طلا گاوصندوق مالکیتی', 'طلا گاوصندوق امانتی'];
 
     var options = {
         chart: {
@@ -220,12 +230,14 @@
                             show: true,
                             fontSize: '12px',
                             fontWeight: '400',
+                            fontFamily: "YekanBakhRegular",
                             color: '#6E7191',
                         },
                         value: {
                             show: true,
                             fontSize: '22px',
                             fontWeight: '600',
+                            fontFamily: "YekanBakhRegular",
                             color: '#2E285C',
                         },
                         //total: {
@@ -262,7 +274,7 @@
             fontWeight: "bold",
             offsetY: 0,
         },
-        colors: ['#645CAA', '#BFACE0'],
+        colors: ['#c7417b', '#f6d912'],
         //title: {
         //    text: 'موجودی انبار',
         //    align: 'top',

@@ -1,7 +1,7 @@
 ﻿using G_APIs.BussinesLogic.Interface;
+using G_APIs.Common;
 using G_APIs.Models;
 using G_APIs.Services;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,7 +27,7 @@ namespace G_APIs.Controllers
 
         #region GoldShopping
         [HttpGet]
-        [GoldAuthorize]
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult BuyIndex()
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -45,7 +45,7 @@ namespace G_APIs.Controllers
             return View(orderVM);
         }
 
-        [GoldAuthorize]
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult SubmitBuy(OrderPerformVM buyVM)
         {
             ApiResult response = new ApiResult();
@@ -100,7 +100,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpGet]
-        [GoldAuthorize]
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult SellIndex()
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -118,7 +118,7 @@ namespace G_APIs.Controllers
             return View(orderVM);
         }
 
-        [GoldAuthorize]
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult SubmitSell(OrderPerformVM sellVM)
         {
             ApiResult response = new ApiResult();
@@ -173,6 +173,7 @@ namespace G_APIs.Controllers
         }
         #endregion GoldShopping
         #region GoldOnlinePrices
+        [GoldAuthorize]
         public ActionResult GoldOnlinePrice(bool isBuy = true)
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -205,6 +206,7 @@ namespace G_APIs.Controllers
         }
         #endregion GoldOnlinePrices
         #region GoldRepositoryManagement
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult RepositoryManagementIndex()
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -236,8 +238,11 @@ namespace G_APIs.Controllers
                     }
                 }
             }
-            foreach (var item in goldRepositoryStatus.GoldRepositoryVM)
+            foreach (GoldRepositoryVM item in goldRepositoryStatus.GoldRepositoryVM)
+            {
                 item.MaintenanceType = item.GoldMaintenanceType == 10 ? "مالکیتی" : "امانتی";
+            }
+
             ViewBag.Carats = lstGoldCaratsSelect;
             ViewBag.Types = lstGoldTypesSelect;
             managementVM.GoldRepositoryStatus = goldRepositoryStatus;
@@ -245,6 +250,7 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult SubmitRepositoryCharge(GoldRepositoryManagementVM managementVM)
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -265,6 +271,7 @@ namespace G_APIs.Controllers
             return View(managementVM);
         }
 
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult RepositoryReportIndex()
         {
             string token = Request.Cookies["gldauth"].Value;
@@ -309,6 +316,7 @@ namespace G_APIs.Controllers
             return View(new GoldRepositoryManagementVM());
         }
 
+        [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult RepositoryReportIndexData(GoldRepositoryManagementVM managementVM)
         {
             string token = Request.Cookies["gldauth"].Value;

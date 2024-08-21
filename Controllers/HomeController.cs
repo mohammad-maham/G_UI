@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace G_APIs.Controllers
 {
+    [GoldAuthorize]
     public class HomeController : Controller
     {
         private readonly ISession _session;
@@ -19,7 +20,6 @@ namespace G_APIs.Controllers
         }
 
         [GoldUserInfo]
-        [GoldAuthorize]
         public ActionResult Index(Models.Dashboard model)
         {
             string userInfo = Request.Headers["UserInfo"];
@@ -32,25 +32,21 @@ namespace G_APIs.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        [GoldAuthorize]
         public ActionResult Chart1()
         {
             return View(new Chart());
         }
 
-        [GoldAuthorize]
         public ActionResult Chart2()
         {
             return View(new Chart());
         }
 
-        [GoldAuthorize]
         public ActionResult Chart3()
         {
             return View(new Chart());
         }
 
-        [GoldAuthorize]
         public ActionResult Sidebar(Menu model)
         {
             User user = _session.Get<User>("UserInfo");

@@ -16,15 +16,15 @@ public class GoldAuthorizeAttribute : AuthorizeAttribute
         {
             string token = userToken.Value.Replace("Bearer ", "");
             ApiResult res = new GoldApi(GoldHost.Accounting, "/api/Attributes/GetAuthorize", new { Token = token }).Post();
-            /*if (res.StatusCode != 200)
+            if (res.StatusCode != 200)
             {
                 filterContext.Result = new RedirectResult("/Account/Login");
-            }*/
+            }
         }
-       /* else
+        else
         {
             filterContext.Result = new RedirectResult("/Account/Login");
-        }*/
+        }
     }
 }
 

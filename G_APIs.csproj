@@ -231,6 +231,7 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="BussinesLogic\Store.cs" />
     <Compile Include="Common\Captcha.cs" />
+    <Compile Include="Common\GoldAccessibilityAuth.cs" />
     <Compile Include="Common\GoldUserInfoAttribute.cs" />
     <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Common\HtmlAttributesExtensions.cs" />
@@ -1213,6 +1214,7 @@
     <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
     <Content Include="Views\Store\SubmitRepositoryCharge.cshtml" />
     <Content Include="Views\Store\RepositoryReportIndexData.cshtml" />
+    <Content Include="Views\Shared\_AuthMiddleware.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

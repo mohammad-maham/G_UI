@@ -18,7 +18,7 @@ public static class HtmlExtensions
 
         tagBuilder.MergeAttributes(attributes);
 
-        var _cssClass = $"statbox widget box box-shadow col-xl-{col} col-md-{col} col-sm-12 col-12";
+        var _cssClass = $"statbox widget box box-shadow col-xl-{col} col-md-{col} col-sm-12 col-12 overflow-hidden";
         tagBuilder.AddCssClass($"{cssClass}");
         tagBuilder.AddCssClass(_cssClass);
 
