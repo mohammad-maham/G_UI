@@ -2,8 +2,15 @@
 @using G_APIs.Models
 @model GoldRepositoryManagementVM
 @{
-    double ownerPieValue = Model.GoldRepositoryStatus.GoldRepositoryVM.Where(x => x.GoldMaintenanceType == 10)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
-    double bondedPieValue = Model.GoldRepositoryStatus.GoldRepositoryVM.Where(x => x.GoldMaintenanceType == 11)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    List<GoldRepositoryVM> ownerRepo = Model.GoldRepositoryStatus.GoldRepositoryVM;
+    // Owner Statistics
+    double ownerPieTotalWeight = ownerRepo.Where(x => x.GoldMaintenanceType == 10)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double ownerPieG1Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 10 && x.GoldType == 1)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double ownerPieG2Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 10 && x.GoldType == 2)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    // Bonded Statistics
+    double bondedPieTotalWeight = ownerRepo.Where(x => x.GoldMaintenanceType == 11)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double bondedPieG1Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 11 && x.GoldType == 1)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double bondedPieG2Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 11 && x.GoldType == 2)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
 }
 
 @Html.Partial("_FormTitle", new FormTitle()
@@ -209,8 +216,8 @@
             disableInputs();
         }
     });
-    const series = [@ownerPieValue, @bondedPieValue];
-    const labels = ['طلا گاوصندوق مالکیتی', 'طلا گاوصندوق امانتی'];
+    const series = [@ownerPieTotalWeight, @ownerPieG1Weight,@ownerPieG2Weight ,@bondedPieTotalWeight,@bondedPieG1Weight,@bondedPieG2Weight];
+    const labels = ['طلا گاوصندوق مالکیتی', 'طلا آب شده مالکیتی', 'طلا آب شده-حواله شده مالکیتی', 'طلا گاوصندوق امانتی', 'طلا آب شده امانتی', 'طلا آب شده-حواله شده امانتی'];
 
     var options = {
         chart: {
@@ -274,7 +281,7 @@
             fontWeight: "bold",
             offsetY: 0,
         },
-        colors: ['#c7417b', '#f6d912'],
+        //colors: ['#c7417b', '#f6d912'],
         //title: {
         //    text: 'موجودی انبار',
         //    align: 'top',
