@@ -8,7 +8,7 @@
         Model.Id = Model.Name;
     }
 
-    var cancelButtonText = " انصراف / بازگشت";
+    var cancelButtonText = "انصراف";
     if (!string.IsNullOrEmpty(Model.Text) && Model.ButtonType != GoldButtonTypes.cancel)
     {
         cancelButtonText = Model.Text;
@@ -32,7 +32,7 @@
     }
     else
     {
-        <button id="@Model.Id" name="@Model.Name" class="@Model.Class btn-danger col-md-4 float-right" type="button" @isReadOnly @isDisabled onclick="javascript:window.location='/'">
+        <button id="@Model.Id" name="@Model.Name" class="@Model.Class btn-danger float-right" type="button" @isReadOnly @isDisabled onclick="javascript:window.location='/'">
             <i class="fa fa-undo fa-2x"></i>
             @if (Model.ButtonShape == GoldButtonShape.rectangle)
             {

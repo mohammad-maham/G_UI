@@ -145,7 +145,3 @@ input[type="number"] {
 .form-control {
     font-weight: 600 !important;
 }
-
-.table-no-data {
-    background-color: #ffd4d4ad !important;
-}

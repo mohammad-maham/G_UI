@@ -2,65 +2,21 @@
 @model  Dashboard
 
 <div class="row gold-row">
-    @*@using (Html.Box(cssClass: "statbox widget box box-shadow col-md-8 col-sm-12 float-left"))*@
-    @using (Html.Box(col: 8))
+    @using (Html.Box("نمودار یک", col: 8))
     {
-
-        <div class=" widget-chart-one">
-            <div class="widget-heading">
-                <h5 class="">نمودار 1</h5>
-                @* <ul class="tabs tab-pills">
-                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Monthly</a></li>
-                    </ul> *@
-            </div>
-
-            <div class="widget-content">
-                <div class="tabs tab-content">
-                    <div id="content_1" class="tabcontent">
-                        @Html.Action("Chart1", "Home")
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        @Html.Action("Chart1", "Home")
     }
-    @*@using (Html.Box(cssClass: "statbox widget box box-shadow col-md-4 col-sm-12 float-right"))*@
-    @using (Html.Box(col: 4))
-
+    @using (Html.Box("نمودار دو", col: 4))
     {
-
-        <div class=" widget-chart-two">
-            <div class="widget-heading">
-                <h5 class="">    نمودار 2</h5>
-            </div>
-            <div class="widget-content">
-                @Html.Action("Chart2", "Home")
-
-            </div>
-        </div>
+        @Html.Action("Chart2", "Home")
     }
 </div>
-
 <div class="row gold-row">
-    @*@using (Html.Box(cssClass: "statbox widget box box-shadow col-md-8 col-sm-12 float-left"))*@
-    @using (Html.Box(col: 8))
+    @using (Html.Box("نمودار سه", col: 8))
     {
-
-        <div class=" widget-chart-three">
-            <div class="widget-heading">
-                <div class="">
-                    <h5 class="">نمودار 3</h5>
-                </div>
-            </div>
-
-            <div class="widget-content">
-                @Html.Action("Chart3", "Home")
-            </div>
-        </div>
+        @Html.Action("Chart3", "Home")
     }
-    @*@using (Html.Box(cssClass: "statbox widget box box-shadow col-md-4 col-sm-12 float-right"))*@
-    @using (Html.Box(col: 4))
+    @using (Html.Box("کیف پول", col: 4))
     {
         @Html.Action("Wallet", "Fund")
     }

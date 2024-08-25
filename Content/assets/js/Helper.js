@@ -45,7 +45,7 @@
                                 xhr.setRequestHeader('Authorization', auth);
                         },
                         success: (response) => {
-                      
+
                             if (response) {
                                 if (settings.mixin) {
                                     if (response.message) {
@@ -177,35 +177,38 @@ function isValidEmail(email) {
 
 
 function ValidateForm(form) {
-    
     let isValid = true;
     $('.invalid-feedback', form).remove();
-
     Array.from(form.elements).forEach(element => {
-
         if (!element.checkValidity()) {
-
             isValid = false;
             let errorMessage = element.dataset.valRequired || "وارد کردن این فیلد الزامیست";
-
-            if (element.validity.valueMissing) {
-                errorMessage = element.dataset.valRequired || "وارد کردن این فیلد الزامیست";
-            } else if (element.validity.typeMismatch && element.type === 'email') {
-                errorMessage = element.dataset.valEmail || "لطفا ایمیل معتبر وارد کنید.";
-            } else if (element.validity.rangeUnderflow || element.validity.rangeOverflow) {
-                errorMessage = element.dataset.valRange || "مفدار وارد شده خارج از محدوده مورد نظر است";
-            } else if (element.validity.patternMismatch) {
-                errorMessage = element.dataset.valPattern || "مقدار وارد شده معتبر نیست";
+            if (element.type !== 'select-one') {
+                if (element.validity.valueMissing) {
+                    errorMessage = element.dataset.valRequired || "وارد کردن این فیلد الزامیست";
+                } else if (element.validity.typeMismatch && element.type === 'email') {
+                    errorMessage = element.dataset.valEmail || "لطفا ایمیل معتبر وارد کنید.";
+                } else if (element.validity.rangeUnderflow || element.validity.rangeOverflow) {
+                    errorMessage = element.dataset.valRange || "مفدار وارد شده خارج از محدوده مورد نظر است";
+                } else if (element.validity.patternMismatch) {
+                    errorMessage = element.dataset.valPattern || "مقدار وارد شده معتبر نیست";
+                }
+                $(element).parent('.form-group').append('<div class="invalid-feedback">' + errorMessage + '</div>')
             }
-
-            $(element).parent('.form-group').append('<div class="invalid-feedback">' + errorMessage +'</div>')
-
         }
 
         if (element.type === 'email' && !isValidEmail(element.value)) {
             isValid = false;
-            const errorMessage = element.dataset.valEmail || "Please enter a valid email address.";
+            const errorMessage = element.dataset.valEmail || "لطفا ایمیل معتبر وارد کنید.";
             $(element).parent('.form-group').append('<div class="invalid-feedback">' + errorMessage + '</div>')
+        } else if (element.type === 'select-one' && element.required && !element.value) {
+            isValid = false;
+            const errorMessage = element.dataset.valEmail || "وارد کردن این فیلد الزامیست";
+            var errorMsg = $(element).parent('div').children(".invalid-feedback").length;
+            if (errorMsg < 1) {
+                $(element).parent('div').append('<div class="invalid-feedback">' + errorMessage + '</div>');
+            }
+            $(element).siblings(".select2-container").children(".selection").children(".select2-selection").css({ "border-color": "red" });
         }
     });
 

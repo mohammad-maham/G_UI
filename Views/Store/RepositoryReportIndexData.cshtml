@@ -4,33 +4,6 @@
     Layout = null;
 }
 
-<style>
-    i.fa.fa-arrow-circle-up {
-        color: #007f5f;
-        font-size: 1.5rem !important;
-    }
-
-    i.fa.fa-arrow-circle-down {
-        color: #bc4749;
-        font-size: 1.5rem !important;
-    }
-
-    td.last-value {
-        font-weight: 600;
-        color: #bc4749 !important;
-    }
-
-    td.new-value {
-        font-weight: 600;
-        color: #007f5f !important;
-    }
-
-    td.current-value {
-        font-weight: 600;
-        color: #ff7b00 !important;
-    }
-</style>
-
 @using (Html.Box(title: "نتیجه گزارش", col: 12))
 {
     <table id="rptGoldRepository" class="datatable table table-hover non-hover table-striped" style="width:100%">
@@ -38,18 +11,18 @@
             <tr>
                 <th>#</th>
                 <th>خرید/فروش</th>
-                <th>شناسه</th>
+                <th>شناسه تراکنش</th>
                 <th>کاربر ثبت کننده</th>
                 <th>نوع کاربری</th>
                 <th>نوع طلا</th>
                 <th>عیار</th>
-                <th>وزن جدید</th>
-                <th>وزن قبلی</th>
-                <th>مقدار</th>
+                <th>وزن جدید (گرم)</th>
+                <th>وزن قبلی (گرم)</th>
+                <th>مقدار (گرم)</th>
                 <th>نوع تراکنش</th>
                 <th>نوع صندوق</th>
                 <th>تاریخ ویرایش/ثبت</th>
-                <th>نوع عملیات</th>
+                <th>نوع تراکنش</th>
             </tr>
         </thead>
         <tbody>
@@ -58,19 +31,42 @@
                 int index = 0;
                 foreach (GoldRepositoryManagementReportVM item in Model)
                 {
-                    <tr>
+                    <tr class="@(item.GoldTypeId==1?"table-info":"table-default")">
                         <td>@(++index)</td>
-                        <td><i title="@(new[] { 2,3}.Contains(item.TransactionTypeId)?"خرید":"فروش")" class="fa @(new[] { 2,3}.Contains(item.TransactionTypeId)?"fa-arrow-circle-up":"fa-arrow-circle-down") primary" data-container="body" data-placement="top" data-html="true" data-original-title></i></td>
+                        <td class="">
+                            @*<span class="badge outline-badge-@(new[] { 2,3}.Contains(item.TransactionTypeId)?"success":"danger") shadow-none">
+                                    <strong>@(new[] { 2, 3 }.Contains(item.TransactionTypeId) ? "خرید" : "فروش")</strong>
+                                </span>*@
+                            <div class="d-flex">
+                                <div class="usr-img-frame mr-2 rounded-circle">
+                                    @if (new[] { 2, 3 }.Contains(item.TransactionTypeId))
+                                    {
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-success" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                            <polyline points="17 6 23 6 23 12" />
+                                        </svg>
+                                    }
+                                    else
+                                    {
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-danger" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                                            <polyline points="17 18 23 18 23 12" />
+                                        </svg>
+                                    }
+                                </div>
+                                <p class="align-self-center mb-0 badge @(new[] { 2, 3 }.Contains(item.TransactionTypeId)?"badge-success":"badge-danger")">@(new[] { 2, 3 }.Contains(item.TransactionTypeId) ? "خرید" : "فروش")</p>
+                            </div>
+                        </td>
                         <td>@(item.TransactionId)</td>
                         <td>@(item.UserName)</td>
                         <td>@(item.Role)</td>
                         <td>@(item.GoldType)</td>
                         <td>@(item.Carat)</td>
-                        <td class="new-value">@(item.NewGoldValue)</td>
-                        <td class="last-value">@(item.LastGoldValue)</td>
-                        <td class="current-value">@(item.Weight)</td>
+                        <td><p class="text-success"><strong>@(item.NewGoldValue)</strong></p></td>
+                        <td><p class="text-danger"><strong>@(item.LastGoldValue)</strong></p></td>
+                        <td>@(item.Weight)</td>
                         <td>@(item.TransactionType)</td>
-                        <td>@(item.GoldMaintenanceType)</td>
+                        <td class=""><span class="badge @(item.GoldMaintenanceTypeId==10?"badge-secondary":"badge-info")">@(item.GoldMaintenanceType)</span></td>
                         <td>@(item.RegPersianDate)</td>
                         <td>@(item.ArchiveOperation)</td>
                     </tr>
@@ -78,7 +74,7 @@
             }
             else
             {
-                <tr><td class="table-no-data text-center" colspan="13">داده یافت نشد</td></tr>
+                <tr><td class="table-no-data text-center" colspan="14">داده یافت نشد</td></tr>
             }
         </tbody>
     </table>

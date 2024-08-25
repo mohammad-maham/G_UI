@@ -3,7 +3,7 @@
     public class GoldButton : BaseModel
     {
         public string Icon { get; set; } = "fa fa-home fa-1x";
-        public string Class { get; set; } = "btn btn-default col-md-3 float-right";
+        public string Class { get; set; } = "btn btn-default float-right";
         public string Text { get; set; } = "ثبت";
         public GoldButtonTypes ButtonType { get; set; } = GoldButtonTypes.button;
         public GoldButtonSchemas Schema { get; set; } = GoldButtonSchemas.button;

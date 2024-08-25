@@ -18,14 +18,14 @@
         color: darkgoldenrod;
     }
 
-   .home-wallet .w-chart {
+    .home-wallet .w-chart {
         display: flex;
     }
 
-    .home-wallet .w-chart .w-chart-section {
-        width: 100%;
-        padding: 0 12px;
-    }
+        .home-wallet .w-chart .w-chart-section {
+            width: 100%;
+            padding: 0 12px;
+        }
 
     .home-wallet .widget.widget-one .w-chart .w-chart-section .w-detail {
         position: absolute;
@@ -70,11 +70,12 @@
         padding: 2px;
     }
 
-    .home-wallet  .invoice-box [class*="info-detail-"]:not(.info-sub) {
+    .home-wallet .invoice-box [class*="info-detail-"]:not(.info-sub) {
         display: block !important;
-        padding:5px;
+        padding: 5px;
     }
-    .home-wallet  .invoice-box .acc-total-info {
+
+    .home-wallet .invoice-box .acc-total-info {
         margin-bottom: 0 !important;
         padding-bottom: 0 !important;
     }
@@ -281,10 +282,9 @@
 </script>
 
 <div class="home-wallet widget-account-invoice-one">
-
-    <div class="widget-heading">
-        <h5 class="">  <i class="fa fa-money"></i>  کیف پول</h5>
-    </div>
+    @*<div class="widget-heading">
+            <h5 class="">  <i class="fa fa-money"></i>  کیف پول</h5>
+        </div>*@
 
     <div class="widget-content">
         <div class="invoice-box">
@@ -338,33 +338,31 @@
 
             </div>
             @*@if (showButtons)
-            {*@
-                <div class="inv-action">
-                    @Html.Partial("_GoldButton", new GoldButton()
-                       {
-                           Schema = GoldButtonSchemas.link,
-                           Name = "btnDeposit",
-                           Icon = "fa fa-money fa-2x",
-                           Class = "btn btn-success col-md-5",
-                           Text = "واریز",
-                           Href = @Url.Action("Deposit", "Fund")
-                       })
+                {*@
+            <div class="inv-action">
+                @Html.Partial("_GoldButton", new GoldButton()
+           {
+               Schema = GoldButtonSchemas.link,
+               Name = "btnDeposit",
+               Icon = "fa fa-money fa-2x",
+               Class = "btn btn-success col-md-5",
+               Text = "واریز",
+               Href = @Url.Action("Deposit", "Fund")
+           })
 
-                    @Html.Partial("_GoldButton", new GoldButton()
-                       {
-                           Schema = GoldButtonSchemas.link,
-                           Name = "btnWindrow",
-                           Icon = "fa fa-upload fa-2x ",
-                           Class = "btn btn-danger col-md-5",
-                           Text = "برداشت",
-                           Href = @Url.Action("Windrow", "Fund")
-                       })
+                @Html.Partial("_GoldButton", new GoldButton()
+           {
+               Schema = GoldButtonSchemas.link,
+               Name = "btnWindrow",
+               Icon = "fa fa-upload fa-2x ",
+               Class = "btn btn-danger col-md-5",
+               Text = "برداشت",
+               Href = @Url.Action("Windrow", "Fund")
+           })
 
-                </div>
+            </div>
             @* } *@
 
         </div>
     </div>
-
 </div>
-
