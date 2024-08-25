@@ -2,7 +2,7 @@
 @model OnlinePriceVM
 @{
     Layout = null;
-    int calcType = Model.CalcTypes == CalcTypes.buy ? 1 : 2;
+    int calcType = (int)Model.CalcTypes;
 }
 
 <style>

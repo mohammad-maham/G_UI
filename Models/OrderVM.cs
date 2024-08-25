@@ -46,7 +46,8 @@ namespace G_APIs.Models
     {
         none = 0,
         buy = 1,
-        sell = 2
+        sell = 2,
+        threshold = 3,
     }
 
     public class PriceCalcVM

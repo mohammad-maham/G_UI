@@ -244,6 +244,7 @@
     <Compile Include="Controllers\FundController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -272,6 +273,7 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\OtpInfo.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ThresholdsVM.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wallet.cs" />
@@ -1216,6 +1218,7 @@
     <Content Include="Views\Store\SubmitRepositoryCharge.cshtml" />
     <Content Include="Views\Store\RepositoryReportIndexData.cshtml" />
     <Content Include="Views\Shared\_AuthMiddleware.cshtml" />
+    <Content Include="Views\Settings\ThresholdPriceManagementIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

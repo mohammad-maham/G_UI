@@ -174,10 +174,10 @@ namespace G_APIs.Controllers
         #endregion GoldShopping
         #region GoldOnlinePrices
         [GoldAuthorize]
-        public ActionResult GoldOnlinePrice(bool isBuy = true)
+        public ActionResult GoldOnlinePrice(int calcType = 1)
         {
             string token = Request.Cookies["gldauth"].Value;
-            CalcTypes priceCalcType = isBuy ? CalcTypes.buy : CalcTypes.sell;
+            CalcTypes priceCalcType = (CalcTypes)calcType;
             double price = _store.GetOnlineBuyPrice(new PriceCalcVM()
             {
                 GoldCalcType = priceCalcType,
@@ -194,7 +194,7 @@ namespace G_APIs.Controllers
                 string token = Request.Cookies["gldauth"].Value;
                 double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
                 {
-                    GoldCalcType = calcType == 1 ? CalcTypes.buy : CalcTypes.sell,
+                    GoldCalcType = (CalcTypes)calcType,
                     GoldWeight = double.Parse(weight)
                 }, token);
                 return buyPrice;
