@@ -10,7 +10,7 @@
 })
 
 <div class="row gold-row">
-    @using (Html.Box("باکس خرید", col: 6))
+    @using (Html.Box("باکس خرید", col: 6, iconType: BoxIconTypes.form))
     {
         <div class="widget-content widget-content-area">
             <form form class="frmBuy" id="frmBuy" action="javascript:void(0);" novalidate>
@@ -63,7 +63,7 @@
             </form>
         </div>
     }
-    @using (Html.Box("کیف پول", col: 6))
+    @using (Html.Box("کیف پول", col: 6, iconType: BoxIconTypes.info))
     {
         @Html.Action("Wallet", "Fund", new { ShowButtons = false })
     }

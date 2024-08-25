@@ -1,10 +1,11 @@
 ﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
 @model IEnumerable<GoldRepositoryManagementReportVM>
 @{
     Layout = null;
 }
 
-@using (Html.Box(title: "نتیجه گزارش", col: 12))
+@using (Html.Box(title: "نتیجه گزارش", col: 12, iconType: BoxIconTypes.grid))
 {
     <table id="rptGoldRepository" class="datatable table table-hover non-hover table-striped" style="width:100%">
         <thead class="">

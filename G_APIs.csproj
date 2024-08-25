@@ -248,6 +248,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ComponentModels\BoxIconTypes.cs" />
     <Compile Include="Models\FinancialVM.cs" />
     <Compile Include="Models\GetUsersVM.cs" />
     <Compile Include="Models\GoldRepositoryManagementVM.cs" />
