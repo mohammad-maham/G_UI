@@ -7,6 +7,10 @@ namespace G_APIs.Models
 {
     public class PaymentLinkRequest
     {
+        public long? UserId { get; set; }
+        public long? WalletId { get; set; }
+        public long? WallectCurrencyId { get; set; }
+
         public string  Title { get; set; }
 
         public long? Price { get; set; }

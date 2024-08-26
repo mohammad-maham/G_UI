@@ -221,9 +221,14 @@ namespace G_APIs.Controllers
                     }
                  };
 
+                var wc = _fund.GetWallet(new Wallet { UserId = user.Id });
+
+                model.UserId= user.Id;
+                model.WalletId = wc.WalletId;
+                model.WallectCurrencyId = wc.WalletCurrencyId;
                 model.Price = factorItems.Sum(x => x.ItemUnitPrice * x.ItemCount);
                 model.ExpDate = DateTime.Now.AddMinutes(15);
-                model.OrderId = user.Id.ToString();
+                model.OrderId = Guid.NewGuid().ToString().Substring(1,10); 
 
                 var factorFooter = new FactorFooter
                 {
@@ -239,10 +244,9 @@ namespace G_APIs.Controllers
                     Header = factorHeader,
                     Items = factorItems,
                     Footer = factorFooter
-
                 };
 
-                model.CallBackURL = ConfigurationManager.AppSettings["CallBackURL"];
+                //model.CallBackURL = ConfigurationManager.AppSettings["CallBackURL"];
                 //return  Json(JsonConvert.SerializeObject(model));
                 var res = _fund.Deposit(model);
 
