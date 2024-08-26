@@ -19,16 +19,26 @@
             @Html.HiddenFor(x => x.ThresholdCurrentPrice)
             <div class="row">
                 <div class="col-md-6 prices">
-                    @Html.EditorFor(x => x.ThresholdBuyPrice)
-                    @Html.EditorFor(x => x.ThresholdSellPrice)
+                    @Html.EditorFor(x => x.ThresholdBuyPrice, new { HtmlAttributes = new { inputGroup = "ریال" } })
+                    @Html.EditorFor(x => x.ThresholdSellPrice, new { HtmlAttributes = new { inputGroup = "ريال" } })
                 </div>
                 <div class="col-md-6 percentages">
-                    @Html.EditorFor(x => x.ThresholdBuyPercentage)
-                    @Html.EditorFor(x => x.ThresholdSellPercentage)
+                    @Html.EditorFor(x => x.ThresholdBuyPercentage, new { HtmlAttributes = new { inputGroup = "%" } })
+                    @Html.EditorFor(x => x.ThresholdSellPercentage, new { HtmlAttributes = new { inputGroup = "%" } })
                 </div>
                 <div class="col-md-6">
+                    <div class="col-auto">
+                        <label for="@(nameof(Model.ThresholdExpireDate))">زمان انقضاء</label>
+                        <div class="mb-3">
+                            <input id="@(nameof(Model.ThresholdExpireDate))" class="form-control text-righ touch-time" mbsc-input data-label-style="stacked" data-input-style="box">
+                        </div>
+                    </div>
                     <div class="col-auto mt-3">
-                        @Html.EditorFor(x => x.ThresholdExpireDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", min = "today" } })
+                        <label for="@(nameof(Model.ThresholdExpireDate))">زمان انقضاء</label>
+                        <div class="form-group">
+                            <input id="@(nameof(Model.ThresholdExpireDate))" class="touch-time" mbsc-input data-label-style="stacked" data-input-style="box" />
+                            @*@Html.EditorFor(x => x.ThresholdExpireDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", min = "today" } })*@
+                        </div>
                     </div>
                     <div class="col-auto">
                         <label for="@(nameof(Model.IsPercentage))">محاسبه بصورت درصد</label>
@@ -51,7 +61,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    @Html.EditorFor(x => x.CurrentPrice)
+                    @Html.EditorFor(x => x.CurrentPrice, new { HtmlAttributes = new { required = true, inputGroup = "ريال" } })
                 </div>
             </div>
             <div class="submit-result">
@@ -94,9 +104,12 @@
         <hr />
         <div class="row">
             <div class="col-md-6">
-                <label for="ThresholdCurrentPrice">قیمت آنلاین من</label>
-                <div class="mb-3">
-                    <input name="@nameof(Model.ThresholdCurrentPrice)" type="text" class="form-control text-right" value="@currentThresholdPrice" aria-describedby="ThresholdCurrentPrice-addon">
+                <label for="@nameof(Model.ThresholdCurrentPrice)">قیمت آنلاین من</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="@nameof(Model.ThresholdCurrentPrice)-addon">ريال</span>
+                    </div>
+                    <input name="@nameof(Model.ThresholdCurrentPrice)" type="text" class="form-control text-right" value="@currentThresholdPrice" aria-describedby="@nameof(Model.ThresholdCurrentPrice)-addon">
                 </div>
             </div>
         </div>

@@ -952,6 +952,8 @@
     <Content Include="Content\plugins\table\datatable\dt-global_style.css" />
     <Content Include="Content\plugins\tagInput\tags-input.css" />
     <Content Include="Content\plugins\tagInput\tags-input.js" />
+    <Content Include="Content\plugins\touch-slider\css\mobiscroll.jquery.min.css" />
+    <Content Include="Content\plugins\touch-slider\js\mobiscroll.jquery.min.js" />
     <Content Include="Content\plugins\treeview\custom-jstree.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -1154,6 +1156,8 @@
     <Content Include="Content\sass\plugins\table\datatable\dt-global_style-dark.scss" />
     <Content Include="Content\sass\plugins\table\datatable\dt-global_style.scss" />
     <Content Include="Content\sass\plugins\tagInput\tags-input.scss" />
+    <Content Include="Content\plugins\touch-slider\css\icons_mobiscroll.ttf" />
+    <Content Include="Content\plugins\touch-slider\css\icons_mobiscroll.woff" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

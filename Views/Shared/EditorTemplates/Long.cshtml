@@ -16,7 +16,7 @@
             errorMessage = requiredAttribute.ErrorMessage;
         }
     }
-    var defaultHtmlAttributesObject = new { type = "number", @class = "form-control", required };
+    var defaultHtmlAttributesObject = new { type = "number", @class = "form-control" };
     var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
     var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
 }
@@ -27,7 +27,7 @@
         <label for="@propertyName">@displayName</label>
         <div class="input-group mb-2">
             <div class="input-group-prepend">
-                <div class="input-group-text">IR</div>
+                <div class="input-group-text">@(htmlAttributes["inputGroup"].ToString())</div>
             </div>
             @Html.TextBoxFor(m => m, ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes)
             @if (required != null)
