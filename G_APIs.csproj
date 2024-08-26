@@ -222,6 +222,7 @@
     <Compile Include="BussinesLogic\Interface\IDashboard.cs" />
     <Compile Include="BussinesLogic\Interface\IFund.cs" />
     <Compile Include="BussinesLogic\Interface\IReports.cs" />
+    <Compile Include="BussinesLogic\Interface\ISettings.cs" />
     <Compile Include="BussinesLogic\Interface\IStore.cs" />
     <Compile Include="BussinesLogic\Reports.cs" />
     <Compile Include="BussinesLogic\SessionManager.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="BussinesLogic\Interface\IAccount.cs" />
     <Compile Include="BussinesLogic\Interface\ISession.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="BussinesLogic\Settings.cs" />
     <Compile Include="BussinesLogic\Store.cs" />
     <Compile Include="Common\Captcha.cs" />
     <Compile Include="Common\GoldAccessibilityAuth.cs" />
@@ -1219,6 +1221,7 @@
     <Content Include="Views\Store\RepositoryReportIndexData.cshtml" />
     <Content Include="Views\Shared\_AuthMiddleware.cshtml" />
     <Content Include="Views\Settings\ThresholdPriceManagementIndex.cshtml" />
+    <Content Include="Views\Settings\SubmitThreshold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

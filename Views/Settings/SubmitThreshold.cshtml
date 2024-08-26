@@ -1,0 +1,19 @@
+﻿@using G_APIs.Models.ComponentModels
+@using G_APIs.Models
+@model AmountThresholdVM
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Id != 0)
+{
+    @Html.Partial("_GoldAlert", new GoldAlert
+    {
+        AlertContentTexts = new List<string> { $"عملیات با موفقیت انجام یافت" },
+        AlertTitleIcon = "fa fa-check-square-o fa-xl",
+        AlertTitleText = "ثبت موفق",
+        AlertType = GoldAlertTypes.Success,
+    })
+}
+
+@Html.Partial("_UI")

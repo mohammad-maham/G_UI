@@ -23,6 +23,11 @@
     if (htmlAttributes != null && htmlAttributes.ContainsKey("type") && htmlAttributes["type"].ToString() == "gold-date")
     {
         htmlAttributes.Add("data-jdp", "");
+
+        if (htmlAttributes.ContainsKey("min") && !string.IsNullOrEmpty(htmlAttributes["min"].ToString()))
+        {
+            htmlAttributes.Add("data-jdp-min-date", htmlAttributes["min"].ToString());
+        }
     }
     displayName = displayName ?? htmlAttributes["DisplayName"].ToString();
 }
