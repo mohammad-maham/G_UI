@@ -28,17 +28,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col-auto">
-                        <label for="@(nameof(Model.ThresholdExpireDate))">زمان انقضاء</label>
-                        <div class="mb-3">
-                            <input id="@(nameof(Model.ThresholdExpireDate))" class="form-control text-righ touch-time" mbsc-input data-label-style="stacked" data-input-style="box">
-                        </div>
-                    </div>
-                    <div class="col-auto mt-3">
-                        <label for="@(nameof(Model.ThresholdExpireDate))">زمان انقضاء</label>
-                        <div class="form-group">
-                            <input id="@(nameof(Model.ThresholdExpireDate))" class="touch-time" mbsc-input data-label-style="stacked" data-input-style="box" />
-                            @*@Html.EditorFor(x => x.ThresholdExpireDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", min = "today" } })*@
-                        </div>
+                        @Html.EditorFor(x => x.ThresholdExpireDate, new { HtmlAttributes = new { @class = "time-clock text-center" } })
                     </div>
                     <div class="col-auto">
                         <label for="@(nameof(Model.IsPercentage))">محاسبه بصورت درصد</label>
@@ -71,13 +61,6 @@
                     AlertTitleIcon = "fa fa-bolt fa-xl",
                     AlertTitleText = "نکته",
                     AlertType = GoldAlertTypes.Warning,
-                })
-                @Html.Partial("_GoldAlert", new GoldAlert
-                {
-                    AlertContentTexts = new List<string> { "در صورت عدم ثبت تاریخ انقضاء، قیمت مربوطه بصورت روزانه (24 ساعت) معتبر خواهد بود" },
-                    AlertTitleIcon = "fa fa-bolt fa-xl",
-                    AlertTitleText = "نکته",
-                    AlertType = GoldAlertTypes.Info,
                 })
             </div>
             <div class="col-auto field-wrapper command-panel">

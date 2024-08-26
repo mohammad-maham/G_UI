@@ -19,7 +19,7 @@ namespace G_APIs.Models
         public double? ThresholdSellPrice { get; set; }
         [Display(Name = "درصد/قیمت")]
         public int IsPercentage { get; set; }
-        [Display(Name = "تاریخ انقضاء قیمت")]
+        [Display(Name = "ساعت انقضاء قیمت")]
         public string ThresholdExpireDate { get; set; }
         [Display(Name = "قیمت پایه من"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public double CurrentPrice { get; set; } = 1;

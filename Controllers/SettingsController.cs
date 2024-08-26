@@ -73,7 +73,7 @@ namespace G_APIs.Controllers
                         thresholds.ThresholdBuyPrice = (thresholds.ThresholdBuyPercentage / 100d);
                         thresholds.ThresholdSellPrice = (thresholds.ThresholdSellPercentage / 100d);
                     }
-                    string convertedDate = DateTime.Parse(thresholds.ThresholdExpireDate, CultureInfo.GetCultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59Z");
+                    string convertedDate = DateTime.Now.ToString($"yyyy-MM-ddT{thresholds.ThresholdExpireDate}:00Z");
                     // Filling API Model
                     amount.BuyThreshold = thresholds.ThresholdBuyPrice.Value;
                     amount.SelThreshold = thresholds.ThresholdSellPrice.Value;

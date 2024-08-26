@@ -24,7 +24,7 @@
     <link href="~/Content/assets/css/elements/infobox.css" rel="stylesheet" />
     <link href="~/Content/assets/css/forms/switches.css" rel="stylesheet" />
     <link href="~/Content/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" />
-    <link href="~/Content/plugins/touch-slider/css/mobiscroll.jquery.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/fancy-clock-time-picker/timedropper.min.css" rel="stylesheet" />
     @*<link href="~/Conten/assets/css/plugins.css" rel="stylesheet" type="text/css" />*@
 
     @*----------------- JS ------------------------------------*@
@@ -36,7 +36,7 @@
     <script src="~/Content/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="~/Content/assets/js/app.js"></script>
     <script src="~/Content/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-    <script src="~/Content/plugins/touch-slider/js/mobiscroll.jquery.min.js"></script>
+    <script src="~/Content/plugins/fancy-clock-time-picker/timedropper.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -99,12 +99,17 @@
 </html>
 
 <script>
-    $('.touch-time').mobiscroll().datepicker({
-        //theme: 'ios',
-        themeVariant: 'light',
-        controls: ['time'],
-        timeFormat: 'HH:mm:ss',
-        headerText: 'Time: {value}',
-        touchUi: true
+    $(".time-clock").timeDropper({
+        format: 'HH:mm',
+        autoswitch: true,
+        meridians: false,
+        mousewheel: true,
+        setCurrentTime: true,
+        init_animation: "dropDown",
+        minutesSteps: 5,
+        primaryColor: "#5C1AC3",
+        borderColor: "#5C1AC3",
+        backgroundColor: "#FFF",
+        textColor: '#999'
     });
 </script>
