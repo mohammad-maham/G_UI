@@ -1,0 +1,145 @@
+﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
+@model List<UsersList>
+@{
+    Layout = null;
+}
+
+@using (Html.Box(title: "نتیجه جستجو", col: 12, iconType: BoxIconTypes.grid))
+{
+    <table id="rptUsers" class="datatable table table-hover non-hover table-striped" style="width:100%">
+        <thead class="">
+            <tr>
+                <th>#</th>
+                <th>نام کاربری</th>
+                <th>کاربر</th>
+                <th>کد ملی</th>
+                <th>نام پدر</th>
+                <th>موبایل</th>
+                <th>تاریخ تولد</th>
+                <th>وضعیت کاربر</th>
+                <th>سطح دسترسی</th>
+                <th>تاریخ ثبت نام</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                int index = 0;
+                foreach (UsersList item in Model)
+                {
+                    <tr class="table-default">
+                        <td>@(++index)</td>
+                        <td>@(item.Username??"-")</td>
+                        <td>@(!string.IsNullOrEmpty(item.Firstname) && !string.IsNullOrEmpty(item.Lastname)? item.Firstname + " " + item.Lastname:"-")</td>
+                        <td>@(item.NationalCode)</td>
+                        <td>@(item.Fathername??"-")</td>
+                        <td>@(item.Mobile)</td>
+                        <td>@(item.Birthday)</td>
+                        <td class="">
+                            <span class="badge @(new List<int>{1,2,3 }.Contains(item.StatusId.Value)?"badge-success":"badge-warning")">@(item.Status)</span>
+                        </td>
+                        <td>@(item.Role)</td>
+                        <td class="ltr">@(item.RegDate)</td>
+                        <td class="text-center">
+                            <div class="dropdown custom-dropdown">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink5" style="will-change: transform;">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="loadUserRoleChangeScreen(@item.UserId)">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                <line x1="4" x2="4" y1="21" y2="14" />
+                                                <line x1="4" x2="4" y1="10" y2="3" />
+                                                <line x1="12" x2="12" y1="21" y2="12" />
+                                                <line x1="12" x2="12" y1="8" y2="3" />
+                                                <line x1="20" x2="20" y1="21" y2="16" />
+                                                <line x1="20" x2="20" y1="12" y2="3" />
+                                                <line x1="1" x2="7" y1="14" y2="14" />
+                                                <line x1="9" x2="15" y1="8" y2="8" />
+                                                <line x1="17" x2="23" y1="16" y2="16" />
+                                            </svg>
+                                        </span> &#x2022; تغییر سطح دسترسی
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0);">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                <polyline points="17 1 21 5 17 9" />
+                                                <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+                                                <polyline points="7 23 3 19 7 15" />
+                                                <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+                                            </svg>
+                                        </span> &#x2022; تغییر وضعیت
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td class="table-no-data text-center" colspan="11">داده یافت نشد</td></tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+<div class="modals-response"></div>
+
+<script>
+    GetCookie = (name) => {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+    loadUserStatusChangeScreen = (id) => {
+        $.ajax({
+            type: "GET",
+            beforeSend: function (xhr) {
+                var auth = GetCookie('gldauth');
+                if (auth != null)
+                    xhr.setRequestHeader('Authorization', auth);
+            },
+            async: false,
+            url: "/Account/UpdateUserStatusIndex",
+            data: { userId: id },
+            success: function (viewHTML) {
+                $('.modals-response').empty();
+                $('.modals-response').html(viewHTML);
+                var modal = $('#mdlChangeUserStatus');
+                if (modal.length > 0) {
+                    $('#mdlChangeUserStatus').modal('show');
+                }
+            },
+            error: function (errorData) { }
+        });
+    }
+    loadUserRoleChangeScreen = (id) => {
+        $.ajax({
+            type: "GET",
+            beforeSend: function (xhr) {
+                var auth = GetCookie('gldauth');
+                if (auth != null)
+                    xhr.setRequestHeader('Authorization', auth);
+            },
+            async: false,
+            url: "/Account/ChangeUserRoleIndex",
+            data: { userId: id },
+            success: function (viewHTML) {
+                $('.modals-response').empty();
+                $('.modals-response').html(viewHTML);
+                var modal = $('#mdlChangeUserRole');
+                if (modal.length > 0) {
+                    $('#mdlChangeUserRole').modal('show');
+                }
+            },
+            error: function (errorData) { }
+        });
+    }
+</script>
+
+@Html.Partial("_LayoutReport")

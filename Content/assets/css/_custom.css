@@ -161,3 +161,7 @@ input[type="number"] {
     align-content: center;
     align-items: center;
 }
+
+.ltr {
+    direction: ltr !important;
+}

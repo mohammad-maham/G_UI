@@ -1226,6 +1226,10 @@
     <Content Include="Views\Shared\_AuthMiddleware.cshtml" />
     <Content Include="Views\Settings\ThresholdPriceManagementIndex.cshtml" />
     <Content Include="Views\Settings\SubmitThreshold.cshtml" />
+    <Content Include="Views\Account\UsersManagementIndex.cshtml" />
+    <Content Include="Views\Account\UsersManagementIndexData.cshtml" />
+    <Content Include="Views\Account\UpdateUserStatusIndex.cshtml" />
+    <Content Include="Views\Account\ChangeUserRoleIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

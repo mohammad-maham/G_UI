@@ -58,8 +58,48 @@ namespace G_APIs.Models
         public string FatherName { get; set; }
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }
-
         public double BuyPrice { get; set; }
         public double SellPrice { get; set; }
+    }
+
+
+    public class UsersList
+    {
+        public long? UserId { get; set; }
+        public string Username { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Role { get; set; }
+        public long? RoleId { get; set; }
+        public string Status { get; set; }
+        public int? StatusId { get; set; }
+        public string RegDate { get; set; }
+        public long? Mobile { get; set; }
+        public long? NationalCode { get; set; }
+        public string Fathername { get; set; }
+        public string Birthday { get; set; }
+        [Display(Name = "از تاریخ")]
+        public string FromDate { get; set; }
+        public DateTime? FromRegDate { get; set; }
+        [Display(Name = "تا تاریخ")]
+        public string ToDate { get; set; }
+        public DateTime? ToRegDate { get; set; }
+        public long? Roles { get; set; }
+    }
+
+    public class UserRole
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public short Status { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class UsersReportFilterVM
+    {
+        public long? RoleId { get; set; }
+        public long? NationalCode { get; set; }
+        public DateTime? FromRegDate { get; set; }
+        public DateTime? ToRegDate { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -66,10 +67,45 @@ namespace G_APIs.BussinesLogic
             }
             catch (Exception)
             {
-
                 throw;
             }
             return users;
+        }
+
+        public List<UsersList> GetUsersList(UsersReportFilterVM users, string token)
+        {
+            List<UsersList> usersList = new List<UsersList>();
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Accounting, "/api/Reports/GetUsers", users, authorization: token).Post();
+                if (response != null && response.StatusCode == 200 && !string.IsNullOrEmpty(response.Data))
+                {
+                    usersList = JsonConvert.DeserializeObject<List<UsersList>>(response.Data);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return usersList;
+        }
+
+        public List<UserRole> GetUserRoles(string token)
+        {
+            List<UserRole> userRoles = new List<UserRole>();
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Accounting, "/api/User/GetRoles", new { }, authorization: token).Post();
+                if (response != null && response.StatusCode == 200 && !string.IsNullOrEmpty(response.Data))
+                {
+                    userRoles = JsonConvert.DeserializeObject<List<UserRole>>(response.Data);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return userRoles;
         }
     }
 }

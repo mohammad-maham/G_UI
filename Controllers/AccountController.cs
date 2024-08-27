@@ -3,6 +3,9 @@ using G_APIs.Common;
 using G_APIs.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -322,5 +325,86 @@ namespace G_APIs.Controllers
             }
             return view;
         }
+
+        #region UserManagement
+        [GoldAuthorize]
+        public ActionResult UsersManagementIndex(UsersList users)
+        {
+            List<UserRole> roles = new List<UserRole>();
+            List<SelectListItem> lstRolesSelect = new List<SelectListItem>();
+            string token = Request.Cookies["gldauth"].Value;
+
+            roles = _account.GetUserRoles(token);
+
+            if (roles.Count > 0)
+            {
+                foreach (UserRole role in roles)
+                    lstRolesSelect.Add(new SelectListItem() { Text = role.Description, Value = role.Id.ToString() });
+            }
+            ViewBag.Roles = lstRolesSelect;
+            return View(users);
+        }
+
+        public ActionResult UsersManagementIndexData(UsersList users)
+        {
+            UsersReportFilterVM filterVM = new UsersReportFilterVM();
+            string token = Request.Headers["Authorization"].ToString();
+
+            List<UsersList> usersLists = new List<UsersList>();
+            if (users != null)
+            {
+                if (!string.IsNullOrEmpty(users.FromDate))
+                {
+                    string from = DateTime.Parse(users.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00Z");
+                    users.FromRegDate = DateTime.Parse(from).ToUniversalTime();
+                }
+                if (!string.IsNullOrEmpty(users.ToDate))
+                {
+                    string to = DateTime.Parse(users.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59Z");
+                    users.ToRegDate = DateTime.Parse(to).ToUniversalTime();
+                }
+
+                filterVM.RoleId = users.Roles;
+                filterVM.FromRegDate = users.FromRegDate;
+                filterVM.ToRegDate = users.ToRegDate;
+                filterVM.NationalCode = users.NationalCode;
+                usersLists = _account.GetUsersList(filterVM, token).OrderBy(x => x.RegDate).ToList();
+            }
+            return View(usersLists);
+        }
+
+        public ActionResult UpdateUserStatusIndex(long userId)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUserStatus(long userId)
+        {
+            return View();
+        }
+
+        public ActionResult ChangeUserRoleIndex(long userId)
+        {
+            List<UserRole> roles = new List<UserRole>();
+            List<SelectListItem> lstRolesSelect = new List<SelectListItem>();
+            string token = Request.Cookies["gldauth"].Value;
+
+            roles = _account.GetUserRoles(token);
+            if (roles.Count > 0)
+            {
+                foreach (UserRole role in roles)
+                    lstRolesSelect.Add(new SelectListItem() { Text = role.Description, Value = role.Id.ToString() });
+            }
+            ViewBag.Roles = lstRolesSelect;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeUserRole(long userId)
+        {
+            return View();
+        }
+        #endregion UserManagement
     }
 }

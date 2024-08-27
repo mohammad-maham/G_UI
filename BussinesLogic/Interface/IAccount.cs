@@ -13,5 +13,7 @@ namespace G_APIs.BussinesLogic.Interface
         ApiResult GetUserInfo(User model, string token);
         ApiResult ForgotPassword(User model);
         List<GetUsersVM> GetUsers(string token);
+        List<UsersList> GetUsersList(UsersReportFilterVM users, string token);
+        List<UserRole> GetUserRoles(string token);
     }
 }
