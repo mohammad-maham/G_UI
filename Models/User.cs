@@ -85,6 +85,7 @@ namespace G_APIs.Models
         public string ToDate { get; set; }
         public DateTime? ToRegDate { get; set; }
         public long? Roles { get; set; }
+        public int? Statuses { get; set; }
     }
 
     public class UserRole
@@ -93,6 +94,13 @@ namespace G_APIs.Models
         public string Name { get; set; }
         public short Status { get; set; }
         public string Description { get; set; }
+    }
+
+    public class UserStatus
+    {
+        public short Id { get; set; }
+        public string Name { get; set; }
+        public string Caption { get; set; }
     }
 
     public class UsersReportFilterVM

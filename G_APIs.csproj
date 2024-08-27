@@ -1230,6 +1230,7 @@
     <Content Include="Views\Account\UsersManagementIndexData.cshtml" />
     <Content Include="Views\Account\UpdateUserStatusIndex.cshtml" />
     <Content Include="Views\Account\ChangeUserRoleIndex.cshtml" />
+    <Content Include="Views\Shared\_ModalLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,7 +1,6 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
-using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ namespace G_APIs.BussinesLogic
 {
     public class Account : IAccount
     {
-
         public ApiResult Login(User model)
         {
             ApiResult res = new GoldApi(GoldHost.Accounting, "/api/User/SignIn", model).Post();
@@ -106,6 +104,36 @@ namespace G_APIs.BussinesLogic
                 throw;
             }
             return userRoles;
+        }
+
+        public ApiResult UpdateUserStatus(UsersList users, string token)
+        {
+            ApiResult response = new GoldApi(GoldHost.Accounting, "/api/User/UpdateUserStatus", users, authorization: token).Post();
+            return response;
+        }
+
+        public ApiResult ChangeUserRole(UsersList users, string token)
+        {
+            ApiResult response = new GoldApi(GoldHost.Accounting, "/api/User/ChangeUserRole", users, authorization: token).Post();
+            return response;
+        }
+
+        public List<UserStatus> GetUserStatuses(string token)
+        {
+            List<UserStatus> userStatuses = new List<UserStatus>();
+            try
+            {
+                ApiResult response = new GoldApi(GoldHost.Accounting, "/api/User/GetStatuses", new { }, authorization: token).Post();
+                if (response != null && response.StatusCode == 200 && !string.IsNullOrEmpty(response.Data))
+                {
+                    userStatuses = JsonConvert.DeserializeObject<List<UserStatus>>(response.Data);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return userStatuses;
         }
     }
 }

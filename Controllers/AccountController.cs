@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -375,13 +376,33 @@ namespace G_APIs.Controllers
 
         public ActionResult UpdateUserStatusIndex(long userId)
         {
+            List<UserStatus> statuses = new List<UserStatus>();
+            List<SelectListItem> lstStatusesSelect = new List<SelectListItem>();
+            string token = Request.Cookies["gldauth"].Value;
+
+            statuses = _account.GetUserStatuses(token);
+            if (statuses.Count > 0)
+            {
+                foreach (UserStatus status in statuses)
+                    lstStatusesSelect.Add(new SelectListItem() { Text = status.Caption, Value = status.Id.ToString() });
+            }
+            ViewBag.Statuses = lstStatusesSelect;
             return View();
         }
 
         [HttpPost]
-        public ActionResult UpdateUserStatus(long userId)
+        public ActionResult UpdateUserStatus(UsersList users)
         {
-            return View();
+            string token = Request.Cookies["gldauth"].Value;
+            if (users != null && users.UserId != 0 && users.Statuses != 0)
+            {
+                ApiResult result = _account.UpdateUserStatus(users, token);
+                if (result != null)
+                {
+                    return Json(new { result = result.StatusCode, message = result.Message });
+                }
+            }
+            return Json(new { result = false, message = "عملیات با مشکل مواجه شد" });
         }
 
         public ActionResult ChangeUserRoleIndex(long userId)
@@ -401,9 +422,18 @@ namespace G_APIs.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeUserRole(long userId)
+        public ActionResult ChangeUserRole(UsersList users)
         {
-            return View();
+            string token = Request.Cookies["gldauth"].Value;
+            if (users != null && users.UserId != 0 && users.Statuses != 0)
+            {
+                ApiResult result = _account.ChangeUserRole(users, token);
+                if (result != null)
+                {
+                    return Json(new { result = result.StatusCode, message = result.Message });
+                }
+            }
+            return Json(new { result = false, message = "عملیات با مشکل مواجه شد" });
         }
         #endregion UserManagement
     }

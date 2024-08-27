@@ -15,5 +15,8 @@ namespace G_APIs.BussinesLogic.Interface
         List<GetUsersVM> GetUsers(string token);
         List<UsersList> GetUsersList(UsersReportFilterVM users, string token);
         List<UserRole> GetUserRoles(string token);
+        List<UserStatus> GetUserStatuses(string token);
+        ApiResult UpdateUserStatus(UsersList users, string token);
+        ApiResult ChangeUserRole(UsersList users, string token);
     }
 }
