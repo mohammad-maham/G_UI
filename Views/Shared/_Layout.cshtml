@@ -25,6 +25,8 @@
     <link href="~/Content/assets/css/forms/switches.css" rel="stylesheet" />
     <link href="~/Content/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" />
     <link href="~/Content/plugins/fancy-clock-time-picker/timedropper.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/jalali-datepicker/jalalidatepicker.min.css" rel="stylesheet" />
+
     @*<link href="~/Conten/assets/css/plugins.css" rel="stylesheet" type="text/css" />*@
 
     @*----------------- JS ------------------------------------*@
@@ -37,6 +39,7 @@
     <script src="~/Content/assets/js/app.js"></script>
     <script src="~/Content/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
     <script src="~/Content/plugins/fancy-clock-time-picker/timedropper.min.js"></script>
+    <script src="~/Content/plugins/jalali-datepicker/jalalidatepicker.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -111,5 +114,11 @@
         borderColor: "#5C1AC3",
         backgroundColor: "#FFF",
         textColor: '#999'
+    });
+    jalaliDatepicker.startWatch({
+        persianDigits: true,
+        zIndex: 999999999999,
+        autoReadOnlyInput: true,
+        minDate: 'attr'
     });
 </script>
