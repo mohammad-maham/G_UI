@@ -396,6 +396,7 @@ namespace G_APIs.Controllers
             string token = Request.Cookies["gldauth"].Value;
             if (users != null && users.UserId != 0 && users.Statuses != 0)
             {
+                users.Status = users.Statuses.ToString();
                 ApiResult result = _account.UpdateUserStatus(users, token);
                 if (result != null)
                 {
@@ -427,10 +428,11 @@ namespace G_APIs.Controllers
             string token = Request.Cookies["gldauth"].Value;
             if (users != null && users.UserId != 0 && users.Statuses != 0)
             {
+                users.RoleId = users.Roles;
                 ApiResult result = _account.ChangeUserRole(users, token);
                 if (result != null)
                 {
-                    return Json(new { result = result.StatusCode, message = result.Message });
+                    return Json(new { result = result.StatusCode, message = result.Message ?? "عملیات با مشکل مواجه شد" });
                 }
             }
             return Json(new { result = false, message = "عملیات با مشکل مواجه شد" });

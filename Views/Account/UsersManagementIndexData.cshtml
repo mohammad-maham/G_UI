@@ -13,7 +13,7 @@
                 <th>#</th>
                 <th>نام کاربری</th>
                 <th>کاربر</th>
-                <th>کد ملی</th>
+                <th>کد ملی/شناسه کاربری</th>
                 <th>نام پدر</th>
                 <th>موبایل</th>
                 <th>تاریخ تولد</th>
@@ -33,12 +33,12 @@
                         <td>@(++index)</td>
                         <td>@(item.Username??"-")</td>
                         <td>@(!string.IsNullOrEmpty(item.Firstname) && !string.IsNullOrEmpty(item.Lastname)? item.Firstname + " " + item.Lastname:"-")</td>
-                        <td>@(item.NationalCode)</td>
+                        <td class="text-primary font-weight-bold text-center">@(item.NationalCode)</td>
                         <td>@(item.Fathername??"-")</td>
                         <td>@(item.Mobile)</td>
                         <td>@(item.Birthday)</td>
                         <td class="">
-                            <span class="badge @(new List<int>{1,2,3 }.Contains(item.StatusId.Value)?"badge-success":"badge-warning")">@(item.Status)</span>
+                            <span class="badge @(new List<int>{1,2,3 }.Contains(item.StatusId.Value)?"badge-success":"badge-secondary")">@(item.Status)</span>
                         </td>
                         <td>@(item.Role)</td>
                         <td class="ltr">@(item.RegDate)</td>

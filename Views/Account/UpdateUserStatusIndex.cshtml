@@ -27,7 +27,7 @@
                     <div class="result"></div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" data-dismiss="modal">انصراف</button>
+                    <button class="btn btn-danger" data-dismiss="modal">بستن</button>
                     @Html.Partial("_GoldButton", new GoldButton()
                     {
                         ButtonType = GoldButtonTypes.submit,
@@ -52,6 +52,11 @@
         blockui: true,
         mixin: true,
         target: ".result",
-        success: function (data) { }
+        success: function (data) {
+            if (data && data.result) {
+                $('#mdlChangeUserStatus').modal('hide');
+                $('#btnSearch').trigger('click');
+            }
+        }
     });
 </script>
