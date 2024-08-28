@@ -1,7 +1,7 @@
 ﻿
 @using G_APIs.Models
 @using G_APIs.Models.ComponentModels
-@model  WalletCurrency
+@model  G_APIs.Model.FilterVM
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
@@ -10,10 +10,43 @@
     Description = "گزارش تمام پرداخت های کاربر  "
 })
 
-
 <div class="row gold-row">
-    @using (Html.Box(title: "   لیست پرداخت ها      ", col: 12))
+    @using (Html.Box(col: 12, title: "جستجو", iconType: BoxIconTypes.search))
     {
-        @Html.Action("GetTransactions", "Fund", new Transaction() { TransactionTypeId = 3 })
+        <form   class="frmDepositForm" id="frmDepositForm" action="javascript:void(0);" novalidate>
+            <input type="hidden" name="TransactionTypeId" value="3" />
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", required = true } })
+                </div>
+                <div class="col-md-3">
+                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", required = true } })
+                </div>
+            </div>
+            <div class="col-auto field-wrapper command-panel">
+                @Html.Partial("_GoldButton", new GoldButton()
+           {
+               ButtonType = GoldButtonTypes.submit,
+               Name = "btnSearch",
+               Icon = "fa fa-search fa-1x",
+               Class = "btn btn-primary",
+               Text = "جستجو"
+           })
+            </div>
+        </form>
     }
 </div>
+
+<div class="report-result"></div>
+
+<script>
+    $('#frmDepositForm').ajaxForm({
+        validation: true,
+        url: '/Fund/GetTransactions',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+        target: ".report-result",
+        success: function (data) { }
+    });
+</script>

@@ -165,3 +165,10 @@ input[type="number"] {
 .ltr {
     direction: ltr !important;
 }
+
+@media only screen and (max-width: 770px) {
+    .xs-hidden {
+        display: none;
+    }
+
+}

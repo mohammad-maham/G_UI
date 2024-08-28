@@ -1,4 +1,5 @@
 ﻿using G_APIs.BussinesLogic.Interface;
+using G_APIs.Model;
 using G_APIs.Models;
 using G_APIs.Services;
 using Microsoft.Owin.Security.Provider;
@@ -6,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -119,7 +121,13 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public ActionResult FinanceMinisterReport()
+        public ActionResult FinanceMinister()
+        {
+            return View();
+        }
+
+        [GoldAuthorize]
+        public ActionResult FinanceMinisterReport(FilterVM model)
         {
             try
             {
@@ -128,8 +136,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<FinancialVM>());
 
-                var res = _fund.GetFinancialReport(new Wallet { UserId = 100000081 })
-                    .OrderBy(x => x.Id).ToList();
+                var res = _fund.GetFinancialReport(model).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -140,7 +147,7 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public ActionResult ExchangeReport()
+        public ActionResult ExchangeReport(FilterVM model)
         {
             try
             {
@@ -149,7 +156,7 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<Xchenger>());
 
-                var res = _fund.GetExchanges(new Wallet { UserId = user.Id });
+                var res = _fund.GetExchanges(model).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -159,18 +166,26 @@ namespace G_APIs.Controllers
             }
         }
 
+        [HttpPost]
         [GoldAuthorize]
-        public ActionResult GetTransactions(Transaction tr)
+        public ActionResult GetTransactions(FilterVM model)
         {
             try
             {
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
-                    return View(new List<Transaction>());
+                    return View(new List<ReportVM>());
 
-                var res = _fund.GetTransactions(new Wallet { UserId = user.Id })
-                    .Where(x => x.TransactionTypeId == tr.TransactionTypeId).OrderBy(x => x.Id).ToList();
+                model.UserId = (int)user.Id;
+
+                if (model.FromDate != null)
+                    model.FromDate = DateTime.Parse(model.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
+
+                if (model.ToDate!= null)
+                    model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
+
+                var res = _fund.GetTransactions(model).OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -223,12 +238,12 @@ namespace G_APIs.Controllers
 
                 var wc = _fund.GetWallet(new Wallet { UserId = user.Id });
 
-                model.UserId= user.Id;
+                model.UserId = user.Id;
                 model.WalletId = wc.WalletId;
                 model.WallectCurrencyId = wc.WalletCurrencyId;
                 model.Price = factorItems.Sum(x => x.ItemUnitPrice * x.ItemCount);
                 model.ExpDate = DateTime.Now.AddMinutes(15);
-                model.OrderId = Guid.NewGuid().ToString().Substring(1,10); 
+                model.OrderId = Guid.NewGuid().ToString().Substring(1, 10);
 
                 var factorFooter = new FactorFooter
                 {

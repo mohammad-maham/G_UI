@@ -252,6 +252,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ComponentModels\BoxIconTypes.cs" />
+    <Compile Include="Models\FilterVM.cs" />
     <Compile Include="Models\FinancialVM.cs" />
     <Compile Include="Models\GetUsersVM.cs" />
     <Compile Include="Models\GoldRepositoryManagementVM.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\OtpInfo.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportVM.cs" />
     <Compile Include="Models\ThresholdsVM.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
@@ -1231,6 +1233,7 @@
     <Content Include="Views\Account\UpdateUserStatusIndex.cshtml" />
     <Content Include="Views\Account\ChangeUserRoleIndex.cshtml" />
     <Content Include="Views\Shared\_ModalLayout.cshtml" />
+    <Content Include="Views\Fund\FinanceMinister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
