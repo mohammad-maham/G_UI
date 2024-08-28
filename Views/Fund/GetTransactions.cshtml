@@ -1,41 +1,75 @@
 ﻿@using G_APIs.Models
-@model List<Transaction>
+@using G_APIs.Models.ComponentModels
+@model IEnumerable<ReportVM>
 @{
     Layout = null;
 }
 
- <table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
+@using (Html.Box(title: "نتیجه گزارش", col: 12, iconType: BoxIconTypes.grid))
+{
+    <table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
         <thead class="">
             <tr>
-                <th>    </th>
-                <th>  نوع ارز </th>
-                <th> مدل تراکنش  </th>
+                <th>#</th>
                 <th> نوع تراکنش  </th>
+                <th>  نوع ارز </th>
                 <th> تاریح  </th>
                 <th>مبلغ  </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var b in Model)
+            @if (Model != null && Model.Count() > 0)
             {
-                <tr class="gra">
-                    <td>@b.Id</td>
-                    <td>@(b.WalletCurrencyId ==1 ?"پول":"طلا")  </td>
-                    <td>@(b.TransactionModeId ==2 ?"آنلاین":"آفلاین")  </td>
-                    <td>@(b.TransactionTypeId ==4 ?"واریز":"برداشت")  </td>
-                    <td style="direction:ltr">@b.PersianDate </td>
-                    <td>@b.Amount </td>
-                </tr>
+                foreach (var item in Model)
+                {
+                    <tr class="@(item.TransactionTypeId==4?"table-info":"table-default")">
+                        <td>@(item.Id)</td>
+                        <td class="">
+                            <div class="d-flex">
+                                @if (item.TransactionTypeId == 3)
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-success" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                            <polyline points="17 6 23 6 23 12" />
+                                        </svg>
+                                    </div>
+
+                                    <p class="align-self-center mb-0 badge  badge-danger">@item.TransactionType</p>
+                                }
+                                else
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-danger" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                                            <polyline points="17 18 23 18 23 12" />
+                                        </svg>
+                                    </div>
+                                    <p class="align-self-center mb-0 badge   badge-success ">@item.TransactionType</p>
+                                }
+                            </div>
+                        </td>
+                        <td>@(item.SourceWalletCurrency)</td>
+                        <td class="ltr">@(item.RepDate)</td>
+                        <td>@(item.Amount.ToString("N0"))  @(item.SourceWalletCurrencyId == 1 ? "ریال" : "گرم")</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td class="table-no-data text-center" colspan="14">داده یافت نشد</td></tr>
             }
         </tbody>
-    </table> 
+    </table>
+}
 
-@*@Html.GridFor(Model,
-    c => c.Id,
-    c => c.PersianDate,
-    c => c.WalletCurrencyId,
-    c => c.TransactionModeId,
-    c => c.TransactionTypeId)*@
+<script>
+    $('td i.primary').tooltip({
+        template: '<div class="tooltip tooltip-success" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',
+        title: "Primary"
+    });
+</script>
 
 
 @Html.Partial("_LayoutReport")

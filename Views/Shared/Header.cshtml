@@ -8,12 +8,13 @@
 <style>
     .badge.price-preview {
         font-size: 15px;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     #buyPrice {
         box-shadow: 0 0 5px #8dbf42;
     }
+
     #sellPrice {
         box-shadow: 0 0 5px #e7515a;
     }
@@ -25,6 +26,7 @@
         .dropdown-item.logout > a > span {
             color: orangered !important;
         }
+
 </style>
 
 <header class="header navbar navbar-expand-sm expand-header">
@@ -32,21 +34,30 @@
 
     <ul class="navbar-item flex-row ml-auto">
 
+
         <li class="nav-item align-self-center search-animated">
-            <a href="@Url.Action("SellIndex","Store")">
-                <span class="badge badge-danger price-preview m-3" id="sellPrice">
-                    قیمت فروش طلا
-                    <span class=" m-1 sell">   @Model.SellPrice.ToString("N0") </span>
-                    ریال
-                </span>
-            </a>
-            <a href="@Url.Action("BuyIndex","Store")">
-                <span class="badge badge-success price-preview m-3" id="buyPrice">
-                    قیمت خرید طلا
-                    <span class=" m-1 buy">   @Model.BuyPrice.ToString("N0") </span>
-                    ریال
-                </span>
-            </a>
+            @if (Model.SellPrice > 0)
+            {
+                <a href="@Url.Action("SellIndex","Store")">
+                    <span class="badge badge-danger price-preview m-3" id="sellPrice">
+                        <span class="xs-hidden">قیمت فروش طلا</span>
+                        <span class=" m-1 sell">   @Model.SellPrice.ToString("N0") </span>
+                        <span class="xs-hidden"> ریال    </span>
+                    </span>
+                </a>
+            }
+            @if (Model.BuyPrice > 0)
+            {
+                <a href="@Url.Action("BuyIndex","Store")">
+                    <span class="badge badge-success price-preview m-3" id="buyPrice">
+                        <span class="xs-hidden">قیمت خرید طلا</span>
+                        <span class=" m-1 buy">   @Model.BuyPrice.ToString("N0") </span>
+                        
+                        <span class="xs-hidden"> ریال    </span>
+
+                    </span>
+                </a>
+            }
         </li>
 
         <li class="nav-item dropdown notification-dropdown mt-1">
@@ -128,7 +139,7 @@
                 calcType: 1,
             },
             success: function (data) {
-           
+
                 if ($.isNumeric(data)) {
 
                     var formattedData = Number(data).toLocaleString('en');

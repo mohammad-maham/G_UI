@@ -1,4 +1,5 @@
-﻿using G_APIs.Models;
+﻿using G_APIs.Model;
+using G_APIs.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,9 +18,9 @@ namespace G_APIs.BussinesLogic.Interface
         IEnumerable<WalletBankAccount> GetBankAccounts(Wallet model);
         ApiResult AddBankAccount(WalletBankAccount model);
         ApiResult ToggleBankCard(WalletBankAccount model);
-        IEnumerable<Transaction> GetTransactions(Wallet model);
-        IEnumerable<FinancialVM> GetFinancialReport(Wallet model);
-        IEnumerable<Xchenger> GetExchanges(Wallet model);
+        IEnumerable<ReportVM> GetTransactions(FilterVM model);
+        IEnumerable<ReportVM> GetFinancialReport(FilterVM model);
+        IEnumerable<ReportVM> GetExchanges(FilterVM model);
 
     }
 }

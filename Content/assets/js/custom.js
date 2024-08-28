@@ -159,4 +159,5 @@ $(function () {
             $(this).parent('div').children(".invalid-feedback.live").css("display", "none");
         }
     });
+
 });

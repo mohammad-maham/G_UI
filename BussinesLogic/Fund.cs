@@ -1,4 +1,5 @@
 ﻿using G_APIs.BussinesLogic.Interface;
+using G_APIs.Model;
 using G_APIs.Models;
 using G_APIs.Services;
 using G_Wallet_API.Common;
@@ -70,24 +71,24 @@ namespace G_APIs.BussinesLogic
             var res = new GoldApi(GoldHost.Wallet, "/api/Fund/ToggleBankCard", model).Post();
             return res;
         }
-        public IEnumerable<Transaction> GetTransactions(Wallet model)
+        public IEnumerable<ReportVM> GetTransactions(FilterVM model)
         {
-            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetTransactions", model).Post();
-            var res = JsonConvert.DeserializeObject<List<Transaction>>(t.Data);
+            var t = new GoldApi("http://localhost:5017/api/Fund/GetTransactions", model).Post();
+            var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }
 
-        public IEnumerable<FinancialVM> GetFinancialReport(Wallet model)
+        public IEnumerable<ReportVM> GetFinancialReport(FilterVM model)
         {
             var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
-            var res = JsonConvert.DeserializeObject<List<FinancialVM>>(t.Data);
+            var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }
 
-        public IEnumerable<Xchenger> GetExchanges(Wallet model)
+        public IEnumerable<ReportVM> GetExchanges(FilterVM model)
         {
             var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetExchanges", model).Post();
-            var res = JsonConvert.DeserializeObject<List<Xchenger>>(t.Data);
+            var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }
     }
