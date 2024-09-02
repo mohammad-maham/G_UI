@@ -120,22 +120,34 @@ namespace G_APIs.Controllers
             return View();
         }
 
-        [GoldAuthorize]
-        public ActionResult FinanceMinister()
+        public ActionResult ExchangeReport()
         {
             return View();
         }
 
         [GoldAuthorize]
-        public ActionResult FinanceMinisterReport(FilterVM model)
+        public ActionResult FinanceMinisterReport()
+        {
+            return View();
+        }
+
+        [GoldAuthorize]
+        public ActionResult GetFinances(FilterVM model)
         {
             try
             {
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
-                    return View(new List<FinancialVM>());
+                    return View(new List<ReportVM>());
 
+                if (model.FromDate != null)
+                    model.FromDate = DateTime.Parse(model.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
+
+                if (model.ToDate != null)
+                    model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
+
+                model.UserId =(int) user.Id;
                 var res = _fund.GetFinancialReport(model).OrderBy(x => x.Id).ToList();
 
                 return View(res);
@@ -146,15 +158,24 @@ namespace G_APIs.Controllers
             }
         }
 
+        [HttpPost]
         [GoldAuthorize]
-        public ActionResult ExchangeReport(FilterVM model)
+        public ActionResult GetExchanges(FilterVM model)
         {
             try
             {
                 var user = _session.Get<User>("UserInfo");
 
                 if (user == null)
-                    return View(new List<Xchenger>());
+                    return View(new List<ReportVM>());
+
+                model.UserId = (int)user.Id;
+
+                if (model.FromDate != null)
+                    model.FromDate = DateTime.Parse(model.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
+
+                if (model.ToDate != null)
+                    model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
 
                 var res = _fund.GetExchanges(model).OrderBy(x => x.Id).ToList();
 
@@ -182,7 +203,7 @@ namespace G_APIs.Controllers
                 if (model.FromDate != null)
                     model.FromDate = DateTime.Parse(model.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
 
-                if (model.ToDate!= null)
+                if (model.ToDate != null)
                     model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
 
                 var res = _fund.GetTransactions(model).OrderBy(x => x.Id).ToList();
@@ -214,6 +235,22 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
+                var wc = _fund.GetWallet(new Wallet { UserId = user.Id });
+                var t = new TransactionVM
+                {
+                    TransactionModeId = (short)TransactionMode.Online,
+                    WalletCurrencyId = wc.WalletCurrencyId,
+                    WalletId = wc.WalletId,
+                    TransactionTypeId = (short)TransactionType.Deposit,
+                    Amount = decimal.Parse(amount)
+                };
+
+                var resTrans = _fund.AddTransaction(t);
+                if (resTrans == null)
+                    return Json(new { result = false, message = "بروز خطا در ثبت تراکنش " });
+
+                var trans = JsonConvert.DeserializeObject<TransactionVM>(resTrans.Data);
+
                 var model = new PaymentLinkRequest();
                 var factorHeader = new FactorHeader
                 {
@@ -236,14 +273,13 @@ namespace G_APIs.Controllers
                     }
                  };
 
-                var wc = _fund.GetWallet(new Wallet { UserId = user.Id });
-
                 model.UserId = user.Id;
                 model.WalletId = wc.WalletId;
                 model.WallectCurrencyId = wc.WalletCurrencyId;
                 model.Price = factorItems.Sum(x => x.ItemUnitPrice * x.ItemCount);
                 model.ExpDate = DateTime.Now.AddMinutes(15);
                 model.OrderId = Guid.NewGuid().ToString().Substring(1, 10);
+                model.TransactionConfirmId = trans.TransactionConfirmId;
 
                 var factorFooter = new FactorFooter
                 {
@@ -261,8 +297,6 @@ namespace G_APIs.Controllers
                     Footer = factorFooter
                 };
 
-                //model.CallBackURL = ConfigurationManager.AppSettings["CallBackURL"];
-                //return  Json(JsonConvert.SerializeObject(model));
                 var res = _fund.Deposit(model);
 
                 if (res.StatusCode == 200)
@@ -342,7 +376,6 @@ namespace G_APIs.Controllers
         public ActionResult DepoResult()
         {
             return View();
-
         }
 
         [GoldAuthorize]
@@ -365,7 +398,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
-        public ActionResult Windrow(WalletCurrency model)
+        public ActionResult Windrow(TransactionVM model)
         {
             try
             {
@@ -388,11 +421,20 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "بروز خطا : کیف پول پیدا نشد." });
 
 
-                if (wc.Amount < model.Amount)
+                if (wc.Amount < (double)model.Amount)
                     return Json(new { result = false, message = "بروز خطا :مقدار درخواستی بیش از موجودی میباشد." });
 
-                wc.Amount = model.Amount;
-                var res = _fund.Windrow(wc);
+                var t = new TransactionVM
+                {
+                    TransactionModeId = (short)TransactionMode.Online,
+                    WalletCurrencyId = wc.CurrencyId,
+                    WalletId = wc.WalletId,
+                    TransactionTypeId = (short)TransactionType.Windrow,
+                    Amount = model.Amount  ,
+                    RequestDescription=model.Description
+                };
+
+                var res = _fund.AddTransaction(t);
 
                 if (res != null)
                 {

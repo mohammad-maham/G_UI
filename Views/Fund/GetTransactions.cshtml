@@ -15,6 +15,7 @@
                 <th>  نوع ارز </th>
                 <th> تاریح  </th>
                 <th>مبلغ  </th>
+                <th>  </th>
             </tr>
         </thead>
         <tbody>
@@ -29,30 +30,67 @@
                                 @if (item.TransactionTypeId == 3)
                                 {
                                     <div class="usr-img-frame mr-2 rounded-circle">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-success" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                                            <polyline points="17 6 23 6 23 12" />
-                                        </svg>
-                                    </div>
-
-                                    <p class="align-self-center mb-0 badge  badge-danger">@item.TransactionType</p>
-                                }
-                                else
-                                {
-                                    <div class="usr-img-frame mr-2 rounded-circle">
-
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-danger" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
                                             <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
                                             <polyline points="17 18 23 18 23 12" />
                                         </svg>
                                     </div>
-                                    <p class="align-self-center mb-0 badge   badge-success ">@item.TransactionType</p>
+                                    <p class="align-self-center mb-0 badge  badge-danger">@item.TransactionType</p>
+
                                 }
+                                else
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-success" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                            <polyline points="17 6 23 6 23 12" />
+                                        </svg>
+                                    </div>
+                                    <p class="align-self-center mb-0 badge   badge-success ">@item.TransactionType</p>
+
+                                }
+
                             </div>
                         </td>
                         <td>@(item.SourceWalletCurrency)</td>
                         <td class="ltr">@(item.RepDate)</td>
-                        <td>@(item.Amount.ToString("N0"))  @(item.SourceWalletCurrencyId == 1 ? "ریال" : "گرم")</td>
+                        <td>@(item.SourceAmount.GetValueOrDefault().ToString("N0"))  @(item.SourceWalletCurrencyId == 1 ? "ریال" : "گرم")</td>
+                        <td>
+                            <p class="align-self-center mb-0 badge pointer  badge-primary" onclick="ShowConfirmInfo(this)">توضیحات</p>
+                            <div class="  hide table-responsive">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th>توضحات کاربر</th>
+                                            <th>توضحات ادمین</th>
+                                            <th>تاریخ  </th>
+                                            <th> وضعیت  </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>@item.RequestDescription</td>
+                                            <td>@item.ResponceDescription</td>
+                                            <td>@item.ConfirmationDate</td>
+                                            <td>
+                                                @if (item.Status <= 0)
+                                                {
+                                                    <p class="align-self-center mb-0 badge pointer  badge-warning">در انتظار بررسی    </p>
+                                                }
+                                                else if (item.Status == 1)
+                                                {
+                                                    <div>
+                                                        <label>اطلاعات پرداخت    </label>
+                                                        <span>@item.TransactionInfo</span>
+                                                    </div>
+                                                }
+                                               
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
                     </tr>
                 }
             }
@@ -65,10 +103,18 @@
 }
 
 <script>
-    $('td i.primary').tooltip({
-        template: '<div class="tooltip tooltip-success" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',
-        title: "Primary"
-    });
+
+    function ShowConfirmInfo(e) {
+        debugger
+        var info = $(e).next().html();
+        swal({
+            title: 'اطلاعات تایید     ',
+            html: info,
+            confirmButtonText: 'تائید',
+            padding: '2em'
+        });
+    }
+
 </script>
 
 

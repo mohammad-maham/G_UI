@@ -16,7 +16,15 @@
 
             @Html.HiddenFor(x => x.WalletId, new { id = "walletId" })
 
-            @Html.EditorFor(x => x.Amount, new { HtmlAttributes = new { @class = "rtl", id = "amount" } })
+            <div class="col-auto">
+                <label for="CurrentCalculatedPrice">  مبلغ</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="CurrentCalculatedPrice-addon">ريال</span>
+                    </div>
+                    <input name="Amount" id="amount" type="text" class="form-control text-right" value="@Model.Amount.ToString("N0")" aria-describedby="CurrentCalculatedPrice-addon">
+                </div>
+            </div>
             @Html.EditorFor(x => x.Description, new { HtmlAttributes = new { id = "description" } })
 
             <hr />
@@ -62,8 +70,7 @@
             console.log(res)
 
             if (res.result) {
-                location.reload();
-                $('input[name="Amount"]').val('');
+                $('input[name="Amount"],input[name="Description"]').val('');
             }
         },
 

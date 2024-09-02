@@ -1,0 +1,142 @@
+﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
+@model IEnumerable<ReportVM>
+@{
+    Layout = null;
+}
+
+@using (Html.Box(title: "نتیجه گزارش", col: 12, iconType: BoxIconTypes.grid))
+{
+    <table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
+        <thead class="">
+            <tr>
+                <th>#</th>
+                <th> نوع تراکنش  </th>
+                <th> تاریح  </th>
+                <th>مقدار مبدا  </th>
+                <th>مقدار مقصد  </th>
+                <th>   </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="@(item.TransactionTypeId==4?"table-info":"table-default")">
+                        <td>@(item.Id)</td>
+                        <td class="">
+                            <div class="d-flex">
+                                @if (item.TransactionTypeId == 3)
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-danger" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                                            <polyline points="17 18 23 18 23 12" />
+                                        </svg>
+                                    </div>
+                                    <p class="align-self-center mb-0 badge  badge-danger">@item.TransactionType</p>
+
+                                }
+                                else if (item.TransactionTypeId == 4)
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-success" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                            <polyline points="17 6 23 6 23 12" />
+                                        </svg>
+                                    </div>
+                                    <p class="align-self-center mb-0 badge   badge-success ">@item.TransactionType</p>
+
+                                }
+                                else if (item.TransactionTypeId == 5)
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg fill="#e2b75a" height="40" width="40" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#e2b75a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M162.256,239.091c-3.207-2.216-7.479-4.234-12.82-6.069v27.474c11.75-0.457,17.628-4.506,17.628-12.136 C167.064,244.395,165.461,241.303,162.256,239.091z"></path> </g> </g> <g> <g> <path d="M122.645,175.556c0,3.817,1.334,6.828,4.009,9.042c2.667,2.219,6.672,4.163,12.016,5.84V162.28 C127.987,163.193,122.645,167.622,122.645,175.556z"></path> </g> </g> <g> <g> <path d="M369.778,156.444c-33.142,0-63.636,11.337-87.818,30.345c-12.435-65.863-70.265-115.678-139.738-115.678 C63.677,71.111,0,134.784,0,213.333s63.677,142.222,142.222,142.222c33.142,0,63.636-11.336,87.818-30.343 c12.434,65.862,70.266,115.676,139.738,115.676c78.547,0,142.222-63.673,142.222-142.222S448.324,156.444,369.778,156.444z M202.782,266.906c-3.059,6.113-7.141,11.103-12.25,14.999c-5.116,3.893-10.991,6.837-17.63,8.814 c-6.642,1.978-13.622,3.127-20.948,3.432v26.561h-15.799v-26.789c-10.53-0.914-20.951-3.048-31.253-6.407 c-10.301-3.355-19.577-7.784-27.817-13.284l16.484-32.741c0.612,0.769,2.25,2.03,4.924,3.777 c2.667,1.761,6.069,3.587,10.187,5.493c4.119,1.919,8.776,3.743,13.965,5.503c5.19,1.752,10.534,3.011,16.027,3.776v-30.45 l-10.99-3.21c-7.481-2.29-13.966-4.772-19.459-7.437c-5.497-2.671-10.041-5.763-13.623-9.27 c-3.587-3.511-6.262-7.561-8.016-12.136c-1.754-4.581-2.634-9.926-2.634-16.031c0-7.935,1.374-14.992,4.124-21.178 c2.746-6.178,6.444-11.477,11.103-15.912c4.654-4.425,10.148-7.893,16.485-10.412c6.33-2.519,13.163-4.159,20.49-4.927v-23.121 h15.798v23.122c9.917,0.92,19.23,3.13,27.93,6.642c8.7,3.516,16.256,7.1,22.667,10.758l-16.484,31.142 c-0.457-0.61-1.796-1.607-4.006-2.985c-2.213-1.37-5.037-2.856-8.471-4.461c-3.436-1.597-7.252-3.127-11.447-4.581 c-4.2-1.451-8.435-2.472-12.706-3.086v31.135l7.324,1.833c7.785,2.138,14.802,4.463,21.065,6.98 c6.255,2.519,11.561,5.649,15.912,9.39c4.351,3.743,7.707,8.277,10.072,13.622c2.367,5.342,3.55,11.756,3.55,19.234 C207.359,253.4,205.834,260.804,202.782,266.906z M430.006,356.543c-4.813,4.736-10.351,8.705-16.613,11.915 c-6.265,3.207-12.911,5.655-19.937,7.332c-7.024,1.681-13.899,2.52-20.621,2.52c-9.014,0-17.455-1.449-25.32-4.353 c-7.869-2.901-14.972-6.797-21.309-11.686c-6.34-4.89-11.915-10.654-16.728-17.3c-4.81-6.646-8.59-13.71-11.341-21.197h-22.913 l7.789-19.703h10.084c-0.154-1.678-0.269-3.321-0.343-4.927c-0.08-1.603-0.115-3.244-0.115-4.925v-1.148h-15.811l7.792-19.703 h10.766c2.139-7.942,5.461-15.543,9.97-22.8c4.503-7.255,10.082-13.635,16.728-19.133c6.643-5.5,14.356-9.889,23.142-13.177 c8.781-3.284,18.445-4.925,28.983-4.925c15.273,0,28.53,3.288,39.757,9.853c11.227,6.569,19.59,15.122,25.091,25.663 l-28.871,20.167c-1.835-4.278-4.166-7.829-6.99-10.655c-2.826-2.827-5.922-5.117-9.277-6.875 c-3.361-1.754-6.801-2.981-10.313-3.666c-3.516-0.686-6.953-1.031-10.31-1.031c-9.933,0-18.028,2.563-24.289,7.676 c-6.266,5.119-10.924,11.419-13.978,18.904H385.9l-7.792,19.703h-47.201v2.52c0,1.529,0.037,2.98,0.114,4.356 c0.077,1.372,0.191,2.752,0.344,4.122h47.661l-7.792,19.703H338.24c3.667,6.417,8.512,11.538,14.548,15.354 c6.033,3.821,13.02,5.727,20.965,5.727c3.358,0,6.837-0.42,10.426-1.26c3.585-0.838,7.026-2.138,10.313-3.894 c3.284-1.755,6.3-4.045,9.05-6.875c2.751-2.823,4.961-6.302,6.646-10.425l30.702,18.106 C438.444,346.46,434.815,351.808,430.006,356.543z"></path> </g> </g> <g> <g> <path d="M412.134,132.5l-24.522-79.219l-14.34,16.018C338.21,47.171,298.048,35.556,256,35.556v42.667 c31.437,0,61.552,8.058,88.297,23.44l-13.604,15.196L412.134,132.5z"></path> </g> </g> <g> <g> <path d="M167.703,410.338l13.604-15.196L99.866,379.5l24.522,79.219l14.34-16.018c35.062,22.128,75.224,33.744,117.272,33.744 v-42.667C224.563,433.778,194.448,425.719,167.703,410.338z"></path> </g> </g> </g></svg>
+
+                                    </div>
+                                    <p class="align-self-center mb-0 ml-1 badge badge-warning ">تبدیل @item.TransactionType</p>
+                                }
+
+                            </div>
+                        </td>
+
+                        <td class="ltr">@(item.RepDate)</td>
+                        <td>@(item.SourceAmount.GetValueOrDefault().ToString("N0"))  @(item.SourceWalletCurrencyId == 1 ? "ریال" : "گرم")</td>
+                        <td>
+                            @if (item.TransactionTypeId == 5)
+                            {
+                                <div>
+                                    @(item.DestinationAmout.GetValueOrDefault().ToString("N0")) @(item.DestinationWalletCurrencyId == 1 ? "ریال" : "گرم")
+                                </div>
+                            }
+
+                        </td>
+                        <td>
+                            @if (item.TransactionTypeId == 3 || item.TransactionTypeId == 4)
+                            {
+                                <p class="align-self-center mb-0 badge pointer  badge-primary" onclick="ShowConfirmInfo(this)">توضیحات</p>
+                                <div class="  hide table-responsive">
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                            <tr>
+                                                <th>توضحات کاربر</th>
+                                                <th>توضحات ادمین</th>
+                                                <th>تاریخ  </th>
+                                                <th> وضعیت  </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@item.RequestDescription</td>
+                                                <td>@item.ResponceDescription</td>
+                                                <td>@item.ConfirmationDate</td>
+                                                <td>
+                                                    @if (item.Status <= 0)
+                                                    {
+                                                        <p class="align-self-center mb-0 badge pointer  badge-warning">در انتظار بررسی    </p>
+                                                    }
+                                                    else if (item.Status == 1)
+                                                    {
+                                                        <div>
+                                                            <label>اطلاعات پرداخت    </label>
+                                                            <span>@item.TransactionInfo</span>
+                                                        </div>
+                                                    }
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td class="table-no-data text-center" colspan="14">داده یافت نشد</td></tr>
+            }
+        </tbody>
+    </table>
+}
+
+@Html.Partial("_LayoutReport")
+
+<script>
+
+    function ShowConfirmInfo(e) {
+        debugger
+        var info = $(e).next().html();
+        swal({
+            title: 'اطلاعات تایید     ',
+            html: info,
+            confirmButtonText: 'تائید',
+            padding: '2em'
+        });
+    }
+
+</script>
+

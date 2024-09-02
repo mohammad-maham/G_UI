@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Resources;
 
 namespace G_APIs.Model
 {
@@ -8,9 +9,11 @@ namespace G_APIs.Model
 
         public int UserId { get; set; }
 
-        [Display(Name = "از تاریخ"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Display(Name = "از تاریخ ")]
+
         public string FromDate { get; set; }
-        [Display(Name = "تا تاریخ"), Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+
+        [Display(Name = "تا تاریخ ")]
         public string ToDate { get; set; }
         public long? WalletId { get; set; }
         public long? WalletCurrencyId { get; set; }

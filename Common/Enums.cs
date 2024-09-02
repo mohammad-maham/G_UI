@@ -21,11 +21,11 @@ namespace G_APIs.Common
 
         public enum TransactionType
         {
-            Deposit = 4,
-            Windrow = 3,
             Sell = 1,
             Buy = 2,
-            Change = 5
+            Windrow = 3,
+            Deposit = 4,
+            Exchange = 5
         }
         public enum TransactionMode
         {

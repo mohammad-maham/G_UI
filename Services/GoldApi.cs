@@ -104,7 +104,7 @@ namespace G_APIs.Services
                 RestRequest request = new RestRequest
                 {
                     Method = _Method,
-                    Timeout = TimeSpan.FromSeconds(20),
+                    Timeout = TimeSpan.FromSeconds(100),
                 };
 
                 if (Authorization != null)

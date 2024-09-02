@@ -14,13 +14,13 @@
     @using (Html.Box(col: 12, title: "جستجو", iconType: BoxIconTypes.search))
     {
         <form class="frmWindrowForm" id="frmWindrowForm" action="javascript:void(0);" novalidate>
-            <input type="hidden" name="TransactionTypeId" value="4" />
+            <input type="hidden" name="TransactionTypeId" value="3" />
             <div class="row">
                 <div class="col-md-3">
-                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", required = true } })
+                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date"} })
                 </div>
                 <div class="col-md-3">
-                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date", required = true } })
+                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date"} })
                 </div>
             </div>
             <div class="col-auto field-wrapper command-panel">

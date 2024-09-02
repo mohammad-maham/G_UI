@@ -8,7 +8,7 @@ namespace G_APIs.Models
         public long? WalletId { get; set; }
         public long? WalletCurrencyId { get; set; }
 
-        public int TransactionTypeId { get; set; }
+        public int? TransactionTypeId { get; set; }
         public string TransactionType { get; set; }
 
         public string TransactionMode { get; set; }
@@ -24,7 +24,8 @@ namespace G_APIs.Models
 
         public string TrackingCode { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal? SourceAmount { get; set; }
+        public decimal? DestinationAmout { get; set; }
 
         public string SourceAddress { get; set; }
 
@@ -36,13 +37,18 @@ namespace G_APIs.Models
         public long? DestinationWalletCurrencyId { get; set; }
         public string DestinationWalletCurrency { get; set; }
 
-        public decimal? SourceAmount { get; set; }
-
         public long? UserId { get; set; }
 
-        public decimal? DestinationAmout { get; set; }
 
+        public long? ConfirmationUserId { get; set; }
 
+        public string ConfirmationDate { get; set; }
+
+        public string RequestDescription { get; set; }
+
+        public string ResponceDescription { get; set; }
+
+        public string TransactionInfo { get; set; }
     }
 
 }

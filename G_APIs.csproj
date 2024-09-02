@@ -279,6 +279,7 @@
     <Compile Include="Models\ReportVM.cs" />
     <Compile Include="Models\ThresholdsVM.cs" />
     <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionVM.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wallet.cs" />
     <Compile Include="Models\WalletBankAccount.cs" />
@@ -1222,7 +1223,7 @@
     <Content Include="Views\Store\RepositoryManagementIndex.cshtml" />
     <Content Include="Views\Store\RepositoryReportIndex.cshtml" />
     <Content Include="Views\Fund\ExchangeReport.cshtml" />
-    <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
+    <Content Include="Views\Fund\GetFinances.cshtml" />
     <Content Include="Views\Store\SubmitRepositoryCharge.cshtml" />
     <Content Include="Views\Store\RepositoryReportIndexData.cshtml" />
     <Content Include="Views\Shared\_AuthMiddleware.cshtml" />
@@ -1233,7 +1234,9 @@
     <Content Include="Views\Account\UpdateUserStatusIndex.cshtml" />
     <Content Include="Views\Account\ChangeUserRoleIndex.cshtml" />
     <Content Include="Views\Shared\_ModalLayout.cshtml" />
-    <Content Include="Views\Fund\FinanceMinister.cshtml" />
+    <Content Include="Views\Fund\qwe.cshtml" />
+    <Content Include="Views\Fund\GetExchanges.cshtml" />
+    <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
