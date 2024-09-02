@@ -101,7 +101,7 @@ namespace G_APIs.Controllers
 
                 }
 
-                return Json(new { result = false, message = " رمز عبور یا نام کاربری اشتباه است " });
+                return Json(new { result = false, message = res.Message });
             }
             catch (Exception ex)
             {
@@ -191,10 +191,11 @@ namespace G_APIs.Controllers
             var strCaptcha = new Random().Next().ToString().Substring(0, 4);
             _session.Set("Captcha", strCaptcha);
 
-            var savePath = Server.MapPath("~") + @"\Content\Captcha\" + strCaptcha + ".png";
+            var fileName = Guid.NewGuid().ToString().Substring(0, 4);
+            var savePath = Server.MapPath("~") + @"\Content\Captcha\" + fileName + ".png";
             new Captcha().CreateCaptch(strCaptcha).Save(savePath, System.Drawing.Imaging.ImageFormat.Png);
 
-            return strCaptcha + ".png";
+            return fileName + ".png";
         }
 
 

@@ -1,7 +1,7 @@
 ﻿
 @using G_APIs.Models
 @using G_APIs.Models.ComponentModels
-@model  List<FinancialVM>
+@model  G_APIs.Model.FilterVM
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
@@ -10,92 +10,42 @@
     Description = "گزارش  معین مالی   "
 })
 
-<style>
-    #rptfinancial .trans3 td {
-        background-color: #e5a3a3;
-    }
-
-    #rptfinancial .trans4 td {
-        background-color: #a7efa7;
-    }
-
-    #rptfinancial .trans5 td {
-        background-color: #e1b970;
-    }
-</style>
-
 <div class="row gold-row">
-    @using (Html.Box(title: "   گزارش معین مالی      ", col: 12))
+    @using (Html.Box(col: 12, title: "جستجو", iconType: BoxIconTypes.search))
     {
-        <table id="rptfinancial" class="datatable table table-hover non-hover table-striped" style="width:100%">
-            <thead class="">
-                <tr>
-                    <th>   کد </th>
-                    <th>  نوع تراکنش </th>
-                    <th>  مبدا    </th>
-                    <th>  مقصد    </th>
-                    <th> تاریح  </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var b in Model)
-                {
-
-                    var transType = "";
-
-                    var unitType1 = "";
-                    var unitType2 = "";
-
-                    var sourceAmount = "";
-                    var destAmount = "";
-
-
-                    if (b.TransactionTypeId == 3)
-                    {
-                        transType = "برداشت";
-                        unitType1 = "ریال";
-                        sourceAmount = b.SourceAmount.ToString("N0");
-                    }
-                    if (b.TransactionTypeId == 4)
-                    {
-                        transType = "واریز";
-                        unitType1 = "ریال";
-                        sourceAmount = b.SourceAmount.ToString("N0");
-
-                    }
-                    if (b.TransactionTypeId == 5)
-                    {
-                        if (b.SourceWalletCurrency == 1)
-                        {
-                            transType = "تبدیل پول به طلا";
-                            unitType1 = "ریال";
-                            unitType2 = "گرم";
-
-                            sourceAmount = b.SourceAmount.ToString("N0");
-                            destAmount = b.DestinationAmout.ToString("N0");
-                        }
-                        else
-                        {
-                            transType = "تبدیل طلا به پول";
-                            unitType1 = "گرم";
-                            unitType2 = "ریال";
-
-                            sourceAmount = b.SourceAmount.ToString("N0");
-                            destAmount = b.SourceAmount.ToString("N0");
-                        }
-                    }
-
-                    <tr class="gra  trans@(b.TransactionTypeId)">
-                        <td>@b.Id</td>
-                        <td>@(transType)</td>
-                        <td>@(sourceAmount)  @(unitType1) </td>
-                        <td>@(destAmount) @(unitType2) </td>
-                        <td style="direction:ltr">@b.PersianDate </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <form class="frmFinanceForm" id="frmFinanceForm" action="javascript:void(0);" novalidate>
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date" } })
+                </div>
+                <div class="col-md-3">
+                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date" } })
+                </div>
+            </div>
+            <div class="col-auto field-wrapper command-panel">
+                @Html.Partial("_GoldButton", new GoldButton()
+           {
+               ButtonType = GoldButtonTypes.submit,
+               Name = "btnSearch",
+               Icon = "fa fa-search fa-1x",
+               Class = "btn btn-primary",
+               Text = "جستجو"
+           })
+            </div>
+        </form>
     }
 </div>
 
-@Html.Partial("_LayoutReport")
+<div class="report-result"></div>
+
+<script>
+    $('#frmFinanceForm').ajaxForm({
+        validation: true,
+        url: '/Fund/GetFinances',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+        target: ".report-result",
+        success: function (data) { }
+    });
+</script>

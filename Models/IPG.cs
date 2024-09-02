@@ -10,6 +10,7 @@ namespace G_APIs.Models
         public long? UserId { get; set; }
         public long? WalletId { get; set; }
         public long? WallectCurrencyId { get; set; }
+        public long? TransactionConfirmId { get; set; }
 
         public string  Title { get; set; }
 

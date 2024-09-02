@@ -1,6 +1,7 @@
-﻿@using G_APIs.Models
+﻿
+@using G_APIs.Models
 @using G_APIs.Models.ComponentModels
-@model  List<Xchenger>
+@model  G_APIs.Model.FilterVM
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
@@ -9,43 +10,43 @@
     Description = "گزارش انواع تبدیل پول به طلا و برعکس   "
 })
 
-<style>
-    #rptExchange .gold-tr td {
-        background-color: #e5a3a3;
-    }
-
-    #rptExchange .money-tr td {
-        background-color: #a7efa7;
-    }
-</style>
-
 <div class="row gold-row">
-    @using (Html.Box(title: "   لیست برداشت ها      ", col: 12))
+    @using (Html.Box(col: 12, title: "جستجو", iconType: BoxIconTypes.search))
     {
-        <table id="rptExchange" class="datatable table table-hover non-hover table-striped" style="width:100%">
-            <thead class="">
-                <tr>
-                    <th>    </th>
-                    <th>  نوع تبدیل </th>
-                    <th> مبلغ مبدا    </th>
-                    <th> مبلغ مقصد    </th>
-                    <th> تاریخ  </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var b in Model)
-                {
-                    <tr class="gra @(b.SourceWalletCurrency ==1? "money-tr" : "gold-tr")">
-                        <td>@b.Id</td>
-                        <td>@(b.SourceWalletCurrency ==1 ?"پول به طلا":"طلا به پول")  </td>
-                        <td>@(b.SourceAmount.ToString("N0"))   @(b.SourceWalletCurrency == 1 ? "ریال" : "گرم")  </td>
-                        <td>@(b.DestinationAmout.ToString("N0") )   @(b.DestinationWalletCurrency == 1 ? "ریال" : "گرم")</td>
-                        <td style="direction:ltr">@b.PersianDate </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <form class="frmExchangeForm" id="frmExchangeForm" action="javascript:void(0);" novalidate>
+            <input type="hidden" name="TransactionTypeId" value="3" />
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.EditorFor(x => x.FromDate, new { HtmlAttributes = new { @class = "date", type = "gold-date" } })
+                </div>
+                <div class="col-md-3">
+                    @Html.EditorFor(x => x.ToDate, new { HtmlAttributes = new { @class = "date", type = "gold-date" } })
+                </div>
+            </div>
+            <div class="col-auto field-wrapper command-panel">
+                @Html.Partial("_GoldButton", new GoldButton()
+           {
+               ButtonType = GoldButtonTypes.submit,
+               Name = "btnSearch",
+               Icon = "fa fa-search fa-1x",
+               Class = "btn btn-primary",
+               Text = "جستجو"
+           })
+            </div>
+        </form>
     }
 </div>
 
-@Html.Partial("_LayoutReport")
+<div class="report-result"></div>
+
+<script>
+    $('#frmExchangeForm').ajaxForm({
+        validation: true,
+        url: '/Fund/GetExchanges',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+        target: ".report-result",
+        success: function (data) { }
+    });
+</script>
