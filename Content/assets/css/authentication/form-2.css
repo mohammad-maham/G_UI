@@ -109,7 +109,7 @@ body {
       font-size: 37px;
       color: #3b3f5c; }
     .form-form .form-form-wrap form .field-wrapper label {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       color: #3b3f5c;
       margin-bottom: 8px; }
@@ -161,18 +161,20 @@ body {
       .form-form .form-form-wrap form .field-wrapper input::-webkit-input-placeholder, .form-form .form-form-wrap form .field-wrapper input::-ms-input-placeholder, .form-form .form-form-wrap form .field-wrapper input::-moz-placeholder {
         color: #d3d3d3;
         font-size: 14px; }
-    .form-form .form-form-wrap form .field-wrapper button.btn {
-      align-self: center;
-      width: 100%;
-      padding: 11px 14px;
-      font-size: 16px;
-      letter-spacing: 2px; }
+    .form-form .form-form-wrap form .field-wrapper button.btn, .form-form .form-form-wrap form .field-wrapper a.btn {
+        align-self: center;
+        width: 100%;
+        padding: 11px 14px;
+        font-size: 16px;
+        font-weight:bold;
+        letter-spacing: 1px;
+    }
     .form-form .form-form-wrap form .field-wrapper a.forgot-pass-link {
       font-weight: 600;
       color: #888ea8;
       display: block;
       letter-spacing: 1px;
-      font-size: 12px;
+      font-size: 14px;
       margin-bottom: 8px; }
     .form-form .form-form-wrap form .field-wrapper .n-chk .new-control-indicator {
       top: 2px;

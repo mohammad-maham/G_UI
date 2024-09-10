@@ -350,7 +350,7 @@ namespace G_APIs.Controllers
                 model.BankAccountNumber = model.BankAccountNumber.Replace("-", "").Replace("_", "");
 
                 model.WalletId = wallet.Id;
-
+                model.Name = model.BankName;
                 var res = _fund.AddBankAccount(model);
 
                 if (res != null)

@@ -35,7 +35,7 @@
             <input type="hidden" value="1" id="bankId" name="BankId" />
             <input type="hidden" value="melat.png" id="logoPath" name="LogoPath" />
 
-            @Html.EditorFor(x => x.Name)
+            @Html.EditorFor(x => x.BankName)
             @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber", required="required" } })
             @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number", required = "required" } })
             @Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR", required = "required" } })

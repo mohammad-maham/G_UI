@@ -9,14 +9,9 @@
     <link href="~/Content/assets/img/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/authentication/form-1.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/plugins/loaders/custom-loader.css" rel="stylesheet" type="text/css">
     <link href="~/Content/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css">
-
-    @*
-        <link href="~/Content/assets/css/forms/theme-checkbox-radio.css rel="~/Content/stylesheet" type="text/css" >
-        <link href="~/Content/assets/css/forms/switches.css" rel="~/Content/stylesheet" type="text/css" >
-        <link href="~/Content/assets/css/elements/alert.css"  rel="~/Content/stylesheet" type="text/css"> *@
     <link href="~/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/assets/css/_custom.css" rel="stylesheet" />
     <script src="~/Content/assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -26,14 +21,11 @@
     <script src="~/Content/plugins/bootstrap-maxlength/bootstrap-maxlength.js"></script>
     <script src="~/Content/plugins/sweetalerts/sweetalert2.min.js"></script>
     <script src="~/Content/plugins/blockui/jquery.blockUI.min.js"></script>
-
     <script src="~/Content/assets/js/Helper.js"></script>
-
-
 </head>
-<body class="form">
 
-    <div class="form-container">
+<body class="form">
+    <div class="form-container outer">
         <div class="form-form">
             <div class="form-form-wrap">
                 <div class="form-container">
@@ -48,14 +40,11 @@
     </div>
 
     <script>
-
         function GetCaptcha() {
-
             $.ajax({
                 url: '/Account/GetCaptcha',
                 method: "GET",
                 success: function (res) {
-
                     if (res != undefined || res != null) {
                         let src = "/Content/Captcha/" + res;
                         $('#img-captcha').attr("src", src)
@@ -66,11 +55,9 @@
                 }
             });
         }
-
         $(function () {
             setInterval(GetCaptcha, 60000);
-        })
-
+        });
     </script>
 </body>
 </html>
