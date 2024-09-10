@@ -1234,7 +1234,6 @@
     <Content Include="Views\Account\UpdateUserStatusIndex.cshtml" />
     <Content Include="Views\Account\ChangeUserRoleIndex.cshtml" />
     <Content Include="Views\Shared\_ModalLayout.cshtml" />
-    <Content Include="Views\Fund\qwe.cshtml" />
     <Content Include="Views\Fund\GetExchanges.cshtml" />
     <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
   </ItemGroup>
