@@ -3,21 +3,31 @@
 @model  Dashboard
 
 <div class="row gold-row">
-    @using (Html.Box("نمودار یک", col: 8, iconType: BoxIconTypes.chart))
+    @*@using (Html.Box("نمودار یک", col: 8, iconType: BoxIconTypes.chart))
     {
         @Html.Action("Chart1", "Home")
     }
     @using (Html.Box("نمودار دو", col: 4, iconType: BoxIconTypes.chart))
     {
         @Html.Action("Chart2", "Home")
-    }
+    }*@
+
+
+
 </div>
 <div class="row gold-row">
-    @using (Html.Box("نمودار سه", col: 8, iconType: BoxIconTypes.chart))
+    @*@using (Html.Box("نمودار سه", col: 8, iconType: BoxIconTypes.chart))
+        {
+            @Html.Action("Chart3", "Home")
+        }*@
+
+
+    @using (Html.Box(title: "وضعیت گاوصندوق", col: 6, iconType: BoxIconTypes.chart))
     {
-        @Html.Action("Chart3", "Home")
+        <div class="repository-status-chart"></div>
     }
-    @using (Html.Box("کیف پول", col: 4, iconType: BoxIconTypes.info))
+
+    @using (Html.Box("کیف پول", col: 6, iconType: BoxIconTypes.info))
     {
         @Html.Action("Wallet", "Fund")
     }
