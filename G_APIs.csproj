@@ -374,7 +374,9 @@
     <Content Include="Content\assets\img\bg.png" />
     <Content Include="Content\assets\img\ca.png" />
     <Content Include="Content\assets\img\contact-us-map-pin.svg" />
+    <Content Include="Content\assets\img\currency-type1.jpg" />
     <Content Include="Content\assets\img\currency-type1.png" />
+    <Content Include="Content\assets\img\currency-type2.jpg" />
     <Content Include="Content\assets\img\currency-type2.png" />
     <Content Include="Content\assets\img\de.png" />
     <Content Include="Content\assets\img\faq.svg" />
@@ -1193,7 +1195,7 @@
     <Content Include="Views\Account\AddressInfo.cshtml" />
     <Content Include="Views\Fund\BankAccount.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Shared\_LayoutSign.cshtml" />
     <Content Include="Views\Store\BuyIndex.cshtml" />

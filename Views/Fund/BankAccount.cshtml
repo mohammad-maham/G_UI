@@ -36,9 +36,23 @@
             <input type="hidden" value="melat.png" id="logoPath" name="LogoPath" />
 
             @Html.EditorFor(x => x.BankName)
-            @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber", required="required" } })
+            @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber", required = "required" } })
             @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number", required = "required" } })
-            @Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR", required = "required" } })
+            @*@Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR", required = "required" } })*@
+
+            <div class="col-auto mt-3">
+                <label for="@Model.Shaba">@Model.Shaba</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">IR</div>
+                    </div>
+                    <input name="Shaba" id="shaba" type="text" class="form-control text-right" value="@Model.Shaba" >
+                    <div class="invalid-feedback">
+                        وارد کردن این فیلد الزامیست
+                    </div>
+                </div>
+            </div>
+
 
             <div class="col-auto field-wrapper command-panel mt-4">
                 @Html.Partial("_GoldButton", new GoldButton()
@@ -71,7 +85,7 @@
     $(function () {
 
         GetBankAccounts();
-       
+
         $('input[name="BankAccountNumber"]').inputmask("9999-9999-9999-9999");
 
         $('.avatar img').click(function () {

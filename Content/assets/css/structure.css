@@ -1503,8 +1503,8 @@ code {
 
 @media (max-width: 991px) {
     .header-container {
-        padding-left: 35px;
-        padding-right: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     /*
       =============
