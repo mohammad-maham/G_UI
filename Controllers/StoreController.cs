@@ -206,6 +206,18 @@ namespace G_APIs.Controllers
         }
         #endregion GoldOnlinePrices
         #region GoldRepositoryManagement
+        [GoldAuthorize]
+        public ActionResult GoldRepositoryStatusChart()
+        {
+            string token = Request.Cookies["gldauth"].Value;
+            GoldRepositoryStatusVM goldRepositoryStatus = new GoldRepositoryStatusVM();
+            if (!string.IsNullOrEmpty(token))
+            {
+                goldRepositoryStatus = _store.GetGoldRepositoryStatus(token);
+            }
+            return View(goldRepositoryStatus);
+        }
+
         [GoldAccessibilityAuth(UserStatusPermission = 2)]
         public ActionResult RepositoryManagementIndex()
         {

@@ -1,0 +1,114 @@
+﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
+@model GoldRepositoryStatusVM
+@{
+    Layout = null;
+    List<GoldRepositoryVM> ownerRepo = Model.GoldRepositoryVM;
+    // Owner Statistics
+    double ownerPieTotalWeight = ownerRepo.Where(x => x.GoldMaintenanceType == 10)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double ownerPieG1Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 10 && x.GoldType == 1)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double ownerPieG2Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 10 && x.GoldType == 2)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    // Bonded Statistics
+    double bondedPieTotalWeight = ownerRepo.Where(x => x.GoldMaintenanceType == 11)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double bondedPieG1Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 11 && x.GoldType == 1)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+    double bondedPieG2Weight = ownerRepo.Where(x => x.GoldMaintenanceType == 11 && x.GoldType == 2)?.Select(x => x.Weight).FirstOrDefault() ?? 0.0;
+}
+
+<style>
+    .repository-status-chart {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+@using (Html.Box(title: "وضعیت گاوصندوق", col: 6, iconType: BoxIconTypes.chart))
+{
+    <div class="repository-status-chart"></div>
+}
+
+<script>
+    const series = [@ownerPieTotalWeight, @ownerPieG1Weight,@ownerPieG2Weight ,@bondedPieTotalWeight,@bondedPieG1Weight,@bondedPieG2Weight];
+    const labels = ['طلا گاوصندوق مالکیتی', 'طلا آب شده مالکیتی', 'طلا آب شده-حواله شده مالکیتی', 'طلا گاوصندوق امانتی', 'طلا آب شده امانتی', 'طلا آب شده-حواله شده امانتی'];
+
+    var options = {
+        chart: {
+            width: "60%",
+            type: 'pie',
+        },
+        series: series,
+        labels: labels,
+        plotOptions: {
+            pie: {
+                expandOnClick: true,
+                donut: {
+                    size: '75%',
+                    labels: {
+                        show: true,
+                        name: {
+                            show: true,
+                            fontSize: '12px',
+                            fontWeight: '400',
+                            fontFamily: "YekanBakhRegular",
+                            color: '#6E7191',
+                        },
+                        value: {
+                            show: true,
+                            fontSize: '22px',
+                            fontWeight: '600',
+                            fontFamily: "YekanBakhRegular",
+                            color: '#2E285C',
+                        },
+                        //total: {
+                        //    show: true,
+                        //    color: '#BCC1C8',
+                        //    fontWeight: '600',
+                        //    fontSize: '35px',
+                        //}
+                    }
+                }
+            }
+        },
+        dataLabels: {
+            enabled: true,
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom',
+                    fontSize: "17px",
+                    fontFamily: "YekanBakhRegular",
+                    fontWeight: "bold"
+                }
+            }
+        }],
+        legend: {
+            position: 'bottom',
+            fontSize: "17px",
+            fontFamily: "YekanBakhRegular",
+            fontWeight: "bold",
+            offsetY: 0,
+        },
+        //colors: ['#c7417b', '#f6d912'],
+        //title: {
+        //    text: 'موجودی انبار',
+        //    align: 'top',
+        //    floating: true,
+        //    style: {
+        //        fontSize: '36px',
+        //        fontWeight: '500',
+        //        color: '#2E285C'
+        //    },
+        //}
+    };
+
+    var chart = new ApexCharts(document.querySelector(".repository-status-chart"), options);
+    chart.render();
+</script>

@@ -1,34 +1,22 @@
 ﻿@using G_APIs.Models
 @using G_APIs.Models.ComponentModels
 @model  Dashboard
+@{
+    int roleId = ViewBag.UserRoleId;
+
+
+}
 
 <div class="row gold-row">
-    @*@using (Html.Box("نمودار یک", col: 8, iconType: BoxIconTypes.chart))
+    @if (roleId == 11)
     {
-        @Html.Action("Chart1", "Home")
+        @Html.Action("GoldRepositoryStatusChart", "Store")
     }
-    @using (Html.Box("نمودار دو", col: 4, iconType: BoxIconTypes.chart))
+    else
     {
-        @Html.Action("Chart2", "Home")
-    }*@
-
-
-
-</div>
-<div class="row gold-row">
-    @*@using (Html.Box("نمودار سه", col: 8, iconType: BoxIconTypes.chart))
+        using (Html.Box("کیف پول", col: 6, iconType: BoxIconTypes.info))
         {
-            @Html.Action("Chart3", "Home")
-        }*@
-
-
-    @using (Html.Box(title: "وضعیت گاوصندوق", col: 6, iconType: BoxIconTypes.chart))
-    {
-        <div class="repository-status-chart"></div>
-    }
-
-    @using (Html.Box("کیف پول", col: 6, iconType: BoxIconTypes.info))
-    {
-        @Html.Action("Wallet", "Fund")
+            @Html.Action("Wallet", "Fund")
+        }
     }
 </div>

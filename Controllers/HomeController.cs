@@ -1,6 +1,7 @@
 using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
+using Newtonsoft.Json;
 using System.Web.Mvc;
 
 namespace G_APIs.Controllers
@@ -20,13 +21,16 @@ namespace G_APIs.Controllers
         }
 
         [GoldUserInfo]
-        public ActionResult Index(Models.Dashboard model)
+        public ActionResult Index(Dashboard model)
         {
             string userInfo = Request.Headers["UserInfo"];
 
             if (!string.IsNullOrEmpty(userInfo))
             {
                 _session.Set("UserInfo", userInfo);
+                User user = JsonConvert.DeserializeObject<User>(userInfo);
+                int currentUserRoleId = _dashboard.GetDashboard(user).UserRole.Id;
+                ViewBag.UserRoleId = currentUserRoleId;
                 return View(model);
             }
             return RedirectToAction("Login", "Account");

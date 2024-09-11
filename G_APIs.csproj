@@ -1238,6 +1238,7 @@
     <Content Include="Views\Shared\_ModalLayout.cshtml" />
     <Content Include="Views\Fund\GetExchanges.cshtml" />
     <Content Include="Views\Fund\FinanceMinisterReport.cshtml" />
+    <Content Include="Views\Store\GoldRepositoryStatusChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
