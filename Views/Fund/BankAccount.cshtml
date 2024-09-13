@@ -1,6 +1,6 @@
 ﻿@using G_APIs.Models
 @using G_APIs.Models.ComponentModels
-@model  WalletBankAccount
+@model  WalletBankAccount 
 
 @Html.Partial("_FormTitle", new FormTitle()
 {
@@ -37,10 +37,10 @@
 
             @Html.EditorFor(x => x.BankName)
             @Html.EditorFor(x => x.BankAccountNumber, new { HtmlAttributes = new { @class = "rtl", id = "bankAccountNumber", required = "required" } })
-            @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab", type = "number", required = "required" } })
+            @Html.EditorFor(x => x.Hesab, new { HtmlAttributes = new { @class = "rtl", id = "hesab",  required = "required" } })
             @*@Html.EditorFor(x => x.Shaba, new { HtmlAttributes = new { @class = "rtl", id = "Shaba", type = "number", inputGroup = "IR", required = "required" } })*@
 
-            <div class="col-auto mt-3">
+            <div class="mt-3">
                 <label for="@Model.Shaba">@Model.Shaba</label>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">

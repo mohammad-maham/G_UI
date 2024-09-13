@@ -209,7 +209,7 @@ namespace G_APIs.Controllers
             {
                 var token = Request.Headers["Authorization"].ToString();
 
-                if (token == null || !token.StartsWith("Bearer "))
+                if (token == null )
                 {
                     //return Unauthorized("Missing or invalid Authorization header.");
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Resources;
+using static G_APIs.Common.Enums;
 
 namespace G_APIs.Model
 {
     public class FilterVM
     {
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         [Display(Name = "از تاریخ ")]
 

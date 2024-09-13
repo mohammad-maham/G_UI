@@ -61,8 +61,8 @@
                                 <table class="table table-bordered ">
                                     <thead>
                                         <tr>
-                                            <th>توضحات کاربر</th>
-                                            <th>توضحات ادمین</th>
+                                            <th>توضیحات کاربر</th>
+                                            <th>توضیحات ادمین</th>
                                             <th>تاریخ  </th>
                                             <th> وضعیت  </th>
                                         </tr>
@@ -81,7 +81,7 @@
                                                 {
                                                     <div>
                                                         <label>اطلاعات پرداخت    </label>
-                                                        <span>@item.TransactionInfo</span>
+                                                        <span>@(item.TransactionInfo   ?? "")</span>
                                                     </div>
                                                 }
                                                

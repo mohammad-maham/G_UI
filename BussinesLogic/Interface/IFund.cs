@@ -21,6 +21,7 @@ namespace G_APIs.BussinesLogic.Interface
         IEnumerable<ReportVM> GetTransactions(FilterVM model);
         IEnumerable<ReportVM> GetFinancialReport(FilterVM model);
         IEnumerable<ReportVM> GetExchanges(FilterVM model);
+        ApiResult  ConfirmTransaction(TransactionVM model);
 
     }
 }
