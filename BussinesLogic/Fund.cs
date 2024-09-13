@@ -43,13 +43,15 @@ namespace G_APIs.BussinesLogic
 
         public ApiResult Deposit(PaymentLinkRequest model)
         {
-            var res = new GoldApi("http://localhost:5017/IPG/AddPaymentData", model).Post();
+             var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
+            //var res = new GoldApi(GoldHost.IPG, "/api/Fund/AddPaymentData", model).Post();
             return res;
         }
 
         public ApiResult AddTransaction(TransactionVM model)
         {
-            var res = new GoldApi("http://localhost:5017/api/Fund/AddTransaction", model).Post();
+            //var res = new GoldApi("http://localhost:5017/api/Fund/AddTransaction", model).Post();
+            var res = new GoldApi(GoldHost.Wallet, "/api/Fund/AddTransaction", model).Post();
             return res;
         }
 
@@ -73,23 +75,34 @@ namespace G_APIs.BussinesLogic
         }
         public IEnumerable<ReportVM> GetTransactions(FilterVM model)
         {
-            var t = new GoldApi("http://localhost:5017/api/Fund/GetTransactions", model).Post();
+            //var t = new GoldApi("http://localhost:5017/api/Fund/GetTransactions", model).Post();
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetTransactions", model).Post();
             var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }
 
         public IEnumerable<ReportVM> GetFinancialReport(FilterVM model)
         {
-            var t = new GoldApi("http://localhost:5017/api/Fund/GetFinancialReport", model).Post();
+              var t = new GoldApi("http://localhost:5017/api/Fund/GetFinancialReport", model).Post();
+            // var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
             var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }
 
         public IEnumerable<ReportVM> GetExchanges(FilterVM model)
         {
-            var t = new GoldApi("http://localhost:5017/api/Fund/GetExchanges", model).Post();
+            //var t = new GoldApi("http://localhost:5017/api/Fund/GetExchanges", model).Post();
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetExchanges", model).Post();
             var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
+        }
+
+        public ApiResult ConfirmTransaction(TransactionVM model)
+        {
+            var t = new GoldApi("http://localhost:5017/api/Fund/ConfirmTransaction", model).Post();
+            //var t = new GoldApi(GoldHost.Wallet, "/api/Fund/ConfirmTransaction", model).Post();
+            //var res = JsonConvert.DeserializeObject<WalletCurrency>(t.Data);
+            return t;
         }
     }
 }

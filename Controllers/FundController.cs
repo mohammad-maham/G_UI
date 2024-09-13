@@ -31,7 +31,7 @@ namespace G_APIs.Controllers
         {
             try
             {
-                return View();
+                return View(new WalletBankAccount());
             }
             catch (Exception)
             {
@@ -40,6 +40,19 @@ namespace G_APIs.Controllers
 
         }
 
+        [GoldAuthorize]
+        public ActionResult GetWallet()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
         [GoldAuthorize]
         public ActionResult Wallet(Wallet model)
         {
@@ -132,6 +145,12 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
+        public ActionResult AdminFinance()
+        {
+            return View();
+        }
+
+        [GoldAuthorize]
         public ActionResult GetFinances(FilterVM model)
         {
             try
@@ -147,8 +166,36 @@ namespace G_APIs.Controllers
                 if (model.ToDate != null)
                     model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
 
-                model.UserId =(int) user.Id;
+                model.UserId = (int)user.Id;
                 var res = _fund.GetFinancialReport(model).OrderBy(x => x.Id).ToList();
+
+                return View(res);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [GoldAuthorize]
+        public ActionResult AdminFinanceReport(FilterVM model)
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View();
+
+                if (model.FromDate != null)
+                    model.FromDate = DateTime.Parse(model.FromDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT00:00:00");
+
+                if (model.ToDate != null)
+                    model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
+
+                var res = _fund.GetFinancialReport(model)
+                    .Where(x => x.ConfirmationUserId == 0 && x.TransactionTypeId== (short)TransactionType.Windrow)
+                    .OrderBy(x => x.Id).ToList();
 
                 return View(res);
             }
@@ -189,6 +236,34 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
+        public ActionResult ConfirmTransactions(TransactionVM model)
+        {
+            try
+            {
+                var user = _session.Get<User>("UserInfo");
+
+                if (user == null)
+                    return View(new List<ReportVM>());
+
+                model.ConfirmationUserId = (int)user.Id;
+                model.Amount = (-1 * model.Amount);
+                model.TransactionInfo = JsonConvert.SerializeObject(new { TrackingCode = model.TrackingCode });
+                var res = _fund.ConfirmTransaction(model);
+
+                if (res.StatusCode == 200)
+                    return Json(new { result = true, message = res.Message, data = res.Data });
+
+                return Json(new { result = false, message = res.Message });
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [GoldAuthorize]
         public ActionResult GetTransactions(FilterVM model)
         {
             try
@@ -218,7 +293,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
-        public ActionResult Deposit(string amount, string description)
+        public ActionResult Deposit(WalletCurrency m)
         {
             try
             {
@@ -235,14 +310,14 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
-                var wc = _fund.GetWallet(new Wallet { UserId = user.Id });
+                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.Id }).FirstOrDefault(x=>x.CurrencyId==1);
                 var t = new TransactionVM
                 {
                     TransactionModeId = (short)TransactionMode.Online,
-                    WalletCurrencyId = wc.WalletCurrencyId,
+                    WalletCurrencyId = wc.CurrencyId,
                     WalletId = wc.WalletId,
                     TransactionTypeId = (short)TransactionType.Deposit,
-                    Amount = decimal.Parse(amount)
+                    Amount = (decimal)m.Amount
                 };
 
                 var resTrans = _fund.AddTransaction(t);
@@ -266,7 +341,7 @@ namespace G_APIs.Controllers
                     new FactorItem
                     {
                         ItemTitle="واریز پول",
-                        ItemUnitPrice=long.Parse(amount),
+                        ItemUnitPrice=(long) m.Amount,
                         ItemUnitType="ریال",
                         ItemCount=1,
                         ItemDiscount=0,
@@ -275,7 +350,7 @@ namespace G_APIs.Controllers
 
                 model.UserId = user.Id;
                 model.WalletId = wc.WalletId;
-                model.WallectCurrencyId = wc.WalletCurrencyId;
+                model.WallectCurrencyId = wc.CurrencyId;
                 model.Price = factorItems.Sum(x => x.ItemUnitPrice * x.ItemCount);
                 model.ExpDate = DateTime.Now.AddMinutes(15);
                 model.OrderId = Guid.NewGuid().ToString().Substring(1, 10);
@@ -323,7 +398,7 @@ namespace G_APIs.Controllers
 
                 var res = _fund.ToggleBankCard(new WalletBankAccount { Id = id });
 
-                return View("BankAccount");
+                return RedirectToAction("BankAccount");
             }
             catch (Exception)
             {
@@ -348,7 +423,7 @@ namespace G_APIs.Controllers
 
                 var wallet = _fund.GetWallet(new Wallet { UserId = user.Id });
                 model.BankAccountNumber = model.BankAccountNumber.Replace("-", "").Replace("_", "");
-
+                model.Name = model.BankName;
                 model.WalletId = wallet.Id;
                 model.Name = model.BankName;
                 var res = _fund.AddBankAccount(model);
@@ -430,8 +505,8 @@ namespace G_APIs.Controllers
                     WalletCurrencyId = wc.CurrencyId,
                     WalletId = wc.WalletId,
                     TransactionTypeId = (short)TransactionType.Windrow,
-                    Amount = model.Amount  ,
-                    RequestDescription=model.Description
+                    Amount = model.Amount,
+                    RequestDescription = model.Description
                 };
 
                 var res = _fund.AddTransaction(t);
@@ -457,6 +532,7 @@ namespace G_APIs.Controllers
                 });
             }
         }
+
 
     }
 }

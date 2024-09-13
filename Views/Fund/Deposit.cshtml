@@ -93,8 +93,10 @@ else
          mixin: true,
 
          success: function (res) {
-              if(res.result)
-                  window.location.href = "http://localhost:5171/IPG/ShowBill?guid=" + res.data
+             var guid = JSON.parse(res.data)
+             debugger
+             if (res.result)
+                 window.location.href = "http://localhost:5171/IPG/ShowBill?guid=" + guid;
          },
      });
 

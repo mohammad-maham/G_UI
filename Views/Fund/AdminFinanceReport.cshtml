@@ -1,0 +1,182 @@
+﻿@using G_APIs.Models
+@using G_APIs.Models.ComponentModels
+@model IEnumerable<ReportVM>
+@{
+    Layout = null;
+}
+
+@using (Html.Box(title: "نتیجه گزارش", col: 12, iconType: BoxIconTypes.grid))
+{
+    <table id="rtpTransactions" class="datatable table table-hover non-hover table-striped" style="width:100%">
+        <thead class="">
+            <tr>
+                <th>#</th>
+                <th> نوع تراکنش  </th>
+                <th>  نوع ارز </th>
+                <th> تاریح  </th>
+                <th>مبلغ  </th>
+                <th>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="@(item.TransactionTypeId==4?"table-info":"table-default")">
+                        <td>@(item.Id)</td>
+                        <td class="">
+                            <div class="d-flex">
+                                @if (item.TransactionTypeId == 3)
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-danger" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                                            <polyline points="17 18 23 18 23 12" />
+                                        </svg>
+                                    </div>
+                                    <p class="align-self-center mb-0 badge  badge-danger">@item.TransactionType</p>
+
+                                }
+                                else
+                                {
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon text-success" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                            <polyline points="17 6 23 6 23 12" />
+                                        </svg>
+                                    </div>
+                                    <p class="align-self-center mb-0 badge   badge-success ">@item.TransactionType</p>
+
+                                }
+
+                            </div>
+                        </td>
+                        <td>@(item.SourceWalletCurrency)</td>
+                        <td class="ltr">@(item.RepDate)</td>
+                        <td>@(item.SourceAmount.GetValueOrDefault().ToString("N0"))  @(item.SourceWalletCurrencyId == 1 ? "ریال" : "گرم")</td>
+                        <td>
+                            <p class="align-self-center mb-0 badge pointer  badge-primary" onclick="ShowConfirmInfo(this)">توضیحات</p>
+                            <div class="  hide">
+                                <input type="hidden" name="WalletId" value="@item.WalletId" />
+                                <input type="hidden" name="WalletCurrencyId" value="@item.SourceWalletCurrencyId" />
+                                <input type="hidden" name="TransactionConfirmId" value="@item.TransactionConfirmId" />
+                                <input type="hidden" name="Amount" value="@item.SourceAmount" />
+
+                                <div>
+                                    <div class="form-group ">
+                                        <label> توضیحات کاربر</label>
+                                        <input class="form-control" readonly type="text" id="requestDescription" value="@item.RequestDescription" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-group ">
+                                        <label> توضیحات ادمین</label>
+                                        <input class="form-control" type="text" name="ResponceDescription" value="@item.ResponceDescription" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-group ">
+                                        <label> کد رهگیری</label>
+                                        <input class="form-control" required id="trackingCode" type="text" name="TrackingCode" value="@item.TrackingCode" />
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td class="table-no-data text-center" colspan="14">داده یافت نشد</td></tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="modal fade" id="goldModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="frmConfirmTransacton" id="frmConfirmTransacton" action="javascript:void(0);" novalidate>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                @Html.Partial("_GoldButton", new GoldButton()
+                {
+                    ButtonType = GoldButtonTypes.button,
+                    Name = "btnConfirm",
+                    Icon = "fa fa-save fa-2x",
+                    Class = "btn btn-success",
+                    Text = "ذخیره",
+                    OnClick = "ConfirmTransaction()"
+                })
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_LayoutReport")
+
+<script>
+
+    var row = null;
+
+    function ShowConfirmInfo(e) {
+
+        //const id = $(e).next().find('[name="TransactionConfirmId"]').val()
+        //const requestDes = $(e).next().find('[name="RequestDescription"]').val()
+        //const responseDes = $(e).next().find('[name="ResponceDescription"]').val()
+        //const trackCode = $(e).next().find('[name="TrackingCode"]').val()
+
+        let form = $(e).next().clone();
+        row = $(e).parents('tr');
+        $('#goldModal #frmConfirmTransacton').html(form);
+        $('#goldModal #frmConfirmTransacton > div').show();
+        //form.find('[name="TransactionConfirmId"]').val(id)
+        //form.find('#requestDescription').val(requestDes)
+        //form.find('[name="ResponceDescription"]').val(responseDes)
+        //form.find('[name="TrackingCode"]').val(trackCode)
+
+        $('#goldModal').modal('show');
+    }
+
+    function ConfirmTransaction() {
+
+        //let trackCode = $('#trackingCode').val();
+        //if (trackCode == "") {
+
+        //}
+        //else
+        $('#frmConfirmTransacton').submit();
+    }
+
+    $('#frmConfirmTransacton').ajaxForm({
+        validation: true,
+        url: '/Fund/ConfirmTransactions',
+        jwt: true,
+        blockui: true,
+        mixin: true,
+        success: (res) => {
+
+            console.log(res)
+            if (res.result) {
+                $('#goldModal').modal('hide');
+                debugger
+                row.fadeOut(1000);
+                
+            }
+        }
+    });
+
+
+
+
+</script>
+

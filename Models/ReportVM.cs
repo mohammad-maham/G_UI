@@ -4,6 +4,7 @@ namespace G_APIs.Models
     public partial class ReportVM
     {
         public long? Id { get; set; }
+        public long? TransactionConfirmId { get; set; }
 
         public long? WalletId { get; set; }
         public long? WalletCurrencyId { get; set; }
