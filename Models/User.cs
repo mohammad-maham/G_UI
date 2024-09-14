@@ -61,6 +61,11 @@ namespace G_APIs.Models
         public string NationalCardImage { get; set; }
         public double BuyPrice { get; set; }
         public double SellPrice { get; set; }
+
+        public string FrontNationalImage { get; set; }
+        public string BackNationalImage { get; set; }
+
+ 
     }
 
 
