@@ -54,7 +54,8 @@ namespace G_APIs.Models
         public object Otpinfo { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDay { get; set; }
+        [Display(Name = "تاریخ تولد")]
+        public string BirthDay { get; set; }
         public string FatherName { get; set; }
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }
