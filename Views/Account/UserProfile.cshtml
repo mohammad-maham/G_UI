@@ -12,14 +12,34 @@
     Description = " تکمیل اطلاعات کاربری"
 })
 <style>
-    #imagePreviewContainer img {
+    #imagePreviewContainer div {
         width: 80px;
         float: left;
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 4px;
         margin: 10px;
+        position: relative;
     }
+
+        #imagePreviewContainer div img {
+            max-width: 100%;
+        }
+
+        #imagePreviewContainer div span {
+            position: absolute;
+            color: #ff0000;
+            z-index: 999;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            font-weight: bolder;
+            background: #fff;
+            border-radius: 5px;
+            line-height: 10px;
+            font-size: 12px;
+            padding: 2px 2px 0 2px;
+        }
 </style>
 
 <div class="row gold-row">
@@ -56,7 +76,7 @@
                 <div class="col-md-4">
                     <div class="mt-3">
                         <div class="form-group">
-                            <label for=" "> آپلود کارت ملی  </label>
+                            <label for=" "> آپلود پشت و رو کارت ملی  </label>
                             <input class="form-control" name="Images" multiple type="file" id="fileUpload" required />
                             <div class="invalid-feedback">
                                 وارد کردن این فیلد الزامیست
@@ -68,14 +88,19 @@
                             if (!string.IsNullOrEmpty(Model.NationalCardImage))
                             {
                                 var images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(Model.NationalCardImage);
-                                foreach (var image in images)
-                                {
-                                    <img src="data:image/png;base64,@image" alt="Uploaded Image" class="preview-image" />
-                                }
+                                <div>
+                                    <span onclick="RemoveImage(this)">x</span>
+                                    <img src="data:image/png;base64,@images[0]" class="preview-image" />
+                                    <input type="text" name="FrontNationalImage" value="@images[0]" />
+
+                                </div>
+                                <div>
+                                    <span onclick="RemoveImage(this)">x</span>
+                                    <img src="data:image/png;base64,@images[1]" class="preview-image" />
+                                    <input type="text" name="BackNationalImage" value="@images[1]" />
+                                </div>
                             }
                         }
-
-
                     </div>
                 </div>
             </div>
@@ -110,20 +135,21 @@
             $('select[name="Gender"]').val(selectedGender).trigger('change');
         }
 
-        $('#fileUpload').on('change', function () {
-            var files = $(this)[0].files;
-            var previewContainer = $('#imagePreviewContainer');
-            previewContainer.empty(); // Clear previous previews
+        //$('#fileUpload').on('change', function () {
+        //    var files = $(this)[0].files;
+        //    var previewContainer = $('#imagePreviewContainer');
+        //    previewContainer.empty();
 
-            Array.from(files).forEach(function (file) {
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    var img = $('<img>').attr('src', event.target.result).addClass('preview-image');
-                    previewContainer.append(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
+        //    Array.from(files).forEach(function (file) {
+        //        var reader = new FileReader();
+        //        reader.onload = function (event) {
+        //            var img = $('<img>').attr('src', event.target.result).addClass('preview-image');
+        //            previewContainer.append(img);
+        //        };
+        //        reader.readAsDataURL(file);
+        //    });
+        //});
+
 
         $('#profileForm').on('submit', function (e) {
             e.preventDefault();
@@ -137,8 +163,22 @@
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    console.log('Success:', response);
 
+                    if (response.result) {
+                        toast({
+                            type: 'success',
+                            title: response.message,
+                        })
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000)
+                    }
+                    else {
+                        toast({
+                            type: 'error',
+                            title: response.message,
+                        })
+                    }
                 },
                 error: function (error) {
                     console.error('Error:', error);
@@ -148,6 +188,13 @@
         });
     });
 
+
+    var RemoveImage = function (e) {
+
+        let img = $(e);
+        img.parent().remove();
+        img.next().val('');
+    }
     //$('#profileForm').ajaxForm({
 
     //    validation: true,

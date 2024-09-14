@@ -227,14 +227,30 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
 
                 User user = _session.Get<User>("UserInfo");
-
-                //model.BirthDay = DateTime.Parse(model.BirthDate, new CultureInfo("fa-IR"));
                 model.UserId = user.Id;
 
-                var files=Request.Files;
+               
+                var uploadFile = new List<string>();
 
-                var uploadList = new UploadFile().Upload(files);
-                model.NationalCardImage=JsonConvert.SerializeObject(uploadList);
+                if (!string.IsNullOrEmpty(model.FrontNationalImage) )
+                    uploadFile.Add(model.FrontNationalImage);
+
+                if (!string.IsNullOrEmpty(model.BackNationalImage))
+                    uploadFile.Add(model.BackNationalImage);
+
+
+                if (!string.IsNullOrEmpty(model.FrontNationalImage) || !string.IsNullOrEmpty(model.BackNationalImage))
+                {
+                    model.NationalCardImage = JsonConvert.SerializeObject(uploadFile);
+                }
+                else
+                {
+                    var files = Request.Files;
+                    var uploadList = new UploadFile().Upload(files);
+                    model.NationalCardImage = JsonConvert.SerializeObject(uploadList);
+                }
+
+
                 var res = _account.CompleteProfile(model, token);
 
                 if (res != null)
