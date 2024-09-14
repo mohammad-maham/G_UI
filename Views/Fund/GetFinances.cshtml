@@ -99,8 +99,8 @@
                                                     else if (item.Status == 1)
                                                     {
                                                         <div>
-                                                            <label>اطلاعات پرداخت    </label>
-                                                            <span>@item.TransactionInfo</span>
+                                                            <label>کد رهگیری      </label>
+                                                            <span>@(Newtonsoft.Json.JsonConvert.DeserializeObject<TransitionInfo>(item.TransactionInfo).TrackingCode)</span>
                                                         </div>
                                                     }
 

@@ -83,8 +83,8 @@ namespace G_APIs.BussinesLogic
 
         public IEnumerable<ReportVM> GetFinancialReport(FilterVM model)
         {
-              var t = new GoldApi("http://localhost:5017/api/Fund/GetFinancialReport", model).Post();
-            // var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
+             // var t = new GoldApi("http://localhost:5017/api/Fund/GetFinancialReport", model).Post();
+             var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
             var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }
@@ -99,8 +99,8 @@ namespace G_APIs.BussinesLogic
 
         public ApiResult ConfirmTransaction(TransactionVM model)
         {
-            var t = new GoldApi("http://localhost:5017/api/Fund/ConfirmTransaction", model).Post();
-            //var t = new GoldApi(GoldHost.Wallet, "/api/Fund/ConfirmTransaction", model).Post();
+            //var t = new GoldApi("http://localhost:5017/api/Fund/ConfirmTransaction", model).Post();
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/ConfirmTransaction", model).Post();
             //var res = JsonConvert.DeserializeObject<WalletCurrency>(t.Data);
             return t;
         }

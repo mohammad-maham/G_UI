@@ -8,7 +8,6 @@
     <form id="registerForm" class="registerForm clearfix text-left" action="javascript:void(0);" novalidate>
         <div class="form">
             <div id="username-field" class="field-wrapper input">
-                <label for="NationalCode">کد ملی</label>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <input name="NationalCode" type="text" class="form-control basic" maxlength="10" placeholder="کد ملی" required>
 
@@ -17,7 +16,6 @@
                 </div>
             </div>
             <div id="password-field" class="field-wrapper input mb-2">
-                <label for="Mobile">موبایل</label>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 <input name="Mobile" type="text" class="form-control " maxlength="11" placeholder="  موبایل را بدون صفر اولیه وارد کنید" required>
                 <div class="invalid-feedback">
@@ -25,7 +23,7 @@
                 </div>
             </div>
             <div id="captcha-field" class="field-wrapper input mb-2 clearfix">
-               <img id="img-captcha" src="~/Content/Captcha/@(Model.Captcha)" onclick="GetCaptcha()" />
+                <img id="img-captcha" src="~/Content/Captcha/@(Model.Captcha)" onclick="GetCaptcha()" />
                 <input id="captcha" name="captcha" type="text" class="form-control" placeholder="متن تصویر" autocomplete="off" required>
                 <div class="invalid-feedback">
                     لطفا متن تصویر را وارد نمایید
@@ -35,11 +33,9 @@
                 <p></p>
             </div>
         </div>
-        <div class="d-sm-flex justify-content-between">
-            <div class="field-wrapper clearfix">
-                <a class="btn btn-primary col-md-3 float-right" href="@Url.Action("Login","Account")">ورود</a>
-                <button type="submit" class="btn btn-success col-md-8">ثبت نام</button>
-            </div>
+        <div class="field-wrapper clearfix">
+            <a class="btn btn-primary col-md-3 float-right" href="@Url.Action("Login","Account")">ورود</a>
+            <button type="submit" class="btn btn-success col-md-8">ثبت نام</button>
         </div>
     </form>
     <form id="setPasswordForm" class="setPasswordForm hide clearfix" action="javascript:void(0);" novalidate>

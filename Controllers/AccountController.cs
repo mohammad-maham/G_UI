@@ -1,10 +1,12 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Common;
 using G_APIs.Models;
+using G_APIs.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -40,9 +42,22 @@ namespace G_APIs.Controllers
         }
 
         [GoldAuthorize]
-        public ActionResult UserProfile(User model)
+        public ActionResult UserProfile()
         {
-            return View(new User() { Name = "sayid" });
+            User user = _session.Get<User>("UserInfo");
+            string token = Request.Cookies["gldauth"].Value;
+            ApiResult res = _account.GetUserInfo(user, token);
+            User model = JsonConvert.DeserializeObject<User>(res.Data);
+
+            //if (model.BirthDay != null)
+            //    model.BirthDate = DateTime.Parse(model.BirthDay.ToString() , new CultureInfo("fa-IR")).ToString("yyyy/MM/dd");
+
+            List<SelectListItem> genders = new List<SelectListItem>();
+            genders.Add(new SelectListItem() { Text = "مرد", Value = "1" });
+            genders.Add(new SelectListItem() { Text = "زن", Value = "0" });
+            ViewBag.Genders = genders;
+               
+            return View(model);
         }
 
         [GoldAuthorize]
@@ -203,19 +218,23 @@ namespace G_APIs.Controllers
         [HttpPost]
         [GoldAuthorize]
 
-        public ActionResult CompleteProfile(User model)
+        public ActionResult CompleteProfile([System.Web.Http.FromBody] User model)
         {
             try
             {
-                var token = Request.Headers["Authorization"].ToString();
-
-                if (token == null )
-                {
-                    //return Unauthorized("Missing or invalid Authorization header.");
+                string token = Request.Cookies["gldauth"].Value;
+                if (token == null)
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
-                }
 
+                User user = _session.Get<User>("UserInfo");
 
+                //model.BirthDay = DateTime.Parse(model.BirthDate, new CultureInfo("fa-IR"));
+                model.UserId = user.Id;
+
+                var files=Request.Files;
+
+                var uploadList = new UploadFile().Upload(files);
+                model.NationalCardImage=JsonConvert.SerializeObject(uploadList);
                 var res = _account.CompleteProfile(model, token);
 
                 if (res != null)

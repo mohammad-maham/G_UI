@@ -4,49 +4,39 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace G_APIs.Services { 
-
-public class UploadFile
+namespace G_APIs.Services
 {
-    public List<string> Upload(HttpFileCollectionBase files)   //target= company or employee or ...
+
+    public class UploadFile
     {
-        try
+        public List<string> Upload(HttpFileCollectionBase files)   //target= company or employee or ...
         {
-            var uploadList = new List<string>();
-            var uploadFolder = @"UserUploads\";
-            var validFiles =new[]  { ".jpg", ".jpeg", ".png", ".pdf" };
-
-            foreach (var key in files.AllKeys)
+            try
             {
-                var posteFile = files.Get(key);
-                if (posteFile != null)
+                var uploadList = new List<string>();
+                var validFiles = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
+
+                for (int i = 0; i < files.Count; i++)
                 {
-                    if (!validFiles.Contains(Path.GetExtension(posteFile.FileName)))
-                        throw new Exception("فقط تصاویر و فایل های pdf قابل آپلود میباشند.");
-
-                    var fileName = Guid.NewGuid().ToString().Substring(0, 5) + "-" + posteFile.FileName;
-                    var savePath = AppDomain.CurrentDomain.BaseDirectory + uploadFolder  +fileName;
-
-                    posteFile.SaveAs(savePath);
-                    uploadList.Add(fileName);
+                    var file = files[i];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(memoryStream);
+                            var fileBytes = memoryStream.ToArray();
+                            var base64String = Convert.ToBase64String(fileBytes);
+                            uploadList.Add(base64String);
+                        }
+                    }
                 }
+                return uploadList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            return uploadList;
-            //if (file.FileAsBase64.Contains(","))
-            //    file.FileAsBase64 = file.FileAsBase64.Substring(file.FileAsBase64.IndexOf(",") + 1);
-
-            //file.FileAsByteArray = Convert.FromBase64String(file.FileAsBase64);
-            //using (var fs = new FileStream(filePathName, FileMode.CreateNew))
-            //{
-            //    fs.Write(file.FileAsByteArray, 0, file.FileAsByteArray.Length);
-            //}
-
         }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-
     }
-}}
+}
