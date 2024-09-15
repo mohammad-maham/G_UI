@@ -92,7 +92,7 @@
                                                 <td>@item.ResponceDescription</td>
                                                 <td>@item.ConfirmationDate</td>
                                                 <td>
-                                                    @if (item.Status <= 0)
+                                                    @if (item.Status <= 0 &&  string.IsNullOrEmpty(item.ResponceDescription))
                                                     {
                                                         <p class="align-self-center mb-0 badge pointer  badge-warning">در انتظار بررسی    </p>
                                                     }

@@ -14,7 +14,7 @@ namespace G_APIs.BussinesLogic.Interface
         List<WalletCurrency> GetWalletCurrencyAsync(Wallet model);
         List<WalletCurrency> GetWalletCurrency(Wallet model);
         ApiResult AddTransaction(TransactionVM model);
-        ApiResult Deposit(PaymentLinkRequest model);
+        ApiResult Deposit(PaymentLinkRequest model,string token);
         IEnumerable<WalletBankAccount> GetBankAccounts(Wallet model);
         ApiResult AddBankAccount(WalletBankAccount model);
         ApiResult ToggleBankCard(WalletBankAccount model);
