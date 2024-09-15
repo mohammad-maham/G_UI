@@ -297,6 +297,7 @@ namespace G_APIs.Controllers
         {
             try
             {
+                string token = Request.Cookies["gldauth"].Value;
 
                 var er = ValidationHelper.Validate(ModelState);
                 if (!string.IsNullOrEmpty(er))
@@ -317,7 +318,8 @@ namespace G_APIs.Controllers
                     WalletCurrencyId = wc.CurrencyId,
                     WalletId = wc.WalletId,
                     TransactionTypeId = (short)TransactionType.Deposit,
-                    Amount = (decimal)m.Amount
+                    Amount = (decimal)m.Amount     ,
+                    RequestDescription=m.Description
                 };
 
                 var resTrans = _fund.AddTransaction(t);
@@ -372,7 +374,7 @@ namespace G_APIs.Controllers
                     Footer = factorFooter
                 };
 
-                var res = _fund.Deposit(model);
+                var res = _fund.Deposit(model,token);
 
                 if (res.StatusCode == 200)
                     return Json(new { result = true, message = res.Message, data = res.Data });
