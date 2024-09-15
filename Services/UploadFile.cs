@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace G_APIs.Services
 {
@@ -14,13 +15,23 @@ namespace G_APIs.Services
             try
             {
                 var uploadList = new List<string>();
-                var validFiles = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
+                string[] validFiles = { "image/jpeg", "image/jpg" };
+
+                if (files.Count > 2)
+                    throw new Exception("تعداد مجاز برای آپلود تنها دو عدد عکس میباشد");
+
 
                 for (int i = 0; i < files.Count; i++)
                 {
                     var file = files[i];
                     if (file != null && file.ContentLength > 0)
                     {
+                        if (!validFiles.Contains(file.ContentType))
+                            throw new Exception(" فرمت فایل ارسالی باید jpg باشد.");
+
+                        if (file.ContentLength > 300 * 1024)
+                            throw new Exception("سایز عر عکس نباید بیشتر از 300 کیلوبایت باشد");
+
                         using (var memoryStream = new MemoryStream())
                         {
                             file.InputStream.CopyTo(memoryStream);

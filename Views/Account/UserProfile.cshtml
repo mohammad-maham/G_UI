@@ -83,22 +83,26 @@
                             </div>
                         </div>
                     </div>
+
                     <div id="imagePreviewContainer" class="mt-3">
                         @{
-                            if (!string.IsNullOrEmpty(Model.NationalCardImage))
+                            if (!string.IsNullOrEmpty(Model.FrontNationalImage))
                             {
-                                var images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(Model.NationalCardImage);
                                 <div>
                                     <span onclick="RemoveImage(this)">x</span>
-                                    <img src="data:image/png;base64,@images[0]" class="preview-image" />
-                                    <input type="text" name="FrontNationalImage" value="@images[0]" />
+                                    <img src="data:image/png;base64,@(Model.FrontNationalImage)" class="preview-image" />
+                                    <input type="hidden" name="FrontNationalImage" value="@(Model.FrontNationalImage)" />
 
                                 </div>
+                            }
+                            if (!string.IsNullOrEmpty(Model.BackNationalImage))
+                            {
                                 <div>
                                     <span onclick="RemoveImage(this)">x</span>
-                                    <img src="data:image/png;base64,@images[1]" class="preview-image" />
-                                    <input type="text" name="BackNationalImage" value="@images[1]" />
+                                    <img src="data:image/png;base64,@(Model.BackNationalImage)" class="preview-image" />
+                                    <input type="hidden" name="BackNationalImage" value="@(Model.BackNationalImage)" />
                                 </div>
+
                             }
                         }
                     </div>
@@ -135,20 +139,27 @@
             $('select[name="Gender"]').val(selectedGender).trigger('change');
         }
 
-        //$('#fileUpload').on('change', function () {
-        //    var files = $(this)[0].files;
-        //    var previewContainer = $('#imagePreviewContainer');
-        //    previewContainer.empty();
+         $('#fileUpload').on('change', function () {
+             //var files = $(this)[0].files;
+              var previewContainer = $('#imagePreviewContainer');
+             //previewContainer.empty();
 
-        //    Array.from(files).forEach(function (file) {
-        //        var reader = new FileReader();
-        //        reader.onload = function (event) {
-        //            var img = $('<img>').attr('src', event.target.result).addClass('preview-image');
-        //            previewContainer.append(img);
-        //        };
-        //        reader.readAsDataURL(file);
-        //    });
-        //});
+             //Array.from(files).forEach(function (file) {
+             //    var reader = new FileReader();
+             //    reader.onload = function (event) {
+             //        var img = $('<img>').attr('src', event.target.result).addClass('preview-image');
+             //        previewContainer.append(img);
+             //    };
+             //    reader.readAsDataURL(file);
+             //});
+
+             let uploadedImages = $('#imagePreviewContainer img').length;
+             if (uploadedImages >= 2)
+                 toast({
+                     type: 'error',
+                     title: "برای آپلود فایل جدید باید قایل های قبلی را حذف کنید",
+                 })
+         });
 
 
         $('#profileForm').on('submit', function (e) {
@@ -194,6 +205,11 @@
         let img = $(e);
         img.parent().remove();
         img.next().val('');
+
+        toast({
+            type: 'warning',
+            title: "برای اعمال تغییرات فرم را ذخیره نمایید.",
+        })
     }
     //$('#profileForm').ajaxForm({
 

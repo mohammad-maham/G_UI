@@ -232,7 +232,7 @@ code {
     }
 
     .row.statbox.widget.box.box-shadow.form-header {
-        margin: 0px 15px 15px 5px;
+        margin: 0px 15px 15px -5px;
     }
 }
 
@@ -1706,4 +1706,17 @@ footer {
     /*    display: inline-flex !important;
 */ -ms-flex-wrap: nowrap !important;
     flex-wrap: nowrap !important;
+}
+
+
+@media only screen and (max-width: 481px) {
+    jdp-overlay {
+        display:none !important;
+    }
+}
+
+@media only screen and (max-width: 481px) {
+    jdp-container {
+        width: 80% !important;
+    }
 }
