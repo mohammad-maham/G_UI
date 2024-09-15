@@ -76,7 +76,7 @@
                 <div class="col-md-4">
                     <div class="mt-3">
                         <div class="form-group">
-                            <label for=" "> آپلود پشت و رو کارت ملی  </label>
+                            <label for=" "> عکس پشت و رو کارت ملی  </label>
                             <input class="form-control" name="Images" multiple type="file" id="fileUpload" required />
                             <div class="invalid-feedback">
                                 وارد کردن این فیلد الزامیست
@@ -85,7 +85,7 @@
                     </div>
                     <div id="imagePreviewContainer" class="mt-3">
                         @{
-                            if (!string.IsNullOrEmpty(Model.NationalCardImage))
+                            if (Model != null && !string.IsNullOrEmpty(Model.NationalCardImage) && Model.NationalCardImage != "[]")
                             {
                                 var images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(Model.NationalCardImage);
                                 <div>
@@ -109,7 +109,7 @@
                 {
                     ButtonType = GoldButtonTypes.submit,
                     Name = "btnDeposit",
-                    Icon = "fa fa-shopping-basket fa-2x",
+                    Icon = "fa fa-save fa-2x",
                     Class = "btn btn-success",
                     Text = "ذخیره",
                     //OnClick = "Deposit()"
@@ -130,7 +130,7 @@
 
     $(document).ready(function () {
 
-        var selectedGender = '@Model.Gender';
+        var selectedGender = '@(Model!=null ?Model.Gender:1)';
         if (selectedGender) {
             $('select[name="Gender"]').val(selectedGender).trigger('change');
         }
