@@ -22,6 +22,7 @@
         border: 1px solid #a77010;
         padding-block: 10px;
         border-radius: 5px;
+        overflow:auto;
     }
 
     .dataTables_length {
@@ -52,7 +53,7 @@
 
 <script>
     $('.datatable').DataTable({
-        dom: '<"row"<"col-md-12"<"col-md-12"B><"col-md-12"lf> <"row"> ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>>>',
+        dom: '<"row"<"col-md-12"<"col-md-12"B><"col-md-12"lf> <"row"> ><"col-md-12"rt> <"col-md-12"<"row"<"col-5"i><"col-7"p>>>>',
         buttons: {
             buttons: [
                 { extend: 'copy', className: 'btn text-secondary rounded-circle', text: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect height="13" rx="2" ry="2" width="13" x="9" y="9" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>` },

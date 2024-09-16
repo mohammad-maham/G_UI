@@ -49,13 +49,21 @@ namespace G_APIs.Controllers
             ApiResult res = _account.GetUserInfo(user, token);
             User model = JsonConvert.DeserializeObject<User>(res.Data);
 
-            //if (model.BirthDay != null)
-            //    model.BirthDate = DateTime.Parse(model.BirthDay.ToString() , new CultureInfo("fa-IR")).ToString("yyyy/MM/dd");
-
-            List<SelectListItem> genders = new List<SelectListItem>();
-            genders.Add(new SelectListItem() { Text = "مرد", Value = "1" });
-            genders.Add(new SelectListItem() { Text = "زن", Value = "0" });
-            ViewBag.Genders = genders;
+ 
+            List<string> images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(model.NationalCardImage);
+            if (images != null)
+                if (images.Count == 1)
+                    model.FrontNationalImage = images[0];
+                else if (images.Count == 2)
+                {
+                    model.FrontNationalImage = images[0];
+                    model.BackNationalImage = images[1];
+                }
+            //List<SelectListItem> genders = new List<SelectListItem>();
+            //genders.Add(new SelectListItem() { Text = "مرد", Value = "1" });
+            //genders.Add(new SelectListItem() { Text = "زن", Value = "0" });
+            //ViewBag.Genders = genders;
+ 
 
             return View(model);
         }
@@ -234,27 +242,18 @@ namespace G_APIs.Controllers
                 User user = _session.Get<User>("UserInfo");
                 model.UserId = user.Id;
 
-
-                var uploadFile = new List<string>();
+ 
+                HttpFileCollectionBase files = Request.Files;
+                List<string> uploadList = new UploadFile().Upload(files);
 
                 if (!string.IsNullOrEmpty(model.FrontNationalImage))
-                    uploadFile.Add(model.FrontNationalImage);
+                    uploadList.Add(model.FrontNationalImage);
+ 
 
                 if (!string.IsNullOrEmpty(model.BackNationalImage))
-                    uploadFile.Add(model.BackNationalImage);
+                    uploadList.Add(model.BackNationalImage);
 
-
-                if (!string.IsNullOrEmpty(model.FrontNationalImage) || !string.IsNullOrEmpty(model.BackNationalImage))
-                {
-                    model.NationalCardImage = JsonConvert.SerializeObject(uploadFile);
-                }
-                else
-                {
-                    var files = Request.Files;
-                    var uploadList = new UploadFile().Upload(files);
-                    model.NationalCardImage = JsonConvert.SerializeObject(uploadList);
-                }
-
+                model.NationalCardImage = JsonConvert.SerializeObject(uploadList);
 
                 var res = _account.CompleteProfile(model, token);
 
