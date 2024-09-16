@@ -46,10 +46,10 @@ namespace G_APIs.Controllers
         {
             User user = _session.Get<User>("UserInfo");
             string token = Request.Cookies["gldauth"].Value;
-            ApiResult res = _account.GetUserInfo(user, token);
+            ApiResult res = _account.GetUserInfo(user ?? new User(), token);
             User model = JsonConvert.DeserializeObject<User>(res.Data);
 
- 
+
             List<string> images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(model.NationalCardImage);
             if (images != null)
                 if (images.Count == 1)
@@ -63,7 +63,7 @@ namespace G_APIs.Controllers
             //genders.Add(new SelectListItem() { Text = "مرد", Value = "1" });
             //genders.Add(new SelectListItem() { Text = "زن", Value = "0" });
             //ViewBag.Genders = genders;
- 
+
 
             return View(model);
         }
@@ -242,13 +242,13 @@ namespace G_APIs.Controllers
                 User user = _session.Get<User>("UserInfo");
                 model.UserId = user.Id;
 
- 
+
                 HttpFileCollectionBase files = Request.Files;
                 List<string> uploadList = new UploadFile().Upload(files);
 
                 if (!string.IsNullOrEmpty(model.FrontNationalImage))
                     uploadList.Add(model.FrontNationalImage);
- 
+
 
                 if (!string.IsNullOrEmpty(model.BackNationalImage))
                     uploadList.Add(model.BackNationalImage);
