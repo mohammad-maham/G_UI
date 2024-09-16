@@ -11,10 +11,6 @@
     @if (roleId == 11)
     {
         @Html.Action("GoldRepositoryStatusChart", "Store")
-        using (Html.Box("کیف پول", col: 6, iconType: BoxIconTypes.info))
-        {
-            @Html.Action("Wallet", "Fund")
-        }
     }
     else
     {
