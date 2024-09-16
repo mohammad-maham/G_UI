@@ -89,7 +89,7 @@
             mixin: true,
             target: ".transaction-result",
             success: function (data) {
-                if (data) {
+                if (data && data.result == undefined && data.message == undefined) {
                     swal({
                         title: 'خرید موفق',
                         text: "عملیات خرید با موفقیت انجام یافت",
@@ -99,6 +99,13 @@
                     setTimeout(() => {
                         location.reload();
                     }, 1500);
+                } else {
+                    swal({
+                        title: 'خرید ناموفق',
+                        text: data.message,
+                        type: 'error',
+                        padding: '2em'
+                    });
                 }
                 $("input[name='@nameof(Model.Weight)']").val('');
                 disableBuy();

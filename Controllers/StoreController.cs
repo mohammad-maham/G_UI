@@ -56,19 +56,30 @@ namespace G_APIs.Controllers
             {
                 if (userInfo != null && !string.IsNullOrEmpty(token))
                 {
+                    WalletCurrency walletCurrency = _wallet.GetWalletCurrency(new Wallet { UserId = userInfo.Id })
+                        .Where(x => x.CurrencyId == 1)
+                        .FirstOrDefault();
+
                     // Business
                     double buyPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
                     {
                         GoldCalcType = CalcTypes.buy,
                         GoldWeight = buyVM.Weight
                     }, token);
-                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.Id });
+
+                    WalletCurrency wallet = _wallet.GetWallet(new Wallet() { UserId = userInfo.Id });
+
+                    if (walletCurrency == null)
+                        return Json(new { result = false, message = "بروز خطا : کیف پول پیدا نشد." });
+
+                    if (walletCurrency.Amount < (double)buyPrice)
+                        return Json(new { result = false, message = "موجودی پول شما کافی نیست" });
 
                     // Binding
                     buyVM.Carat = 750;
                     buyVM.GoldType = 2;
                     buyVM.SourceAmount = buyPrice;
-                    buyVM.WalleId = walletCurrency.Id;
+                    buyVM.WalleId = wallet.Id;
                     buyVM.UserId = userInfo.Id.Value;
                     buyVM.DestinationAmount = buyVM.Weight;
                     buyVM.CurrentCalculatedPrice = buyPrice;
@@ -129,19 +140,29 @@ namespace G_APIs.Controllers
             {
                 if (userInfo != null && !string.IsNullOrEmpty(token))
                 {
+                    WalletCurrency walletCurrency = _wallet.GetWalletCurrency(new Wallet { UserId = userInfo.Id })
+                        .Where(x => x.CurrencyId == 2)
+                        .FirstOrDefault();
+
                     // Business
                     double sellPrice = _store.GetOnlineBuyPrice(new PriceCalcVM()
                     {
                         GoldCalcType = CalcTypes.sell,
                         GoldWeight = sellVM.Weight
                     }, token);
-                    WalletCurrency walletCurrency = _wallet.GetWallet(new Wallet() { UserId = userInfo.Id });
+                    WalletCurrency wallet = _wallet.GetWallet(new Wallet() { UserId = userInfo.Id });
+
+                    if (walletCurrency == null)
+                        return Json(new { result = false, message = "بروز خطا : کیف پول پیدا نشد." });
+
+                    if (walletCurrency.Amount < (double)sellVM.Weight)
+                        return Json(new { result = false, message = "موجودی طلا شما کافی نیست" });
 
                     // Binding
                     sellVM.Carat = 750;
                     sellVM.GoldType = 2;
                     sellVM.SourceAmount = sellVM.Weight;
-                    sellVM.WalleId = walletCurrency.Id;
+                    sellVM.WalleId = wallet.Id;
                     sellVM.UserId = userInfo.Id.Value;
                     sellVM.DestinationAmount = sellPrice;
                     sellVM.CurrentCalculatedPrice = sellPrice;
