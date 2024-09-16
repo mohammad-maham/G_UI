@@ -41,10 +41,10 @@ namespace G_APIs.BussinesLogic
             return w;
         }
 
-        public ApiResult Deposit(PaymentLinkRequest model)
+        public ApiResult Deposit(PaymentLinkRequest model, string token)
         {
-             var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
-            //var res = new GoldApi(GoldHost.IPG, "/api/Fund/AddPaymentData", model).Post();
+             //var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
+             var res = new GoldApi(GoldHost.IPG, "/IPG/AddPaymentData", model, authorization: token).Post();
             return res;
         }
 
@@ -83,8 +83,8 @@ namespace G_APIs.BussinesLogic
 
         public IEnumerable<ReportVM> GetFinancialReport(FilterVM model)
         {
-             // var t = new GoldApi("http://localhost:5017/api/Fund/GetFinancialReport", model).Post();
-             var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
+            // var t = new GoldApi("http://localhost:5017/api/Fund/GetFinancialReport", model).Post();
+            var t = new GoldApi(GoldHost.Wallet, "/api/Fund/GetFinancialReport", model).Post();
             var res = JsonConvert.DeserializeObject<List<ReportVM>>(t.Data);
             return res;
         }

@@ -52,6 +52,7 @@ namespace G_APIs.Models
         public DateTime RegDate { get; set; }
         public short Status { get; set; }
         public object Otpinfo { get; set; }
+ 
         [Display(Name = "نام  ")]
         public string FirstName { get; set; }
         [Display(Name = "نام خانوادگی  ")]
@@ -59,6 +60,7 @@ namespace G_APIs.Models
         [Display(Name = "تاریخ تولد")]
         public string BirthDay { get; set; }
         [Display(Name = "  نام پدر")]
+ 
         public string FatherName { get; set; }
         public string SedadInfo { get; set; }
         public string NationalCardImage { get; set; }

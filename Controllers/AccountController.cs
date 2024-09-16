@@ -49,6 +49,7 @@ namespace G_APIs.Controllers
             ApiResult res = _account.GetUserInfo(user, token);
             User model = JsonConvert.DeserializeObject<User>(res.Data);
 
+ 
             List<string> images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(model.NationalCardImage);
             if (images != null)
                 if (images.Count == 1)
@@ -62,6 +63,7 @@ namespace G_APIs.Controllers
             //genders.Add(new SelectListItem() { Text = "مرد", Value = "1" });
             //genders.Add(new SelectListItem() { Text = "زن", Value = "0" });
             //ViewBag.Genders = genders;
+ 
 
             return View(model);
         }
@@ -113,7 +115,7 @@ namespace G_APIs.Controllers
                         FormsAuthentication.SetAuthCookie(model.Name, false);
 
                         HttpCookie authCookie = new HttpCookie("gldauth", res.Data);
-                        //authCookie.Expires = DateTime.Now.AddMinutes(5);
+                        authCookie.Expires = DateTime.Now.AddMinutes(10);
                         Response.Cookies.Add(authCookie);
 
                         return Json(new { result = true, data = res.Data });
@@ -232,14 +234,21 @@ namespace G_APIs.Controllers
                 if (token == null)
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
 
+                bool isNotValid = string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName) || string.IsNullOrEmpty(model.FatherName) || string.IsNullOrEmpty(model.BirthDay);
+
+                if (isNotValid)
+                    return Json(new { result = false, message = "لطفا اطلاعات خود را بصورت کامل تکمیل نمائید" });
+
                 User user = _session.Get<User>("UserInfo");
                 model.UserId = user.Id;
 
+ 
                 HttpFileCollectionBase files = Request.Files;
                 List<string> uploadList = new UploadFile().Upload(files);
 
                 if (!string.IsNullOrEmpty(model.FrontNationalImage))
                     uploadList.Add(model.FrontNationalImage);
+ 
 
                 if (!string.IsNullOrEmpty(model.BackNationalImage))
                     uploadList.Add(model.BackNationalImage);
