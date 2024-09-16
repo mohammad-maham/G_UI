@@ -45,7 +45,7 @@ namespace G_APIs.BussinesLogic
 
         public ApiResult Deposit(PaymentLinkRequest model, string token)
         {
-             //var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
+             // var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
              var res = new GoldApi(GoldHost.IPG, "/IPG/AddPaymentData", model, authorization: token).Post();
             return res;
         }

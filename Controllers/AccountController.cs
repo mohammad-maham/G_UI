@@ -1,4 +1,5 @@
-﻿using G_APIs.BussinesLogic.Interface;
+﻿using G_APIs.BussinesLogic;
+using G_APIs.BussinesLogic.Interface;
 using G_APIs.Common;
 using G_APIs.Models;
 using G_APIs.Services;
@@ -47,10 +48,9 @@ namespace G_APIs.Controllers
             User user = _session.Get<User>("UserInfo");
             string token = Request.Cookies["gldauth"].Value;
             ApiResult res = _account.GetUserInfo(user ?? new User(), token);
-            User model = JsonConvert.DeserializeObject<User>(res.Data);
+            User model = JsonConvert.DeserializeObject<User>(res.Data) ?? new User();
 
-
-            List<string> images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(model.NationalCardImage);
+            List<string> images = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(model.NationalCardImage ?? "" );
             if (images != null)
                 if (images.Count == 1)
                     model.FrontNationalImage = images[0];
@@ -85,6 +85,12 @@ namespace G_APIs.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            if (Request.Cookies["gldauth"] != null)
+            {
+                var c = new HttpCookie("gldauth");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
             return RedirectToAction("Login");
         }
 
@@ -115,7 +121,7 @@ namespace G_APIs.Controllers
                         FormsAuthentication.SetAuthCookie(model.Name, false);
 
                         HttpCookie authCookie = new HttpCookie("gldauth", res.Data);
-                        authCookie.Expires = DateTime.Now.AddMinutes(10);
+                        //authCookie.Expires = DateTime.Now.AddMinutes(10);
                         Response.Cookies.Add(authCookie);
 
                         return Json(new { result = true, data = res.Data });
@@ -259,12 +265,18 @@ namespace G_APIs.Controllers
 
                 if (res != null)
                 {
-
+                    
                     if (res.StatusCode != 200)
                         return Json(new { result = false, message = res.Message });
 
                     if (res.StatusCode == 200 && res.Data != null)
+                    {
+                        ApiResult _userInfo = _account.GetUserInfo(user ?? new User(), token);
+                        if (_userInfo!=null && !string.IsNullOrEmpty(_userInfo.Data))
+                            _session.Set("UserInfo", _userInfo.Data);
+
                         return Json(new { result = true, message = res.Message });
+                    }
 
 
                 }
@@ -297,7 +309,6 @@ namespace G_APIs.Controllers
                     return Json(new { result = false, message = "ورود غیر مجاز لطفا دوباره وارد شوید." });
                 }
 
-
                 var res = _account.SubmitContact(model, token);
 
                 if (res != null)
@@ -308,7 +319,6 @@ namespace G_APIs.Controllers
 
                     if (res.StatusCode == 200 && res.Data != null)
                         return Json(new { result = true, message = res.Message });
-
 
                 }
 

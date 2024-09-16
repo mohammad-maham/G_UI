@@ -169,6 +169,7 @@
             e.preventDefault();
 
             var formData = new FormData(this);
+            BlockUi($(this));
 
             $.ajax({
                 url: '/Account/CompleteProfile',
@@ -178,6 +179,7 @@
                 processData: false,
                 success: function (response) {
 
+                    UnBlock($(this));
                     if (response.result) {
                         toast({
                             type: 'success',
@@ -196,12 +198,11 @@
                 },
                 error: function (error) {
                     console.error('Error:', error);
-
+                    UnBlock($(this));
                 }
             });
         });
     });
-
 
     var RemoveImage = function (e) {
 
