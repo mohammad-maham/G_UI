@@ -1,6 +1,7 @@
 ﻿using G_APIs.BussinesLogic.Interface;
 using G_APIs.Models;
 using G_APIs.Services;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -134,6 +135,12 @@ namespace G_APIs.BussinesLogic
                 throw;
             }
             return userStatuses;
+        }
+
+        public ApiResult UserInfo(string token)
+        {
+            ApiResult response = new GoldApi(GoldHost.Accounting, "/api/Attributes/GetUserInfo", new { token }, authorization: token).Post();
+            return response;
         }
     }
 }

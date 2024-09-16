@@ -11,6 +11,7 @@ namespace G_APIs.BussinesLogic.Interface
         ApiResult CompleteProfile(User model, string token);
         ApiResult SubmitContact(User model, string token);
         ApiResult GetUserInfo(User model, string token);
+        ApiResult UserInfo(string token);
         ApiResult ForgotPassword(User model);
         List<GetUsersVM> GetUsers(string token);
         List<UsersList> GetUsersList(UsersReportFilterVM users, string token);
@@ -18,5 +19,6 @@ namespace G_APIs.BussinesLogic.Interface
         List<UserStatus> GetUserStatuses(string token);
         ApiResult UpdateUserStatus(UsersList users, string token);
         ApiResult ChangeUserRole(UsersList users, string token);
+
     }
 }
