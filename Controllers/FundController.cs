@@ -62,7 +62,12 @@ namespace G_APIs.Controllers
                 model.UserId = user.Id;
 
                 if (user == null)
-                    return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
+                    return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات کاربر" } });
+
+                WalletCurrency wallet = _fund.GetWallet(new Wallet { UserId = user.Id });
+                if (wallet == null)
+                    return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت   کیف پول" } });
+
 
                 var res = _fund.GetWalletCurrency(model).OrderBy(x => x.CurrencyId).ToList();
 
@@ -89,7 +94,8 @@ namespace G_APIs.Controllers
                 var res = _fund.GetWalletCurrency(new Wallet { UserId = user.Id })
                     .FirstOrDefault(x => x.CurrencyId == 1);
 
-                ViewBag.BankCards = _fund.GetBankAccounts(new Wallet { UserId = user.Id }).OrderBy(x => x.Id).ToList();
+                ViewBag.BankCards = _fund.GetBankAccounts(new Wallet { UserId = user.Id })
+                    .Where(x=>x.Status==1).OrderBy(x => x.Id).ToList();
 
                 res.Amount = 100000;
                 return View(res);
@@ -194,7 +200,7 @@ namespace G_APIs.Controllers
                     model.ToDate = DateTime.Parse(model.ToDate, new CultureInfo("fa-IR")).ToString("yyyy-MM-ddT23:59:59");
 
                 var res = _fund.GetFinancialReport(model)
-                    .Where(x => x.ConfirmationUserId == 0 && x.TransactionTypeId== (short)TransactionType.Windrow)
+                    .Where(x => x.ConfirmationUserId == 0 && x.TransactionTypeId == (short)TransactionType.Windrow)
                     .OrderBy(x => x.Id).ToList();
 
                 return View(res);
@@ -297,28 +303,25 @@ namespace G_APIs.Controllers
         {
             try
             {
-                string token = Request.Cookies["gldauth"].Value;
 
                 var er = ValidationHelper.Validate(ModelState);
                 if (!string.IsNullOrEmpty(er))
                     return Json(new { result = false, message = er });
 
-                //if (String.IsNullOrEmpty(model.BankCard))
-                //    return Json(new { result = false, message = "بروز خطا : لطفا شماره کارت را وارد نمایید." });
-
-                var user = _session.Get<User>("UserInfo");
+                string token = Request.Cookies["gldauth"].Value;
+                User user = _session.Get<User>("UserInfo");
 
                 if (user == null)
                     return Json(new { result = false, message = "بروز خطا :  لطفا دوباره وارد شوید." });
 
-                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.Id }).FirstOrDefault(x=>x.CurrencyId==1);
+                var wc = _fund.GetWalletCurrency(new Wallet { UserId = user.Id }).FirstOrDefault(x => x.CurrencyId == 1);
                 var t = new TransactionVM
                 {
                     TransactionModeId = (short)TransactionMode.Online,
                     WalletCurrencyId = wc.CurrencyId,
                     WalletId = wc.WalletId,
                     TransactionTypeId = (short)TransactionType.Deposit,
-                    Amount = (decimal)m.Amount     ,
+                    Amount = (decimal)m.Amount,
                     RequestDescription=m.Description
                 };
 

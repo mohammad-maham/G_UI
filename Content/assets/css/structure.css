@@ -382,7 +382,7 @@ code {
 
     .navbar-expand-sm .navbar-item .nav-link {
         line-height: 2.75rem;
-        padding: 6.24px 9.6px;
+        padding: 2px;
         text-transform: initial;
         position: unset;
     }
@@ -915,12 +915,12 @@ code {
 
 /* User Profile Dropdown*/
 .navbar .navbar-item .nav-item.user-profile-dropdown {
-    margin-right: 20px;
+    /*margin-right: 20px;*/
     margin-left: 16px;
 }
 
     .navbar .navbar-item .nav-item.user-profile-dropdown .nav-link.user {
-        padding: 4.64px 0;
+        padding: 0;
         font-size: 25px;
     }
 
@@ -1718,5 +1718,12 @@ footer {
 @media only screen and (max-width: 481px) {
     jdp-container {
         width: 80% !important;
+    }
+}
+
+@media only screen and (max-width: 481px) {
+    .header-container {
+        margin-left: 15px !important;
+        padding-right: 0;
     }
 }

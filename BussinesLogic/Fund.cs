@@ -17,6 +17,7 @@ namespace G_APIs.BussinesLogic
     {
         public WalletCurrency GetWallet(Wallet model)
         {
+           //var res = new GoldApi("http://localhost:5017/api/Fund/GetWallet", model).Post();
             var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWallet", model).Post();
             var w = JsonConvert.DeserializeObject<WalletCurrency>(res.Data);
 
@@ -25,6 +26,7 @@ namespace G_APIs.BussinesLogic
 
         public List<WalletCurrency> GetWalletCurrency(Wallet model)
         {
+           //var res = new GoldApi("http://localhost:5017/api/Fund/GetWalletCurrency", model).Post();
             var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", model).Post();
 
             var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
