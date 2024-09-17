@@ -114,6 +114,8 @@
                 $('#setPasswordForm,.register-header').hide();
                 $('#registed').show();
             }
+            else
+                GetCaptcha();
         },
         error: function (xhr, status, error) {
             $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();

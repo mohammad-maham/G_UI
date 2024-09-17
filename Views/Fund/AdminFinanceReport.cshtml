@@ -71,6 +71,12 @@
                                 </div>
                                 <div>
                                     <div class="form-group ">
+                                        <label> شماره کارت</label>
+                                        <input class="form-control" readonly type="text" id="bankCard" value="@(item.TransInfo?.BankCard ?? "")" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-group ">
                                         <label> توضیحات ادمین</label>
                                         <input class="form-control" type="text" name="ResponceDescription" value="@item.ResponceDescription" />
                                     </div>

@@ -70,12 +70,10 @@
         success: function (response) {
 
             console.log(response)
-            if (response.result) {
-
-                //document.cookie = "auth=" + response.data + "; path=/";
+            if (response.result)
                 window.location.href = '/Home';
-
-            }
+            else
+                GetCaptcha();
         },
         error: function (xhr, status, error) {
             $('.registerResult').html('خطایی رخ داده لطفا دوباره تلاش نمایید.').show();

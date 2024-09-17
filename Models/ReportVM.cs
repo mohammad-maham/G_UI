@@ -1,4 +1,7 @@
 ﻿
+using Elmah.Assertions;
+using Newtonsoft.Json;
+
 namespace G_APIs.Models
 {
     public partial class ReportVM
@@ -50,7 +53,22 @@ namespace G_APIs.Models
         public string ResponceDescription { get; set; }
 
         public string TransactionInfo { get; set; }
+
+        public TransInfo TransInfo
+        {
+            get
+            {
+                if(!string.IsNullOrEmpty(Info))
+                    return JsonConvert.DeserializeObject<TransInfo>(Info);
+
+                return new TransInfo();
+            }
+        }
     }
 
+    public class TransInfo
+    {
+        public string BankCard { get; set; }
+    }
 }
 
