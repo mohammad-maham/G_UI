@@ -93,10 +93,12 @@ else
          mixin: true,
 
          success: function (res) {
-             var guid = JSON.parse(res.data)
              debugger
-             if (res.result)
-                 window.location.href = "http://localhost:5171/IPG/ShowBill?guid=" + guid;
+             if (res.result) {
+                 var guid = JSON.parse(res.data)
+                 window.location.href = "http://194.60.231.81:7125/IPG/ShowBill?guid=" + guid;
+             }
+
          },
      });
 
@@ -108,7 +110,7 @@ else
             return;
         }
 
-        window.location.href = "http://194.60.231.81:7124/Home/Deposit?walletId="+ @Model.WalletId + "&amount=" + amount
+        window.location.href = "http://194.60.231.81:7125/Home/Deposit?walletId="+ @Model.WalletId + "&amount=" + amount
     }*@
 
     </script>
