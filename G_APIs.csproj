@@ -290,6 +290,7 @@
     <Compile Include="Services\AlertMessaging.cs" />
     <Compile Include="Services\GoldApi.cs" />
     <Compile Include="Services\UploadFile.cs" />
+    <Compile Include="SSLFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
@@ -389,6 +390,10 @@
     <Content Include="Content\assets\img\login-image.jpg" />
     <Content Include="Content\assets\img\login-image.png" />
     <Content Include="Content\assets\img\mindset.svg" />
+    <Content Include="Content\assets\img\pwa-icons\android-launchericon-192-192.png" />
+    <Content Include="Content\assets\img\pwa-icons\android-launchericon-512-512.png" />
+    <Content Include="Content\assets\img\pwa-icons\ios-appicon-152-152.png" />
+    <Content Include="Content\assets\img\pwa-icons\ios-appicon-180-180.png" />
     <Content Include="Content\assets\js\app.js" />
     <Content Include="Content\assets\js\apps\contact.js" />
     <Content Include="Content\assets\js\apps\custom-mailbox.js" />
@@ -965,6 +970,7 @@
     <Content Include="Content\plugins\treeview\custom-jstree.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="service-worker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -1164,6 +1170,7 @@
     <Content Include="Content\sass\plugins\table\datatable\dt-global_style-dark.scss" />
     <Content Include="Content\sass\plugins\table\datatable\dt-global_style.scss" />
     <Content Include="Content\sass\plugins\tagInput\tags-input.scss" />
+    <Content Include="manifest.json" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
