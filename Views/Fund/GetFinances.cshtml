@@ -82,6 +82,7 @@
                                             <tr>
                                                 <th>توضیحات کاربر</th>
                                                 <th>توضیحات ادمین</th>
+                                                <th>شماره کارت  </th>
                                                 <th>تاریخ  </th>
                                                 <th> وضعیت  </th>
                                             </tr>
@@ -90,9 +91,10 @@
                                             <tr>
                                                 <td>@item.RequestDescription</td>
                                                 <td>@item.ResponceDescription</td>
+                                                <td>@(item.TransInfo?.BankCard ?? "")</td>
                                                 <td>@item.ConfirmationDate</td>
                                                 <td>
-                                                    @if (item.Status <= 0 &&  string.IsNullOrEmpty(item.ResponceDescription))
+                                                    @if (item.Status <= 0 && string.IsNullOrEmpty(item.ResponceDescription))
                                                     {
                                                         <p class="align-self-center mb-0 badge pointer  badge-warning">در انتظار بررسی    </p>
                                                     }

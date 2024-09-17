@@ -468,6 +468,9 @@ namespace G_APIs.Controllers
                 if (user == null)
                     return View(new List<WalletCurrency> { new WalletCurrency { CurrencyName = "بروز خطا در دریافت اطلاعات" } });
 
+                ViewBag.BankCards = _fund.GetBankAccounts(new Wallet { UserId = user.Id })
+                   .Where(x => x.Status == 1).OrderBy(x => x.Id).ToList();
+
                 return View(new WalletCurrency());
             }
             catch (Exception)
@@ -478,7 +481,7 @@ namespace G_APIs.Controllers
 
         [HttpPost]
         [GoldAuthorize]
-        public ActionResult Windrow(TransactionVM model)
+        public ActionResult Windrow(WalletCurrency model)
         {
             try
             {
@@ -510,8 +513,9 @@ namespace G_APIs.Controllers
                     WalletCurrencyId = wc.CurrencyId,
                     WalletId = wc.WalletId,
                     TransactionTypeId = (short)TransactionType.Windrow,
-                    Amount = model.Amount,
-                    RequestDescription = model.Description
+                    Amount = (decimal)model.Amount,
+                    RequestDescription = model.Description,
+                    Info=JsonConvert.SerializeObject(new TransInfo { BankCard=model.BankCard})
                 };
 
                 var res = _fund.AddTransaction(t);

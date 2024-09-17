@@ -17,7 +17,7 @@ namespace G_APIs.BussinesLogic
     {
         public WalletCurrency GetWallet(Wallet model)
         {
-           //var res = new GoldApi("http://localhost:5017/api/Fund/GetWallet", model).Post();
+            //var res = new GoldApi("http://localhost:5017/api/Fund/GetWallet", model).Post();
             var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWallet", model).Post();
             var w = JsonConvert.DeserializeObject<WalletCurrency>(res.Data);
 
@@ -26,7 +26,7 @@ namespace G_APIs.BussinesLogic
 
         public List<WalletCurrency> GetWalletCurrency(Wallet model)
         {
-           //var res = new GoldApi("http://localhost:5017/api/Fund/GetWalletCurrency", model).Post();
+            //var res = new GoldApi("http://localhost:5017/api/Fund/GetWalletCurrency", model).Post();
             var res = new GoldApi(GoldHost.Wallet, "/api/Fund/GetWalletCurrency", model).Post();
 
             var w = JsonConvert.DeserializeObject<List<WalletCurrency>>(res.Data);
@@ -45,8 +45,8 @@ namespace G_APIs.BussinesLogic
 
         public ApiResult Deposit(PaymentLinkRequest model, string token)
         {
-             // var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
-             var res = new GoldApi(GoldHost.IPG, "/IPG/AddPaymentData", model, authorization: token).Post();
+            // var res = new GoldApi("http://localhost:5171/IPG/AddPaymentData", model).Post();
+            var res = new GoldApi(GoldHost.IPG, "/IPG/AddPaymentData", model, authorization: token).Post();
             return res;
         }
 
