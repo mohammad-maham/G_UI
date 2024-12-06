@@ -297,7 +297,7 @@ namespace G_APIs.Controllers
             }
         }
 
-        [HttpPost]
+         [HttpPost]
         [GoldAuthorize]
         public ActionResult Deposit(WalletCurrency m)
         {
@@ -379,6 +379,7 @@ namespace G_APIs.Controllers
 
                 var res = _fund.Deposit(model,token);
 
+                          return View("ShowBill",model)   ;
                 if (res.StatusCode == 200)
                     return Json(new { result = true, message = res.Message, data = res.Data });
 

@@ -93,11 +93,13 @@ else
          mixin: true,
 
          success: function (res) {
-             debugger
-             if (res.result) {
-                 var guid = JSON.parse(res.data)
-                 window.location.href = "http://194.60.231.81:7125/IPG/ShowBill?guid=" + guid;
-             }
+             console.log(res);
+             $('#custom_styles').html(res);
+             //debugger
+             //if (res.result) {
+             //    var guid = JSON.parse(res.data)
+             //    window.location.href = "http://194.60.231.11:7122/IPG/ShowBill?guid=" + guid;
+             //}
 
          },
      });

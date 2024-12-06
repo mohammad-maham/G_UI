@@ -259,6 +259,7 @@
     <Compile Include="Models\GoldRepositoryStatusVM.cs" />
     <Compile Include="Models\GoldTypesVM.cs" />
     <Compile Include="Models\IPG.cs" />
+    <Compile Include="Models\LinkRequest.cs" />
     <Compile Include="Models\TransitionInfo.cs" />
     <Compile Include="Models\MessageContext.cs" />
     <Compile Include="Models\ApiResult.cs" />
@@ -1250,6 +1251,7 @@
     <Content Include="Views\Fund\AdminFinance.cshtml" />
     <Content Include="Views\Fund\AdminFinanceReport.cshtml" />
     <Content Include="Views\Fund\GetWallet.cshtml" />
+    <Content Include="Views\Fund\ShowBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
