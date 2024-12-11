@@ -1252,6 +1252,7 @@
     <Content Include="Views\Fund\AdminFinanceReport.cshtml" />
     <Content Include="Views\Fund\GetWallet.cshtml" />
     <Content Include="Views\Fund\ShowBill.cshtml" />
+    <Content Include="Views\Home\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

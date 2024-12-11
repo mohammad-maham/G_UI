@@ -12,6 +12,13 @@
     #accordionExample ul.submenu li {
         border-bottom: 0.5px dashed #dbdbdb !important;
     }
+    #accordionExample .fa {
+        color: black;
+        font-size: 12px !important;
+    }
+    #accordionExample .submenu a.active {
+        color: #009cf7 !important;
+    }
 </style>
 
 <nav id="sidebar">
@@ -38,7 +45,8 @@
                             <span>@parentMenu.MenuTitle</span>
                         </div>
                         <div>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            @*<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>*@
+                            <i class="fa  fa-chevron-left"></i>
                         </div>
                     </a>
                     <ul class="collapse submenu recent-submenu mini-recent-submenu list-unstyled show" id="@parentMenu.MenuName" data-parent="#accordionExample">
@@ -276,7 +284,31 @@
             walletBox.effect('highlight', { color: '#f5c37c' }, 2000);
         });
 
-
     }
+
+    function InitializeMenu() {
+
+        const savedMenu = localStorage.getItem('activeMenuItem');
+        if (savedMenu) {
+            debugger
+            $(`#accordionExample #${savedMenu}`)
+                .addClass('active')
+                .parents(`li.menu`)
+                .find(`.dropdown-toggle`)
+                .click();
+        }
+
+        $('#accordionExample .submenu  li a').on('click', function () {
+            const id = $(this).attr('id');
+            $('#accordionExample li a').removeClass('active');
+            $(`#accordionExample #${id}`).addClass('active');
+            localStorage.setItem('activeMenuItem', id); 
+        });
+    }
+
+    $(document).ready(function () {
+        $('header .sidebarCollapse').click();
+        InitializeMenu();
+    });
 
 </script>

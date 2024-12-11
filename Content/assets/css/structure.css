@@ -13,7 +13,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     letter-spacing: 0.0312rem;
-    font-family: YekanBakhRegular,tahoma;
+    font-family: BYekan,IranSans,YekanBakhRegular,tahoma;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -110,7 +110,6 @@ code {
     -ms-flex-pack: start;
     justify-content: flex-start;
     padding: 10px 10px 0 0;
-    margin-bottom: 20px;
 }
 
 #container.fixed-header {
@@ -1671,7 +1670,7 @@ code {
 }
 
 
-footer {
+/*footer {
     position: relative;
     bottom: 0;
     left: 0;
@@ -1696,7 +1695,7 @@ footer {
         color: #fff;
         font-size: 17px;
         text-align: center;
-    }
+    }*/
 
 .navbar-item .nav-item {
     display: inline-flex !important;

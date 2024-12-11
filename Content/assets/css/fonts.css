@@ -16,7 +16,6 @@
     src: url('./../../fonts/YekanBakh/YekanBakhFat.ttf') format("truetype")
 }
 
- 
 
 @font-face {
     font-family: YekanBakhHeavy;
@@ -51,4 +50,13 @@
 @font-face {
     font-family: PeydaRegular;
     src: url('./../../fonts/peyda-bold.ttf') format("truetype")
+}
+
+@font-face {
+    font-family: IranSans;
+    src: url('./../../fonts/Iranian-Sans.ttf') format("truetype")
+}
+@font-face {
+    font-family: BYekan;
+    src: url('./../../fonts/BYekan.ttf') format("truetype")
 }

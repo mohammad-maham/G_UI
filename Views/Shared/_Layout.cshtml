@@ -101,11 +101,13 @@
                 </div>
 
             </div>
+            <div class="row">
+                @Html.Action("Footer", "Home")
+            </div>
         </div>
+
     </div>
-    @*<footer>
-            <p>کلیه حقوق محفوظ است.</p>
-        </footer>*@
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
@@ -117,11 +119,9 @@
                 // Registration was successful
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
             }, function (err) {
-                debugger
                 // registration failed :(
                 console.log('ServiceWorker registration failed: ', err);
             }).catch(function (err) {
-                debugger
                 console.log(err)
             });
         });

@@ -50,7 +50,10 @@ namespace G_APIs.Controllers
         {
             return View(new Chart());
         }
-
+        public ActionResult Footer()
+        {
+            return View();
+        }
         public ActionResult Sidebar(Menu model)
         {
             User user = _session.Get<User>("UserInfo");
